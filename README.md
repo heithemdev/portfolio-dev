@@ -4,9 +4,6 @@ This project uses a pnpm + Turbo monorepo.
 
 ## Project Structure
 
-- `/packages/db` -> Database package (Prisma + PostgreSQL)
-- `/packages/db/prisma/schema.prisma` -> Prisma schema source
-- `/packages/db/prisma/migrations` -> Migration history (do not edit manually)
 - `/apps/web/app` -> Next.js pages and routes
 - `/apps/web/app/api` -> API route handlers
 - `/apps/web/components` -> UI components
@@ -18,7 +15,6 @@ This project uses a pnpm + Turbo monorepo.
 - Next.js 16
 - TypeScript on Node.js (backend)
 - React + Tailwind CSS (UI)
-- PostgreSQL + Prisma (database)
 
 ## Setup (Run From Repo Root)
 
@@ -28,19 +24,11 @@ This project uses a pnpm + Turbo monorepo.
 pnpm install
 ```
 
-2. Generate Prisma client:
+2. Start development:
 
 ```bash
-pnpm --filter @repo/db db:generate
+pnpm dev
 ```
-
-3. Run database migrations (development):
-
-```bash
-pnpm --filter @repo/db db:migrate
-```
-
-Note: `pnpm install` already triggers `db:generate` through `postinstall`, but running generate manually is still safe.
 
 ## Essential Commands (From Root)
 
@@ -68,11 +56,6 @@ Starts development pipelines via Turbo. Web app runs on `http://localhost:3000`.
 pnpm audit
 ```
 Checks dependency vulnerabilities.
-
-```bash
-pnpm --filter @repo/db db:studio
-```
-Opens Prisma Studio to inspect and manage database records.
 
 Optional security scripts already available:
 
@@ -111,5 +94,5 @@ Then open a Pull Request into `main` and wait for approval.
 - Never commit or push `.env` files.
 - Do not edit `.gitignore` unless explicitly approved.
 - Do not modify unrelated files.
-- Do not modify sensitive parts as schema or migrate online directly
+- Do not modify sensitive production settings directly.
 
