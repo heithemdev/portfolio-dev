@@ -1,0 +1,35 @@
+{
+  "name": "monorepo",
+  "private": true,
+  "scripts": {
+    "postinstall": "pnpm --filter @repo/db db:generate",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types",
+    "security:prod": "pnpm audit --prod --audit-level high",
+    "security:all": "pnpm audit",
+    "security:build": "pnpm build && pnpm lint && pnpm --filter web check-types"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.1",
+    "turbo": "^2.8.20",
+    "typescript": "5.9.2"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "hono": "4.12.9",
+      "@hono/node-server": "1.19.11",
+      "effect": "3.21.0",
+      "lodash": "4.17.23",
+      "minimatch": "9.0.7",
+      "flatted": "3.4.2",
+      "picomatch": "4.0.4"
+    }
+  }
+}
