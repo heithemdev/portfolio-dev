@@ -1,11 +1,12 @@
 // app/[locale]/page.tsx
 // Purpose: Locale homepage entry for the portfolio landing page.
-// Linked files: components/navbar.tsx, components/landing/Hero.tsx.
+// Linked files: components/navbar.tsx, components/landing/Hero.tsx, components/landing/projects.tsx.
 
 import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
 
 import Hero from "@/components/landing/Hero";
+import Projects from "@/components/landing/projects";
 import Navbar from "@/components/navbar";
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -28,6 +29,7 @@ export default function HomePage() {
 
       <main className="bg-[#F4EFE8] text-[#111318]">
         <Hero />
+        <Projects />
       </main>
     </div>
   );
