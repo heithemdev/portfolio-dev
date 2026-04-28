@@ -1,6 +1,6 @@
 // components/landing/about-section.tsx
 // Purpose: Localized about section for the portfolio landing page with a compact value-focused editorial layout.
-// Linked files: app/[locale]/page.tsx, components/landing/how-i-work.tsx, components/smooth-section-link.tsx, lib/lang/config.ts, public/assets/heithem about.png, public/icons/software-engineer.svg.
+// Linked files: app/[locale]/page.tsx, components/landing/how-i-work.tsx, components/smooth-section-link.tsx, lib/lang/config.ts, public/assets/Heithem about.png, public/icons/software-engineer.svg.
 
 "use client";
 
@@ -45,7 +45,7 @@ type AboutSectionProps = Readonly<{
   textDirection: TextDirection;
 }>;
 
-const ABOUT_IMAGE_SRC = "/assets/heithem about.png";
+const ABOUT_IMAGE_SRC = "/assets/Heithem about.png";
 const SOFTWARE_ENGINEER_ICON_SRC = "/icons/software-engineer.svg";
 
 const miniFactIcons = [MapPin, GraduationCap, Route] as const;
