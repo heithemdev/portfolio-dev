@@ -1,8 +1,8 @@
 // components/footer.tsx
 // Purpose: Simple portfolio footer with dark contrast, short navigation, and a small playful line.
-// Linked files: app/[locale]/page.tsx, components/landing/contact-section.tsx.
+// Linked files: app/[locale]/page.tsx, components/landing/contact-section.tsx, components/smooth-section-link.tsx.
 
-import Link from "next/link";
+import SmoothSectionLink from "@/components/smooth-section-link";
 
 const footerLinks = [
   {
@@ -49,13 +49,13 @@ export default function Footer() {
             className="flex flex-wrap items-center gap-x-5 gap-y-3"
           >
             {footerLinks.map((link) => (
-              <Link
+              <SmoothSectionLink
                 key={link.href}
                 href={link.href}
                 className="border-b border-transparent pb-1 text-[0.88rem] font-medium leading-none tracking-[-0.025em] text-[#F4EFE8]/68 transition duration-200 hover:border-[#B8792E] hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#111318]"
               >
                 {link.label}
-              </Link>
+              </SmoothSectionLink>
             ))}
           </nav>
         </div>

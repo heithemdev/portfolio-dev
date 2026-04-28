@@ -2,12 +2,13 @@
 
 // components/landing/Hero.tsx
 // Purpose: Minimal portfolio hero with one continuous typing cursor, desktop-safe layout, and full-width mobile portrait.
-// Linked files: app/[locale]/page.tsx, components/navbar.tsx, public/assets/Heithem avatar BNW.png.
+// Linked files: app/[locale]/page.tsx, components/navbar.tsx, components/smooth-section-link.tsx, public/assets/Heithem avatar BNW.png.
 
 import Image from "next/image";
-import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
+
+import SmoothSectionLink from "@/components/smooth-section-link";
 
 import heithemAvatar from "../../public/assets/Heithem avatar BNW.png";
 
@@ -41,7 +42,7 @@ const heroMetrics = [
     label: "Years building web products",
   },
   {
-    value: "5+",
+    value: "4+",
     label: "Startup and business platforms shipped",
   },
 ] satisfies ReadonlyArray<HeroMetric>;
@@ -241,19 +242,19 @@ function HeroSupportContent({
           ease: [0.16, 1, 0.3, 1],
         }}
       >
-        <Link
+        <SmoothSectionLink
           href="#work"
           className="inline-flex min-h-12 items-center justify-center border border-[#111318] bg-[#111318] px-6 text-[0.95rem] font-medium leading-none tracking-[-0.025em] text-[#F4EFE8] transition duration-150 hover:-translate-y-0.5 hover:border-[#B8792E] hover:bg-[#B8792E] hover:text-[#F4EFE8] active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
         >
           See work
-        </Link>
+        </SmoothSectionLink>
 
-        <Link
+        <SmoothSectionLink
           href="#contact"
           className="inline-flex min-h-12 items-center justify-center border border-[#111318]/18 bg-transparent px-6 text-[0.95rem] font-medium leading-none tracking-[-0.025em] text-[#111318] transition duration-150 hover:-translate-y-0.5 hover:border-[#B8792E] hover:text-[#B8792E] active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
         >
           Contact me
-        </Link>
+        </SmoothSectionLink>
       </motion.div>
     </>
   );

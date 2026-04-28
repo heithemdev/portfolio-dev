@@ -1,14 +1,15 @@
 // components/landing/about-section.tsx
 // Purpose: About section for the portfolio landing page with a compact value-focused editorial layout.
-// Linked files: app/[locale]/page.tsx, components/landing/how-i-work.tsx, public/assets/heithem about.png, public/icons/software-engineer.svg.
+// Linked files: app/[locale]/page.tsx, components/landing/how-i-work.tsx, components/smooth-section-link.tsx, public/assets/heithem about.png, public/icons/software-engineer.svg.
 
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowDown, GraduationCap, MapPin, Route } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
+
+import SmoothSectionLink from "@/components/smooth-section-link";
 
 type ValuePoint = Readonly<{
   id: string;
@@ -171,7 +172,7 @@ function ValuePointItem({ point }: { point: ValuePoint }) {
 
 function ProjectButton() {
   return (
-    <Link
+    <SmoothSectionLink
       href="#contact"
       className="group mt-9 inline-flex w-fit items-center gap-3 border border-[#111318] bg-[#111318] px-5 py-4 text-[0.88rem] font-medium leading-none tracking-[-0.025em] text-[#F4EFE8] transition duration-200 hover:border-[#B8792E] hover:bg-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
     >
@@ -180,7 +181,7 @@ function ProjectButton() {
         className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5"
         strokeWidth={1.8}
       />
-    </Link>
+    </SmoothSectionLink>
   );
 }
 

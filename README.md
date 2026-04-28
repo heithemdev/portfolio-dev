@@ -97,8 +97,5 @@ Then open a Pull Request into `main` and wait for approval.
 - Do not modify sensitive production settings directly.
 
 
-mzal : project section 
-project page
-contact logic
-fine tuning ui
 i18n multy language!!
+resume
