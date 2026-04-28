@@ -2,6 +2,7 @@
   "$schema": "./node_modules/turbo/schema.json",
   "ui": "tui",
   "globalEnv": [
+    "CONTACT_FROM_NAME",
     "DATABASE_URL",
     "DIRECT_URL"
   ],

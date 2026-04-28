@@ -6,7 +6,7 @@
 
 import Link from "next/link";
 import type { FormEvent, ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowUpRight,
   Clock3,
@@ -218,7 +218,7 @@ function IconMask({
 
 function useServerSyncedAlgeriaTime() {
   const [clockState, setClockState] = useState<SyncedClockState | null>(null);
-  const [renderTick, setRenderTick] = useState(0);
+  const [, setRenderTick] = useState(0);
 
   useEffect(() => {
     let isMounted = true;
@@ -278,16 +278,13 @@ function useServerSyncedAlgeriaTime() {
     };
   }, []);
 
-  return useMemo(() => {
-    if (!clockState) {
-      return null;
-    }
+  if (!clockState) {
+    return null;
+  }
 
-    const elapsedSinceSync =
-      performance.now() - clockState.syncedAtPerformanceMs;
+  const elapsedSinceSync = performance.now() - clockState.syncedAtPerformanceMs;
 
-    return formatAlgeriaTime(clockState.syncedServerUtcMs + elapsedSinceSync);
-  }, [clockState, renderTick]);
+  return formatAlgeriaTime(clockState.syncedServerUtcMs + elapsedSinceSync);
 }
 
 function FreelancerTimeInline({
