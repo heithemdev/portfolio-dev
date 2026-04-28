@@ -96,3 +96,11 @@ Then open a Pull Request into `main` and wait for approval.
 - Do not modify unrelated files.
 - Do not modify sensitive production settings directly.
 
+
+mzal : project section 
+project page
+contact logic
+fine tuning ui
+the hover behaviour
+in how i work, when you click a video call it will make you see a script
+and when you click agreement it will make you see also an agreement pdf

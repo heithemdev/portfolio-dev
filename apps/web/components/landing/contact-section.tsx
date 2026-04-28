@@ -1,13 +1,13 @@
 // components/landing/contact-section.tsx
-// Purpose: Final contact CTA section with direct contact links, book-call CTA, resume download, and compact email form.
-// Linked files: app/[locale]/page.tsx, public/icons/email.svg, public/icons/linkedin.svg, public/icons/messenger.svg, public/icons/whatsapp.svg, public/icons/zoom.svg, public/resume.pdf.
+// Purpose: Final contact CTA section with direct contact links, server-synced Algeria time, book-call CTA, resume download, and compact email form.
+// Linked files: app/[locale]/page.tsx, app/api/freelancer-time/route.ts, public/icons/email.svg, public/icons/linkedin.svg, public/icons/messenger.svg, public/icons/whatsapp.svg, public/icons/zoom.svg, public/resume.pdf.
 
 "use client";
 
 import Link from "next/link";
 import type { FormEvent, ReactNode } from "react";
-import { useState } from "react";
-import { ArrowUpRight, Download, Mail, Send } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowUpRight, Clock3, Download, Mail, Send } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 
 const CONTACT_EMAIL = "your-email@example.com";
@@ -15,6 +15,7 @@ const BOOK_CALL_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
   "Book a call about a web app project",
 )}`;
 const RESUME_HREF = "/resume.pdf";
+const ALGERIA_TIME_ZONE = "Africa/Algiers";
 
 const contactLinks = [
   {
@@ -44,6 +45,43 @@ type ContactStatus = Readonly<{
   message: string;
 }>;
 
+type ServerTimeResponse = Readonly<{
+  serverUtcMs: number;
+  timeZone: string;
+  time: string;
+  date: string;
+}>;
+
+type SyncedClockState = Readonly<{
+  syncedServerUtcMs: number;
+  syncedAtPerformanceMs: number;
+}>;
+
+type AlgeriaTimeSnapshot = Readonly<{
+  time: string;
+  date: string;
+}>;
+
+function formatAlgeriaTime(utcMs: number): AlgeriaTimeSnapshot {
+  const date = new Date(utcMs);
+
+  return {
+    time: new Intl.DateTimeFormat("en-GB", {
+      timeZone: ALGERIA_TIME_ZONE,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    }).format(date),
+    date: new Intl.DateTimeFormat("en-GB", {
+      timeZone: ALGERIA_TIME_ZONE,
+      weekday: "short",
+      day: "2-digit",
+      month: "short",
+    }).format(date),
+  };
+}
+
 function FadeIn({
   children,
   className,
@@ -72,7 +110,13 @@ function FadeIn({
   );
 }
 
-function IconMask({ src, className = "h-5 w-5" }: { src: string; className?: string }) {
+function IconMask({
+  src,
+  className = "h-5 w-5",
+}: {
+  src: string;
+  className?: string;
+}) {
   return (
     <span
       aria-hidden="true"
@@ -88,6 +132,105 @@ function IconMask({ src, className = "h-5 w-5" }: { src: string; className?: str
         maskSize: "contain",
       }}
     />
+  );
+}
+
+function useServerSyncedAlgeriaTime() {
+  const [clockState, setClockState] = useState<SyncedClockState | null>(null);
+  const [renderTick, setRenderTick] = useState(0);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function syncServerTime() {
+      try {
+        const requestStartedAt = performance.now();
+
+        const response = await fetch("/api/freelancer-time", {
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error("Unable to sync freelancer time.");
+        }
+
+        const requestFinishedAt = performance.now();
+        const data = (await response.json()) as ServerTimeResponse;
+
+        // Half RTT keeps the displayed time closer to the real server moment.
+        const estimatedNetworkHalfRoundTrip =
+          (requestFinishedAt - requestStartedAt) / 2;
+
+        if (!isMounted) {
+          return;
+        }
+
+        setClockState({
+          syncedServerUtcMs: data.serverUtcMs + estimatedNetworkHalfRoundTrip,
+          syncedAtPerformanceMs: requestFinishedAt,
+        });
+      } catch {
+        if (!isMounted) {
+          return;
+        }
+
+        setClockState(null);
+      }
+    }
+
+    syncServerTime();
+
+    const resyncIntervalId = window.setInterval(syncServerTime, 60_000);
+
+    return () => {
+      isMounted = false;
+      window.clearInterval(resyncIntervalId);
+    };
+  }, []);
+
+  useEffect(() => {
+    const tickIntervalId = window.setInterval(() => {
+      setRenderTick((currentTick) => currentTick + 1);
+    }, 1000);
+
+    return () => {
+      window.clearInterval(tickIntervalId);
+    };
+  }, []);
+
+  return useMemo(() => {
+    if (!clockState) {
+      return null;
+    }
+
+    const elapsedSinceSync =
+      performance.now() - clockState.syncedAtPerformanceMs;
+
+    return formatAlgeriaTime(clockState.syncedServerUtcMs + elapsedSinceSync);
+  }, [clockState, renderTick]);
+}
+
+function FreelancerTimeInline() {
+  const snapshot = useServerSyncedAlgeriaTime();
+
+  return (
+    <div className="flex items-center gap-3 text-[#111318]">
+      <Clock3 className="h-4 w-4 shrink-0 text-[#B8792E]" strokeWidth={1.8} />
+
+      <div className="min-w-0">
+        <p className="text-[0.64rem] uppercase tracking-[0.2em] text-[#111318]/42">
+          Time in freelancer zone
+        </p>
+
+        <p className="mt-1 text-[0.82rem] leading-none tracking-[-0.025em] text-[#111318]/66">
+          <span className="font-mono text-[#111318]">
+            {snapshot?.time ?? "--:--:--"}
+          </span>
+          <span className="mx-2 text-[#111318]/24">·</span>
+          <span>{snapshot?.date ?? "Algeria"}</span>
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -300,16 +443,20 @@ function ContactForm() {
         </label>
       </div>
 
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p
-          aria-live="polite"
-          className={[
-            "min-h-5 text-[0.76rem] leading-[1.4] tracking-[-0.02em]",
-            status.type === "error" ? "text-[#111318]" : "text-[#111318]/46",
-          ].join(" ")}
-        >
-          {status.message}
-        </p>
+      <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="grid gap-2">
+          <FreelancerTimeInline />
+
+          <p
+            aria-live="polite"
+            className={[
+              "min-h-5 text-[0.76rem] leading-[1.4] tracking-[-0.02em]",
+              status.type === "error" ? "text-[#111318]" : "text-[#111318]/46",
+            ].join(" ")}
+          >
+            {status.message}
+          </p>
+        </div>
 
         <button
           type="submit"
