@@ -1,41 +1,56 @@
 // components/landing/contact-section.tsx
-// Purpose: Final contact CTA section with direct contact links, server-synced Algeria time, book-call CTA, resume download, and compact email form.
-// Linked files: app/[locale]/page.tsx, app/api/freelancer-time/route.ts, public/icons/email.svg, public/icons/linkedin.svg, public/icons/messenger.svg, public/icons/whatsapp.svg, public/icons/zoom.svg, public/resume.pdf.
+// Purpose: Final contact CTA section with direct contact links, SMTP-backed email form, booking modal, server-synced Algeria time, and resume download.
+// Linked files: app/[locale]/page.tsx, app/api/freelancer-time/route.ts, app/api/contact/route.ts, components/booking-modal.tsx, public/icons/email.svg, public/icons/linkedin.svg, public/icons/whatsapp.svg, public/icons/zoom.svg, public/resume.pdf.
 
 "use client";
 
 import Link from "next/link";
 import type { FormEvent, ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowUpRight, Clock3, Download, Mail, Send } from "lucide-react";
+import {
+  ArrowUpRight,
+  Clock3,
+  Download,
+  Mail,
+  PhoneCall,
+  Send,
+} from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 
-const CONTACT_EMAIL = "your-email@example.com";
-const BOOK_CALL_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-  "Book a call about a web app project",
-)}`;
+import BookingModal from "@/components/booking-modal";
+
+const CONTACT_EMAIL = "heithem.dev@gmail.com";
+const CONTACT_PHONE_DISPLAY = "+213 794 20 66 55";
+const CONTACT_PHONE_HREF = "tel:+213794206655";
+const WHATSAPP_PHONE_DISPLAY = "+213 794206655";
+const WHATSAPP_APP_HREF = "whatsapp://send?phone=213794206655";
+const BOOK_CALL_HREF = "https://calendar.app.google/LAyuzM8fSjE5ezvH7";
 const RESUME_HREF = "/resume.pdf";
 const ALGERIA_TIME_ZONE = "Africa/Algiers";
 
 const contactLinks = [
   {
     label: "Email",
+    value: CONTACT_EMAIL,
     href: `mailto:${CONTACT_EMAIL}`,
     icon: "/icons/email.svg",
   },
   {
+    label: "Call",
+    value: CONTACT_PHONE_DISPLAY,
+    href: CONTACT_PHONE_HREF,
+    icon: "phone",
+  },
+  {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/your-linkedin/",
+    value: "heithemdev",
+    href: "https://www.linkedin.com/in/heithemdev",
     icon: "/icons/linkedin.svg",
   },
   {
-    label: "Messenger",
-    href: "https://m.me/your-username",
-    icon: "/icons/messenger.svg",
-  },
-  {
     label: "WhatsApp",
-    href: "https://wa.me/213000000000",
+    value: WHATSAPP_PHONE_DISPLAY,
+    href: WHATSAPP_APP_HREF,
     icon: "/icons/whatsapp.svg",
   },
 ] as const;
@@ -50,6 +65,11 @@ type ServerTimeResponse = Readonly<{
   timeZone: string;
   time: string;
   date: string;
+}>;
+
+type ContactApiResponse = Readonly<{
+  ok: boolean;
+  message: string;
 }>;
 
 type SyncedClockState = Readonly<{
@@ -157,7 +177,7 @@ function useServerSyncedAlgeriaTime() {
         const requestFinishedAt = performance.now();
         const data = (await response.json()) as ServerTimeResponse;
 
-        // Half RTT keeps the displayed time closer to the real server moment.
+        // Half RTT keeps the displayed time closer to the server moment.
         const estimatedNetworkHalfRoundTrip =
           (requestFinishedAt - requestStartedAt) / 2;
 
@@ -234,12 +254,22 @@ function FreelancerTimeInline() {
   );
 }
 
+function ContactIcon({ icon }: { icon: string }) {
+  if (icon === "phone") {
+    return <PhoneCall className="h-5 w-5 shrink-0" strokeWidth={1.8} />;
+  }
+
+  return <IconMask src={icon} />;
+}
+
 function ContactLinkCard({
   label,
+  value,
   href,
   icon,
 }: {
   label: string;
+  value: string;
   href: string;
   icon: string;
 }) {
@@ -250,50 +280,147 @@ function ContactLinkCard({
       href={href}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noreferrer" : undefined}
-      className="group flex min-h-12 items-center justify-between border border-[#111318]/12 bg-[#111318]/[0.022] px-4 text-[#111318] transition duration-200 hover:border-[#B8792E]/45 hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
-      aria-label={`Contact through ${label}`}
+      className="group flex min-h-14 items-center justify-between border border-[#111318]/12 bg-[#111318]/[0.022] px-4 text-[#111318] transition duration-200 hover:border-[#B8792E]/45 hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
+      aria-label={`${label}: ${value}`}
     >
-      <span className="flex items-center gap-3">
-        <IconMask src={icon} />
-        <span className="text-[0.86rem] font-medium leading-none tracking-[-0.025em]">
-          {label}
+      <span className="flex min-w-0 items-center gap-3">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center text-[#B8792E]">
+          <ContactIcon icon={icon} />
+        </span>
+
+        <span className="min-w-0">
+          <span className="block text-[0.66rem] uppercase tracking-[0.2em] text-[#111318]/42">
+            {label}
+          </span>
+
+          <span className="mt-1 block truncate text-[0.86rem] font-medium leading-none tracking-[-0.025em] text-[#111318]">
+            {value}
+          </span>
         </span>
       </span>
 
       <ArrowUpRight
-        className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        className="ml-4 h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         strokeWidth={1.8}
       />
     </Link>
   );
 }
 
-function PrimaryActions() {
-  return (
-    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-      <Link
-        href={BOOK_CALL_HREF}
-        className="group inline-flex min-h-12 w-fit items-center justify-center gap-3 border border-[#111318] bg-[#111318] px-5 text-[0.88rem] font-medium leading-none tracking-[-0.025em] text-[#F4EFE8] transition duration-200 hover:border-[#B8792E] hover:bg-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
-      >
-        Book a call
-        <IconMask
-          src="/icons/zoom.svg"
-          className="h-4 w-4 transition-transform duration-200 group-hover:scale-110"
-        />
-      </Link>
+function DesktopContactIconLink({
+  label,
+  value,
+  href,
+  icon,
+}: {
+  label: string;
+  value: string;
+  href: string;
+  icon: string;
+}) {
+  const isExternal = href.startsWith("http");
 
-      <a
-        href={RESUME_HREF}
-        download
-        className="group inline-flex min-h-12 w-fit items-center justify-center gap-3 border border-[#111318]/18 bg-transparent px-5 text-[0.88rem] font-medium leading-none tracking-[-0.025em] text-[#111318] transition duration-200 hover:border-[#B8792E] hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
+  return (
+    <Link
+      href={href}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noreferrer" : undefined}
+      aria-label={`${label}: ${value}`}
+      className="group hidden h-[3.25rem] w-[3.25rem] shrink-0 items-center overflow-hidden border border-[#111318]/14 bg-[#111318]/[0.022] text-[#111318] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:w-[12.5rem] hover:border-[#B8792E]/55 hover:bg-[#B8792E]/[0.055] hover:text-[#B8792E] focus-visible:w-[12.5rem] focus-visible:border-[#B8792E]/60 focus-visible:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8] lg:inline-flex"
+    >
+      <span className="flex h-[3.25rem] w-[3.25rem] shrink-0 items-center justify-center text-[#B8792E] transition-colors duration-300 group-hover:text-[#B8792E] group-focus-visible:text-[#B8792E]">
+        <ContactIcon icon={icon} />
+      </span>
+
+      <span className="grid min-w-0 translate-x-1 gap-1 pr-4 opacity-0 transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">
+        <span className="text-[0.66rem] uppercase leading-none tracking-[0.2em] text-[#111318]/42 transition-colors duration-300 group-hover:text-[#B8792E]/70 group-focus-visible:text-[#B8792E]/70">
+          {label}
+        </span>
+
+        <span className="max-w-[8.5rem] truncate text-[0.82rem] font-medium leading-none tracking-[-0.025em] text-[#111318] transition-colors duration-300 group-hover:text-[#B8792E] group-focus-visible:text-[#B8792E]">
+          {value}
+        </span>
+      </span>
+    </Link>
+  );
+}
+
+function ContactLinks() {
+  return (
+    <>
+      <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:hidden">
+        {contactLinks.map((link) => (
+          <ContactLinkCard
+            key={`${link.label}-${link.value}`}
+            label={link.label}
+            value={link.value}
+            href={link.href}
+            icon={link.icon}
+          />
+        ))}
+      </div>
+
+      <div
+        className="mt-9 hidden items-center gap-2 lg:flex"
+        aria-label="Contact links"
       >
-        Download resume
-        <Download
-          className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5"
-          strokeWidth={1.8}
-        />
-      </a>
-    </div>
+        {contactLinks.map((link) => (
+          <DesktopContactIconLink
+            key={`${link.label}-${link.value}`}
+            label={link.label}
+            value={link.value}
+            href={link.href}
+            icon={link.icon}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
+
+function PrimaryActions() {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
+  return (
+    <>
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <button
+          type="button"
+          onClick={() => {
+            setIsBookingOpen(true);
+          }}
+          className="group inline-flex min-h-12 w-fit items-center justify-center gap-3 border border-[#111318] bg-[#111318] px-5 text-[0.88rem] font-medium leading-none tracking-[-0.025em] text-[#F4EFE8] transition duration-200 hover:border-[#B8792E] hover:bg-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
+          aria-haspopup="dialog"
+          aria-expanded={isBookingOpen}
+        >
+          Book a call
+          <IconMask
+            src="/icons/zoom.svg"
+            className="h-4 w-4 transition-transform duration-200 group-hover:scale-110"
+          />
+        </button>
+
+        <a
+          href={RESUME_HREF}
+          download
+          className="group inline-flex min-h-12 w-fit items-center justify-center gap-3 border border-[#111318]/18 bg-transparent px-5 text-[0.88rem] font-medium leading-none tracking-[-0.025em] text-[#111318] transition duration-200 hover:border-[#B8792E] hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
+        >
+          Download resume
+          <Download
+            className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5"
+            strokeWidth={1.8}
+          />
+        </a>
+      </div>
+
+      <BookingModal
+        isOpen={isBookingOpen}
+        onClose={() => {
+          setIsBookingOpen(false);
+        }}
+        bookingUrl={BOOK_CALL_HREF}
+      />
+    </>
   );
 }
 
@@ -303,22 +430,36 @@ function getFieldValue(formData: FormData, key: string) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function getStatusClassName(statusType: ContactStatus["type"]) {
+  if (statusType === "success") {
+    return "text-[#B8792E]";
+  }
+
+  if (statusType === "error") {
+    return "text-[#111318]";
+  }
+
+  return "text-[#111318]/46";
+}
+
 function ContactForm() {
   const [status, setStatus] = useState<ContactStatus>({
     type: "idle",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const honeypot = getFieldValue(formData, "company");
 
     if (honeypot.length > 0) {
       setStatus({
         type: "success",
-        message: "Message ready.",
+        message: "Message sent.",
       });
       return;
     }
@@ -336,37 +477,59 @@ function ContactForm() {
       return;
     }
 
-    const subject = `Portfolio inquiry from ${name}`;
-    const body = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      project ? `Project: ${project}` : null,
-      "",
-      "Message:",
-      message,
-    ]
-      .filter(Boolean)
-      .join("\n");
-
-    const mailtoHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
-
-    window.location.href = mailtoHref;
-
+    setIsSubmitting(true);
     setStatus({
-      type: "success",
-      message: "Your email draft is ready.",
+      type: "idle",
+      message: "Sending message...",
     });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          project,
+          message,
+          company: honeypot,
+        }),
+      });
+
+      const data = (await response.json()) as ContactApiResponse;
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.message || "Email could not be sent right now.");
+      }
+
+      form.reset();
+
+      setStatus({
+        type: "success",
+        message: data.message,
+      });
+    } catch (error) {
+      setStatus({
+        type: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Email could not be sent right now.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
     <form
       onSubmit={handleSubmit}
       aria-labelledby="contact-form-title"
-      className="border border-[#111318]/14 bg-[#F4EFE8] p-5 sm:p-6"
+      className="border border-[#111318]/12 bg-[#F8F3EA] p-5 shadow-[0_28px_90px_rgba(17,19,24,0.06)] sm:p-6"
     >
-      <div className="flex items-start justify-between gap-6 border-b border-[#111318]/12 pb-4">
+      <div className="flex items-start justify-between gap-6 border-b border-[#111318]/10 pb-4">
         <div>
           <p
             id="contact-form-title"
@@ -393,7 +556,8 @@ function ContactForm() {
             type="text"
             autoComplete="name"
             required
-            className="min-h-11 border border-[#111318]/14 bg-transparent px-4 text-[0.92rem] leading-none tracking-[-0.025em] text-[#111318] outline-none transition duration-200 placeholder:text-[#111318]/30 focus:border-[#B8792E]"
+            disabled={isSubmitting}
+            className="min-h-11 border border-[#111318]/12 bg-[#F4EFE8]/55 px-4 text-[0.92rem] leading-none tracking-[-0.025em] text-[#111318] outline-none transition duration-200 placeholder:text-[#111318]/30 focus:border-[#B8792E] focus:bg-[#F4EFE8] disabled:cursor-not-allowed disabled:opacity-60"
             placeholder="Your name"
           />
         </label>
@@ -407,7 +571,8 @@ function ContactForm() {
             type="email"
             autoComplete="email"
             required
-            className="min-h-11 border border-[#111318]/14 bg-transparent px-4 text-[0.92rem] leading-none tracking-[-0.025em] text-[#111318] outline-none transition duration-200 placeholder:text-[#111318]/30 focus:border-[#B8792E]"
+            disabled={isSubmitting}
+            className="min-h-11 border border-[#111318]/12 bg-[#F4EFE8]/55 px-4 text-[0.92rem] leading-none tracking-[-0.025em] text-[#111318] outline-none transition duration-200 placeholder:text-[#111318]/30 focus:border-[#B8792E] focus:bg-[#F4EFE8] disabled:cursor-not-allowed disabled:opacity-60"
             placeholder="name@example.com"
           />
         </label>
@@ -419,7 +584,8 @@ function ContactForm() {
           <input
             name="project"
             type="text"
-            className="min-h-11 border border-[#111318]/14 bg-transparent px-4 text-[0.92rem] leading-none tracking-[-0.025em] text-[#111318] outline-none transition duration-200 placeholder:text-[#111318]/30 focus:border-[#B8792E]"
+            disabled={isSubmitting}
+            className="min-h-11 border border-[#111318]/12 bg-[#F4EFE8]/55 px-4 text-[0.92rem] leading-none tracking-[-0.025em] text-[#111318] outline-none transition duration-200 placeholder:text-[#111318]/30 focus:border-[#B8792E] focus:bg-[#F4EFE8] disabled:cursor-not-allowed disabled:opacity-60"
             placeholder="Store, SaaS, dashboard, MVP..."
           />
         </label>
@@ -432,7 +598,8 @@ function ContactForm() {
             name="message"
             required
             rows={4}
-            className="resize-none border border-[#111318]/14 bg-transparent px-4 py-3 text-[0.92rem] leading-[1.45] tracking-[-0.025em] text-[#111318] outline-none transition duration-200 placeholder:text-[#111318]/30 focus:border-[#B8792E]"
+            disabled={isSubmitting}
+            className="resize-none border border-[#111318]/12 bg-[#F4EFE8]/55 px-4 py-3 text-[0.92rem] leading-[1.45] tracking-[-0.025em] text-[#111318] outline-none transition duration-200 placeholder:text-[#111318]/30 focus:border-[#B8792E] focus:bg-[#F4EFE8] disabled:cursor-not-allowed disabled:opacity-60"
             placeholder="What are you trying to build?"
           />
         </label>
@@ -451,7 +618,7 @@ function ContactForm() {
             aria-live="polite"
             className={[
               "min-h-5 text-[0.76rem] leading-[1.4] tracking-[-0.02em]",
-              status.type === "error" ? "text-[#111318]" : "text-[#111318]/46",
+              getStatusClassName(status.type),
             ].join(" ")}
           >
             {status.message}
@@ -460,11 +627,17 @@ function ContactForm() {
 
         <button
           type="submit"
-          className="group inline-flex min-h-11 w-fit items-center justify-center gap-3 border border-[#111318] bg-[#111318] px-5 text-[0.84rem] font-medium leading-none tracking-[-0.025em] text-[#F4EFE8] transition duration-200 hover:border-[#B8792E] hover:bg-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
+          disabled={isSubmitting}
+          className="group inline-flex min-h-11 w-fit items-center justify-center gap-3 border border-[#111318] bg-[#111318] px-5 text-[0.84rem] font-medium leading-none tracking-[-0.025em] text-[#F4EFE8] transition duration-200 hover:border-[#B8792E] hover:bg-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F8F3EA] disabled:cursor-not-allowed disabled:border-[#111318]/30 disabled:bg-[#111318]/30"
         >
-          Send message
+          {isSubmitting ? "Sending..." : "Send message"}
           <Send
-            className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            className={[
+              "h-3.5 w-3.5 transition-transform duration-200",
+              isSubmitting
+                ? "animate-pulse"
+                : "group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
+            ].join(" ")}
             strokeWidth={1.8}
           />
         </button>
@@ -502,16 +675,7 @@ export default function ContactSection() {
 
           <PrimaryActions />
 
-          <div className="mt-9 grid gap-3 sm:grid-cols-2">
-            {contactLinks.map((link) => (
-              <ContactLinkCard
-                key={link.label}
-                label={link.label}
-                href={link.href}
-                icon={link.icon}
-              />
-            ))}
-          </div>
+          <ContactLinks />
         </FadeIn>
 
         <FadeIn delay={0.1}>

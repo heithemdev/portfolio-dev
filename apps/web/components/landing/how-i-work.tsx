@@ -1,11 +1,11 @@
 // components/landing/how-i-work.tsx
-// Purpose: Portfolio process section shown as a calm client conversation.
-// Linked files: app/[locale]/page.tsx, components/landing/projects.tsx, public/assets/Heithem profile picture.jpg.
+// Purpose: Portfolio process section shown as a calm client conversation with a shared booking modal CTA.
+// Linked files: app/[locale]/page.tsx, components/landing/projects.tsx, components/booking-modal.tsx, public/assets/Heithem profile picture.jpg.
 
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { useState } from "react";
 import {
   CheckCheck,
   Clock3,
@@ -16,7 +16,10 @@ import {
 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 
+import BookingModal from "@/components/booking-modal";
 import heithemProfilePicture from "../../public/assets/Heithem profile picture.jpg";
+
+const BOOK_CALL_HREF = "https://calendar.app.google/LAyuzM8fSjE5ezvH7";
 
 type ChatAuthor = "client" | "heithem";
 
@@ -404,82 +407,87 @@ function ProcessNote({
 }
 
 export default function HowIWork() {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
   return (
-    <section
-      id="how-i-work"
-      aria-labelledby="how-i-work-title"
-      className="relative isolate overflow-hidden bg-[#F4EFE8] py-[clamp(5rem,9vw,8rem)] text-[#111318]"
-    >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#111318]/10" />
+    <>
+      <section
+        id="how-i-work"
+        aria-labelledby="how-i-work-title"
+        className="relative isolate overflow-hidden bg-[#F4EFE8] py-[clamp(5rem,9vw,8rem)] text-[#111318]"
+      >
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#111318]/10" />
 
-      <div className="mx-auto grid w-full max-w-[1920px] gap-12 px-5 sm:px-8 lg:grid-cols-[minmax(0,0.56fr)_minmax(34rem,0.74fr)] lg:items-start lg:gap-16 lg:px-10">
-        <div className="lg:sticky lg:top-[6rem]">
-          <p className="text-[0.72rem] uppercase tracking-[0.24em] text-[#B8792E]">
-            Process
-          </p>
+        <div className="mx-auto grid w-full max-w-[1920px] gap-12 px-5 sm:px-8 lg:grid-cols-[minmax(0,0.56fr)_minmax(34rem,0.74fr)] lg:items-start lg:gap-16 lg:px-10">
+          <div className="lg:sticky lg:top-[6rem]">
+            <p className="text-[0.72rem] uppercase tracking-[0.24em] text-[#B8792E]">
+              Process
+            </p>
 
-          <h2
-            id="how-i-work-title"
-            className="mt-4 text-[clamp(3rem,7vw,7.4rem)] font-normal leading-[0.86] tracking-[-0.095em] text-[#111318]"
-          >
-            How I work
-          </h2>
-
-          <p className="mt-6 max-w-[36rem] text-[clamp(1rem,1.2vw,1.14rem)] font-normal leading-[1.58] tracking-[-0.025em] text-[#111318]/62">
-            A useful project starts with the business case: who needs it, what
-            should become easier, where the value is, and what counts as a win.
-          </p>
-
-          <div className="mt-9 grid gap-3">
-            {processNotes.map((note, index) => (
-              <ProcessNote
-                key={note.label}
-                label={note.label}
-                value={note.value}
-                index={index}
-              />
-            ))}
-          </div>
-
-          <div className="mt-9">
-            <Link
-              href="#contact"
-              className="inline-flex items-center gap-2 border-b border-[#111318] pb-1 text-[0.9rem] font-medium leading-none tracking-[-0.025em] text-[#111318] transition duration-200 hover:border-[#B8792E] hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
+            <h2
+              id="how-i-work-title"
+              className="mt-4 text-[clamp(3rem,7vw,7.4rem)] font-normal leading-[0.86] tracking-[-0.095em] text-[#111318]"
             >
-              Start with a call
-              <PhoneCall className="h-4 w-4" strokeWidth={1.8} />
-            </Link>
-          </div>
-        </div>
+              How I work
+            </h2>
 
-        <motion.div
-          className="overflow-hidden border border-[#111318]/14 bg-[#F4EFE8] shadow-[0_34px_100px_rgba(17,19,24,0.08)]"
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <ChatHeader />
+            <p className="mt-6 max-w-[36rem] text-[clamp(1rem,1.2vw,1.14rem)] font-normal leading-[1.58] tracking-[-0.025em] text-[#111318]/62">
+              A useful project starts with the business case: who needs it, what
+              should become easier, where the value is, and what counts as a win.
+            </p>
 
-          <div className="flex flex-col gap-4 px-4 py-5 sm:px-5 sm:py-6">
-            {chatItems.map((item, index) => (
-              <ChatItemRenderer key={item.id} item={item} index={index} />
-            ))}
-          </div>
+            <div className="mt-9 grid gap-3">
+              {processNotes.map((note, index) => (
+                <ProcessNote
+                  key={note.label}
+                  label={note.label}
+                  value={note.value}
+                  index={index}
+                />
+              ))}
+            </div>
 
-          <div className="border-t border-[#111318]/12 px-4 py-4 sm:px-5">
-            <div className="flex items-center justify-between gap-4">
-              <p className="text-[0.75rem] leading-[1.4] tracking-[-0.02em] text-[#111318]/45">
-                Simple flow: call, scope, agreement, build.
-              </p>
-
-              <span className="hidden text-[0.7rem] uppercase tracking-[0.2em] text-[#111318]/30 sm:inline">
-                30 min free call
-              </span>
+            <div className="mt-9">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsBookingOpen(true);
+                }}
+                className="inline-flex items-center gap-2 border-b border-[#111318] pb-1 text-[0.9rem] font-medium leading-none tracking-[-0.025em] text-[#111318] transition duration-200 hover:border-[#B8792E] hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
+                aria-haspopup="dialog"
+                aria-expanded={isBookingOpen}
+              >
+                Reserve a call
+                <PhoneCall className="h-4 w-4" strokeWidth={1.8} />
+              </button>
             </div>
           </div>
-        </motion.div>
-      </div>
-    </section>
+
+          <motion.div
+            className="overflow-hidden border border-[#111318]/14 bg-[#F4EFE8] shadow-[0_34px_100px_rgba(17,19,24,0.08)]"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <ChatHeader />
+
+            <div className="flex flex-col gap-4 px-4 py-5 sm:px-5 sm:py-6">
+              {chatItems.map((item, index) => (
+                <ChatItemRenderer key={item.id} item={item} index={index} />
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <BookingModal
+        isOpen={isBookingOpen}
+        onClose={() => {
+          setIsBookingOpen(false);
+        }}
+        bookingUrl={BOOK_CALL_HREF}
+      />
+    </>
   );
 }

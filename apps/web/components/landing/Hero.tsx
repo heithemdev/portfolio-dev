@@ -193,7 +193,7 @@ function HeroMetricBlock({ metric }: { metric: HeroMetric }) {
         {metric.value}
       </p>
 
-      <p className="mt-2 max-w-[12.5rem] text-[0.8rem] font-normal leading-[1.25] tracking-[-0.02em] text-[#111318]/55">
+      <p className="mt-2 max-w-[12.5rem] text-[0.86rem] font-medium leading-[1.34] tracking-[-0.018em] text-[#111318]/78">
         {metric.label}
       </p>
     </div>
@@ -243,14 +243,14 @@ function HeroSupportContent({
       >
         <Link
           href="#work"
-          className="inline-flex min-h-12 items-center justify-center border border-[#111318] bg-[#111318] px-6 text-[0.95rem] font-medium leading-none tracking-[-0.025em] text-[#F4EFE8] transition duration-150 hover:-translate-y-0.5 hover:bg-[#111318]/92 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
+          className="inline-flex min-h-12 items-center justify-center border border-[#111318] bg-[#111318] px-6 text-[0.95rem] font-medium leading-none tracking-[-0.025em] text-[#F4EFE8] transition duration-150 hover:-translate-y-0.5 hover:border-[#B8792E] hover:bg-[#B8792E] hover:text-[#F4EFE8] active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
         >
           See work
         </Link>
 
         <Link
           href="#contact"
-          className="inline-flex min-h-12 items-center justify-center border border-[#111318]/18 bg-transparent px-6 text-[0.95rem] font-medium leading-none tracking-[-0.025em] text-[#111318] transition duration-150 hover:-translate-y-0.5 hover:border-[#111318] active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
+          className="inline-flex min-h-12 items-center justify-center border border-[#111318]/18 bg-transparent px-6 text-[0.95rem] font-medium leading-none tracking-[-0.025em] text-[#111318] transition duration-150 hover:-translate-y-0.5 hover:border-[#B8792E] hover:text-[#B8792E] active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
         >
           Contact me
         </Link>
@@ -430,11 +430,11 @@ export default function Hero() {
               ease: [0.16, 1, 0.3, 1],
             }}
             style={{
-  WebkitMaskImage:
-    "linear-gradient(to bottom, black 0%, black 81%, rgba(0,0,0,0.72) 89%, transparent 100%)",
-  maskImage:
-    "linear-gradient(to bottom, black 0%, black 81%, rgba(0,0,0,0.72) 89%, transparent 100%)",
-}}
+              WebkitMaskImage:
+                "linear-gradient(to bottom, black 0%, black 81%, rgba(0,0,0,0.72) 89%, transparent 100%)",
+              maskImage:
+                "linear-gradient(to bottom, black 0%, black 81%, rgba(0,0,0,0.72) 89%, transparent 100%)",
+            }}
           >
             <Image
               src={heithemAvatar}

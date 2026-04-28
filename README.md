@@ -101,6 +101,4 @@ mzal : project section
 project page
 contact logic
 fine tuning ui
-the hover behaviour
-in how i work, when you click a video call it will make you see a script
-and when you click agreement it will make you see also an agreement pdf
+i18n multy language!!
