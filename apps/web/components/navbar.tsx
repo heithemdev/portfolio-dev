@@ -1,62 +1,340 @@
 // components/navbar.tsx
-// Purpose: Minimal portfolio navigation with desktop and mobile layouts.
-// Linked files: app/[locale]/page.tsx, components/landing/Hero.tsx, components/smooth-section-link.tsx, public/assets/H.png.
+// Purpose: Minimal portfolio navigation with localized section links and custom language switchers.
+// Linked files: app/[locale]/page.tsx, components/landing/Hero.tsx, components/smooth-section-link.tsx, lib/lang/config.ts, public/assets/H.png.
+
+"use client";
 
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  ArrowUpRight,
+  Check,
+  ChevronDown,
+  Languages,
+} from "lucide-react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+} from "react";
 
 import SmoothSectionLink from "@/components/smooth-section-link";
+import {
+  DEFAULT_LOCALE,
+  isLocale,
+  type Locale,
+  type TextDirection,
+} from "@/lib/lang/config";
 
 import heithemLogo from "../public/assets/H.png";
 
-const navItems = [
-  { href: "#work", label: "Work", mobileLabel: "Work" },
-  { href: "#how-i-work", label: "How I work", mobileLabel: "How" },
-  { href: "#about", label: "About", mobileLabel: "About" },
-] as const;
+type LanguageOption = Readonly<{
+  locale: Locale;
+  label: string;
+  name: string;
+}>;
 
-export default function Navbar() {
+type NavbarCopy = Readonly<{
+  logoAria: string;
+  mainNavigationAria: string;
+  languageAria: string;
+  switchLanguageTo: string;
+  work: string;
+  howIWork: string;
+  howIWorkMobile: string;
+  about: string;
+  contact: string;
+}>;
+
+type NavbarProps = Readonly<{
+  copy: NavbarCopy;
+  textDirection: TextDirection;
+}>;
+
+const fallbackLanguageOption: LanguageOption = {
+  locale: DEFAULT_LOCALE,
+  label: "EN",
+  name: "English",
+};
+
+const languageOptions = [
+  { locale: "en", label: "EN", name: "English" },
+  { locale: "fr", label: "FR", name: "Français" },
+  { locale: "ar", label: "AR", name: "العربية" },
+] satisfies ReadonlyArray<LanguageOption>;
+
+function getLocaleFromPathname(pathname: string): Locale {
+  const firstSegment = pathname.split("/").filter(Boolean)[0];
+
+  return firstSegment && isLocale(firstSegment) ? firstSegment : DEFAULT_LOCALE;
+}
+
+function getPathnameWithoutLocale(pathname: string): string {
+  const segments = pathname.split("/").filter(Boolean);
+
+  if (segments[0] && isLocale(segments[0])) {
+    const remainingPath = segments.slice(1).join("/");
+
+    return remainingPath ? `/${remainingPath}` : "/";
+  }
+
+  return pathname || "/";
+}
+
+function buildLocalizedHref(
+  pathname: string,
+  nextLocale: Locale,
+  hash: string,
+): string {
+  const pathnameWithoutLocale = getPathnameWithoutLocale(pathname);
+  const normalizedPathname =
+    pathnameWithoutLocale === "/" ? "" : pathnameWithoutLocale;
+  const normalizedHash = hash.startsWith("#") ? hash : "";
+
+  return `/${nextLocale}${normalizedPathname}${normalizedHash}`;
+}
+
+export default function Navbar({ copy, textDirection }: NavbarProps) {
+  const pathname = usePathname();
+
+  const currentLocale = getLocaleFromPathname(pathname);
+  const currentLanguage =
+    languageOptions.find((language) => language.locale === currentLocale) ??
+    fallbackLanguageOption;
+
+  const [activeHash, setActiveHash] = useState("");
+  const [isMobileLanguageOpen, setIsMobileLanguageOpen] = useState(false);
+
+  const mobileLanguageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const syncHash = () => {
+      setActiveHash(window.location.hash || "");
+    };
+
+    syncHash();
+    window.addEventListener("hashchange", syncHash);
+
+    return () => {
+      window.removeEventListener("hashchange", syncHash);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isMobileLanguageOpen) {
+      return;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (
+        mobileLanguageRef.current &&
+        !mobileLanguageRef.current.contains(event.target as Node)
+      ) {
+        setIsMobileLanguageOpen(false);
+      }
+    };
+
+    const handleEscape = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMobileLanguageOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isMobileLanguageOpen]);
+
+  const navItems = [
+    { href: "#work", label: copy.work, mobileLabel: copy.work },
+    {
+      href: "#how-i-work",
+      label: copy.howIWork,
+      mobileLabel: copy.howIWorkMobile,
+    },
+    { href: "#about", label: copy.about, mobileLabel: copy.about },
+  ] as const;
+
+  const trackingClass =
+    currentLocale === "ar" ? "tracking-normal" : "tracking-[-0.025em]";
+
+  const handleMobileLanguageKeyDown = (
+    event: KeyboardEvent<HTMLDivElement>,
+  ) => {
+    if (event.key === "Escape") {
+      setIsMobileLanguageOpen(false);
+    }
+  };
+
   return (
-    <header className="fixed inset-x-0 top-0 z-30 bg-[#F4EFE8]/92 text-[#111318] backdrop-blur-sm">
+    <header
+      className="fixed inset-x-0 top-0 z-30 bg-[#F4EFE8]/92 text-[#111318] backdrop-blur-sm"
+      dir="ltr"
+    >
       <nav
-        aria-label="Main navigation"
+        aria-label={copy.mainNavigationAria}
         className="mx-auto flex h-[4.75rem] w-full max-w-[1920px] items-center justify-between px-4 sm:px-8 lg:pl-10 lg:pr-20"
       >
-        <div className="flex items-center gap-[clamp(2rem,3.6vw,4.75rem)]">
+        <div className="flex items-center gap-2.5 md:gap-[clamp(2rem,3.6vw,4.75rem)]">
           <SmoothSectionLink
             href="#hero"
-            aria-label="Go to hero"
-            className="flex size-12 items-center justify-center transition-opacity duration-150 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
+            aria-label={copy.logoAria}
+            className="flex size-12 shrink-0 items-center justify-center transition-opacity duration-150 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
           >
             <Image
               src={heithemLogo}
-              alt="Heithem logo"
+              alt=""
               width={64}
               height={64}
-              priority
               className="h-12 w-12 object-contain"
+              loading="eager"
+              fetchPriority="high"
             />
           </SmoothSectionLink>
+
+          <div
+            ref={mobileLanguageRef}
+            className="relative md:hidden"
+            onKeyDown={handleMobileLanguageKeyDown}
+          >
+            <button
+              type="button"
+              aria-label={copy.languageAria}
+              aria-expanded={isMobileLanguageOpen}
+              aria-haspopup="listbox"
+              onClick={() => {
+                setIsMobileLanguageOpen((currentValue) => !currentValue);
+              }}
+              className="inline-flex h-10 items-center gap-1.5 border border-[#111318]/12 bg-[#F4EFE8]/80 px-2.5 text-[0.76rem] font-semibold leading-none text-[#111318]/76 shadow-[0_10px_24px_rgba(17,19,24,0.04)] transition-colors duration-150 hover:border-[#B8792E]/45 hover:text-[#111318] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4EFE8]"
+            >
+              <Languages
+                aria-hidden="true"
+                size={14}
+                strokeWidth={2}
+                className="text-[#B8792E]"
+              />
+
+              <span>{currentLanguage.label}</span>
+
+              <ChevronDown
+                aria-hidden="true"
+                size={13}
+                strokeWidth={2}
+                className={`transition-transform duration-150 ${
+                  isMobileLanguageOpen ? "rotate-180" : "rotate-0"
+                }`}
+              />
+            </button>
+
+            {isMobileLanguageOpen ? (
+              <div
+                role="listbox"
+                aria-label={copy.languageAria}
+                className="absolute left-0 top-[calc(100%+0.5rem)] z-50 w-36 border border-[#111318]/12 bg-[#F4EFE8] p-1 shadow-[0_18px_46px_rgba(17,19,24,0.16)]"
+              >
+                {languageOptions.map((language) => {
+                  const isActive = language.locale === currentLocale;
+
+                  return (
+                    <Link
+                      key={language.locale}
+                      href={buildLocalizedHref(
+                        pathname,
+                        language.locale,
+                        activeHash,
+                      )}
+                      role="option"
+                      aria-selected={isActive}
+                      onClick={() => {
+                        setIsMobileLanguageOpen(false);
+                      }}
+                      className={`flex min-h-10 items-center justify-between gap-3 px-3 text-[0.82rem] font-medium leading-none transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] ${
+                        isActive
+                          ? "bg-[#111318] text-[#F4EFE8]"
+                          : "text-[#111318]/72 hover:bg-[#111318]/5 hover:text-[#111318]"
+                      }`}
+                    >
+                      <span>{language.name}</span>
+                      <span className="flex min-w-6 items-center justify-end text-[0.7rem] font-semibold uppercase">
+                        {isActive ? (
+                          <Check
+                            aria-hidden="true"
+                            size={14}
+                            strokeWidth={2.2}
+                          />
+                        ) : (
+                          language.label
+                        )}
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : null}
+          </div>
 
           <div className="hidden items-center gap-[clamp(1.65rem,2.5vw,3rem)] md:flex">
             {navItems.map((item) => (
               <SmoothSectionLink
                 key={item.href}
                 href={item.href}
-                className="text-[0.96rem] font-medium leading-none tracking-[-0.025em] text-[#111318] transition-opacity duration-150 hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
+                className={`text-[0.96rem] font-medium leading-none ${trackingClass} text-[#111318] transition-opacity duration-150 hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]`}
               >
-                {item.label}
+                <span dir={textDirection}>{item.label}</span>
               </SmoothSectionLink>
             ))}
           </div>
         </div>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-4 md:flex">
+          <div
+            aria-label={copy.languageAria}
+            className="inline-flex h-11 items-center gap-1 border border-[#111318]/12 bg-[#F4EFE8]/80 px-1.5"
+            dir="ltr"
+          >
+            <Languages
+              aria-hidden="true"
+              size={16}
+              strokeWidth={2}
+              className="ml-1 text-[#111318]/58"
+            />
+
+            {languageOptions.map((language) => {
+              const isActive = language.locale === currentLocale;
+
+              return (
+                <Link
+                  key={language.locale}
+                  href={buildLocalizedHref(
+                    pathname,
+                    language.locale,
+                    activeHash,
+                  )}
+                  aria-current={isActive ? "true" : undefined}
+                  aria-label={`${copy.switchLanguageTo} ${language.name}`}
+                  className={`inline-flex h-8 min-w-9 items-center justify-center px-2 text-[0.78rem] font-semibold uppercase leading-none transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4EFE8] ${
+                    isActive
+                      ? "bg-[#111318] text-[#F4EFE8]"
+                      : "text-[#111318]/58 hover:bg-[#111318]/5 hover:text-[#111318]"
+                  }`}
+                >
+                  {language.label}
+                </Link>
+              );
+            })}
+          </div>
+
           <SmoothSectionLink
             href="#contact"
-            className="group inline-flex items-center gap-1.5 border-b border-[#111318] pb-1 text-[0.96rem] font-medium leading-none tracking-[-0.025em] text-[#111318] transition-opacity duration-150 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
+            className={`group inline-flex items-center gap-1.5 border-b border-[#111318] pb-1 text-[0.96rem] font-medium leading-none ${trackingClass} text-[#111318] transition-opacity duration-150 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]`}
           >
-            Contact
+            <span dir={textDirection}>{copy.contact}</span>
             <ArrowUpRight
               aria-hidden="true"
               size={17}
@@ -72,16 +350,16 @@ export default function Navbar() {
               key={item.href}
               href={item.href}
               aria-label={item.label}
-              className="inline-flex min-h-9 items-center justify-center px-2.5 text-[0.82rem] font-medium leading-none tracking-[-0.025em] text-[#111318]/72 transition-colors duration-150 hover:text-[#111318] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4EFE8]"
+              className={`inline-flex min-h-9 items-center justify-center px-2 text-[0.8rem] font-medium leading-none ${trackingClass} text-[#111318]/72 transition-colors duration-150 hover:text-[#111318] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4EFE8] max-[380px]:px-1.5 max-[380px]:text-[0.76rem]`}
             >
-              {item.mobileLabel}
+              <span dir={textDirection}>{item.mobileLabel}</span>
             </SmoothSectionLink>
           ))}
 
           <SmoothSectionLink
             href="#contact"
-            aria-label="Contact"
-            className="ml-1 inline-flex size-9 items-center justify-center bg-[#111318] text-[#F4EFE8] transition-opacity duration-150 hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4EFE8]"
+            aria-label={copy.contact}
+            className="ml-1 inline-flex size-9 shrink-0 items-center justify-center bg-[#111318] text-[#F4EFE8] transition-opacity duration-150 hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4EFE8]"
           >
             <ArrowUpRight aria-hidden="true" size={17} strokeWidth={2} />
           </SmoothSectionLink>

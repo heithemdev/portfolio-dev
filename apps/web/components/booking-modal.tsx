@@ -1,6 +1,6 @@
 // components/booking-modal.tsx
-// Purpose: Shared Google Calendar booking modal rendered through a body-level portal so it appears above fixed site chrome.
-// Linked files: components/landing/contact-section.tsx, components/landing/how-i-work.tsx, components/navbar.tsx.
+// Purpose: Shared localized booking modal rendered through a body-level portal so it appears above fixed site chrome.
+// Linked files: components/landing/contact-section.tsx, components/landing/how-i-work.tsx, components/navbar.tsx, lib/lang/config.ts.
 
 "use client";
 
@@ -9,10 +9,25 @@ import { createPortal } from "react-dom";
 import { ArrowUpRight, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
+import type { TextDirection } from "@/lib/lang/config";
+
+export type BookingModalCopy = Readonly<{
+  eyebrow: string;
+  title: string;
+  description: string;
+  closeAria: string;
+  loading: string;
+  fallback: string;
+  openPage: string;
+  iframeTitle: string;
+}>;
+
 type BookingModalProps = Readonly<{
   isOpen: boolean;
   onClose: () => void;
   bookingUrl: string;
+  copy: BookingModalCopy;
+  textDirection: TextDirection;
 }>;
 
 const focusableSelector = [
@@ -28,6 +43,8 @@ export default function BookingModal({
   isOpen,
   onClose,
   bookingUrl,
+  copy,
+  textDirection,
 }: BookingModalProps) {
   const shouldReduceMotion = useReducedMotion();
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -132,6 +149,7 @@ export default function BookingModal({
           animate={shouldReduceMotion ? undefined : { opacity: 1 }}
           exit={shouldReduceMotion ? undefined : { opacity: 0 }}
           transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+          dir="ltr"
         >
           <motion.div
             ref={panelRef}
@@ -169,21 +187,20 @@ export default function BookingModal({
             }}
           >
             <div className="flex min-h-[4.75rem] items-start justify-between gap-4 border-b border-[#111318]/12 bg-[#F4EFE8] px-4 py-4 sm:px-5">
-              <div className="min-w-0">
+              <div className="min-w-0" dir={textDirection}>
                 <p className="text-[0.66rem] uppercase tracking-[0.22em] text-[#B8792E]">
-                  Book a call
+                  {copy.eyebrow}
                 </p>
 
                 <h3
                   id="booking-modal-title"
                   className="mt-1 truncate text-[1.25rem] font-normal leading-none tracking-[-0.055em] text-[#111318] sm:mt-2 sm:text-[clamp(1.45rem,2vw,2.15rem)]"
                 >
-                  Project discovery call
+                  {copy.title}
                 </h3>
 
                 <p className="mt-2 hidden max-w-[38rem] text-[0.85rem] leading-[1.45] tracking-[-0.025em] text-[#111318]/58 sm:block">
-                  Pick a time that works for you. The booking stays inside this
-                  window.
+                  {copy.description}
                 </p>
               </div>
 
@@ -192,7 +209,7 @@ export default function BookingModal({
                 type="button"
                 onClick={onClose}
                 className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#111318]/14 bg-[#111318]/[0.025] text-[#111318] transition duration-200 hover:border-[#B8792E]/55 hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
-                aria-label="Close booking window"
+                aria-label={copy.closeAria}
               >
                 <X className="h-4 w-4" strokeWidth={1.8} />
               </button>
@@ -203,8 +220,11 @@ export default function BookingModal({
                 <div className="absolute inset-0 z-10 grid place-items-center bg-[#F4EFE8]">
                   <div className="grid justify-items-center gap-3 px-6 text-center">
                     <div className="h-8 w-8 animate-pulse border border-[#B8792E]/45 bg-[#B8792E]/[0.05]" />
-                    <p className="text-[0.82rem] tracking-[-0.025em] text-[#111318]/58">
-                      Loading available times...
+                    <p
+                      dir={textDirection}
+                      className="text-[0.82rem] tracking-[-0.025em] text-[#111318]/58"
+                    >
+                      {copy.loading}
                     </p>
                   </div>
                 </div>
@@ -212,7 +232,7 @@ export default function BookingModal({
 
               <iframe
                 src={bookingUrl}
-                title="Book a project discovery call"
+                title={copy.iframeTitle}
                 className="block h-full w-full border-0 bg-white"
                 loading="lazy"
                 referrerPolicy="strict-origin-when-cross-origin"
@@ -224,9 +244,11 @@ export default function BookingModal({
             </div>
 
             <div className="flex shrink-0 flex-col gap-3 border-t border-[#111318]/12 bg-[#F4EFE8] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-5">
-              <p className="text-[0.76rem] leading-[1.45] tracking-[-0.02em] text-[#111318]/52 sm:max-w-[34rem]">
-                If the calendar does not load here, open the same booking page
-                directly.
+              <p
+                dir={textDirection}
+                className="text-[0.76rem] leading-[1.45] tracking-[-0.02em] text-[#111318]/52 sm:max-w-[34rem]"
+              >
+                {copy.fallback}
               </p>
 
               <a
@@ -235,7 +257,7 @@ export default function BookingModal({
                 rel="noreferrer"
                 className="inline-flex min-h-10 w-full items-center justify-center gap-2 border border-[#111318]/18 px-4 text-[0.82rem] font-medium leading-none tracking-[-0.025em] text-[#111318] transition duration-200 hover:border-[#B8792E] hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8] sm:w-fit"
               >
-                Open booking page
+                <span dir={textDirection}>{copy.openPage}</span>
                 <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={1.8} />
               </a>
             </div>

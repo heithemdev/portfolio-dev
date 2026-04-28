@@ -1,5 +1,5 @@
 // app/[locale]/layout.tsx
-// Purpose: Minimal root layout for localized routes. It validates the locale, sets html lang and dir, and imports globals once.
+// Purpose: Minimal root layout for localized routes. It validates the locale, keeps layout direction stable, and imports globals once.
 // Linked files: app/globals.css, lib/lang/config.ts, app/[locale]/page.tsx.
 
 import "../globals.css";
@@ -36,13 +36,12 @@ export default async function LocaleLayout({
 }: LocaleLayoutProps) {
   const { locale } = await params;
 
-  // Invalid locale routes should fail fast instead of silently rendering the wrong language.
   if (!isLocale(locale)) {
     notFound();
   }
 
   return (
-    <html lang={locale} dir={getDirection(locale)}>
+    <html lang={locale} dir="ltr" data-text-direction={getDirection(locale)}>
       <body>{children}</body>
     </html>
   );

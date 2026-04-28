@@ -96,6 +96,4 @@ Then open a Pull Request into `main` and wait for approval.
 - Do not modify unrelated files.
 - Do not modify sensitive production settings directly.
 
-
-i18n multy language!!
 resume

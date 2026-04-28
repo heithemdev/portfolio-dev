@@ -1,6 +1,6 @@
 // components/landing/contact-section.tsx
-// Purpose: Final contact CTA section with direct contact links, SMTP-backed email form, booking modal, server-synced Algeria time, and resume download.
-// Linked files: app/[locale]/page.tsx, app/api/freelancer-time/route.ts, app/api/contact/route.ts, components/booking-modal.tsx, public/icons/email.svg, public/icons/linkedin.svg, public/icons/whatsapp.svg, public/icons/zoom.svg, public/resume.pdf.
+// Purpose: Localized final contact CTA section with direct contact links, SMTP-backed email form, booking modal, server-synced Algeria time, and resume download.
+// Linked files: app/[locale]/page.tsx, app/api/freelancer-time/route.ts, app/api/contact/route.ts, components/booking-modal.tsx, lib/lang/config.ts, public/icons/email.svg, public/icons/linkedin.svg, public/icons/whatsapp.svg, public/icons/zoom.svg, public/resume.pdf.
 
 "use client";
 
@@ -17,7 +17,8 @@ import {
 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 
-import BookingModal from "@/components/booking-modal";
+import BookingModal, { type BookingModalCopy } from "@/components/booking-modal";
+import type { Locale, TextDirection } from "@/lib/lang/config";
 
 const CONTACT_EMAIL = "heithem.dev@gmail.com";
 const CONTACT_PHONE_DISPLAY = "+213 794 20 66 55";
@@ -25,35 +26,12 @@ const CONTACT_PHONE_HREF = "tel:+213794206655";
 const WHATSAPP_PHONE_DISPLAY = "+213 794206655";
 const WHATSAPP_APP_HREF = "whatsapp://send?phone=213794206655";
 const BOOK_CALL_HREF = "https://calendar.app.google/LAyuzM8fSjE5ezvH7";
-const RESUME_HREF = "/resume.pdf";
+const RESUME_HREFS: Record<Locale, string> = {
+  en: "/Heithem_Chorfi_Resume.pdf",
+  fr: "/Heithem_Chorfi_CV_FR.pdf",
+  ar: "/Heithem_Chorfi_Resume.pdf",
+};
 const ALGERIA_TIME_ZONE = "Africa/Algiers";
-
-const contactLinks = [
-  {
-    label: "Email",
-    value: CONTACT_EMAIL,
-    href: `mailto:${CONTACT_EMAIL}`,
-    icon: "/icons/email.svg",
-  },
-  {
-    label: "Call",
-    value: CONTACT_PHONE_DISPLAY,
-    href: CONTACT_PHONE_HREF,
-    icon: "phone",
-  },
-  {
-    label: "LinkedIn",
-    value: "heithemdev",
-    href: "https://www.linkedin.com/in/heithemdev",
-    icon: "/icons/linkedin.svg",
-  },
-  {
-    label: "WhatsApp",
-    value: WHATSAPP_PHONE_DISPLAY,
-    href: WHATSAPP_APP_HREF,
-    icon: "/icons/whatsapp.svg",
-  },
-] as const;
 
 type ContactStatus = Readonly<{
   type: "idle" | "success" | "error";
@@ -81,6 +59,89 @@ type AlgeriaTimeSnapshot = Readonly<{
   time: string;
   date: string;
 }>;
+
+type ContactCopy = Readonly<{
+  eyebrow: string;
+  title: string;
+  intro: string;
+  bookCall: string;
+  downloadResume: string;
+  contactLinksAria: string;
+  timeLabel: string;
+  timeFallbackDate: string;
+  formTitle: string;
+  formIntro: string;
+  labels: {
+    name: string;
+    email: string;
+    project: string;
+    message: string;
+    company: string;
+  };
+  placeholders: {
+    name: string;
+    email: string;
+    project: string;
+    message: string;
+  };
+  submit: string;
+  submitting: string;
+  status: {
+    honeypotSuccess: string;
+    required: string;
+    sending: string;
+    failed: string;
+  };
+  links: {
+    email: string;
+    call: string;
+    linkedin: string;
+    whatsapp: string;
+  };
+}>;
+
+type ContactSectionProps = Readonly<{
+  copy: ContactCopy;
+  bookingModalCopy: BookingModalCopy;
+  textDirection: TextDirection;
+  locale: Locale;
+}>;
+
+type ContactLink = Readonly<{
+  label: string;
+  value: string;
+  href: string;
+  icon: string;
+}>;
+
+function getContactLinks(copy: ContactCopy): ReadonlyArray<ContactLink> {
+  return [
+    {
+      label: copy.links.email,
+      value: CONTACT_EMAIL,
+      href: `mailto:${CONTACT_EMAIL}`,
+      icon: "/icons/email.svg",
+    },
+    {
+      label: copy.links.call,
+      value: CONTACT_PHONE_DISPLAY,
+      href: CONTACT_PHONE_HREF,
+      icon: "phone",
+    },
+    {
+      label: copy.links.linkedin,
+      value: "heithemdev",
+      href: "https://www.linkedin.com/in/heithemdev",
+      icon: "/icons/linkedin.svg",
+    },
+    {
+      label: copy.links.whatsapp,
+      value: WHATSAPP_PHONE_DISPLAY,
+      href: WHATSAPP_APP_HREF,
+      icon: "/icons/whatsapp.svg",
+    },
+  ];
+}
 
 function formatAlgeriaTime(utcMs: number): AlgeriaTimeSnapshot {
   const date = new Date(utcMs);
@@ -177,7 +238,6 @@ function useServerSyncedAlgeriaTime() {
         const requestFinishedAt = performance.now();
         const data = (await response.json()) as ServerTimeResponse;
 
-        // Half RTT keeps the displayed time closer to the server moment.
         const estimatedNetworkHalfRoundTrip =
           (requestFinishedAt - requestStartedAt) / 2;
 
@@ -230,16 +290,24 @@ function useServerSyncedAlgeriaTime() {
   }, [clockState, renderTick]);
 }
 
-function FreelancerTimeInline() {
+function FreelancerTimeInline({
+  label,
+  fallbackDate,
+  textDirection,
+}: {
+  label: string;
+  fallbackDate: string;
+  textDirection: TextDirection;
+}) {
   const snapshot = useServerSyncedAlgeriaTime();
 
   return (
     <div className="flex items-center gap-3 text-[#111318]">
       <Clock3 className="h-4 w-4 shrink-0 text-[#B8792E]" strokeWidth={1.8} />
 
-      <div className="min-w-0">
+      <div className="min-w-0" dir={textDirection}>
         <p className="text-[0.64rem] uppercase tracking-[0.2em] text-[#111318]/42">
-          Time in freelancer zone
+          {label}
         </p>
 
         <p className="mt-1 text-[0.82rem] leading-none tracking-[-0.025em] text-[#111318]/66">
@@ -247,7 +315,7 @@ function FreelancerTimeInline() {
             {snapshot?.time ?? "--:--:--"}
           </span>
           <span className="mx-2 text-[#111318]/24">·</span>
-          <span>{snapshot?.date ?? "Algeria"}</span>
+          <span>{snapshot?.date ?? fallbackDate}</span>
         </p>
       </div>
     </div>
@@ -267,11 +335,9 @@ function ContactLinkCard({
   value,
   href,
   icon,
-}: {
-  label: string;
-  value: string;
-  href: string;
-  icon: string;
+  textDirection,
+}: ContactLink & {
+  textDirection: TextDirection;
 }) {
   const isExternal = href.startsWith("http");
 
@@ -288,7 +354,7 @@ function ContactLinkCard({
           <ContactIcon icon={icon} />
         </span>
 
-        <span className="min-w-0">
+        <span className="min-w-0" dir={textDirection}>
           <span className="block text-[0.66rem] uppercase tracking-[0.2em] text-[#111318]/42">
             {label}
           </span>
@@ -312,11 +378,9 @@ function DesktopContactIconLink({
   value,
   href,
   icon,
-}: {
-  label: string;
-  value: string;
-  href: string;
-  icon: string;
+  textDirection,
+}: ContactLink & {
+  textDirection: TextDirection;
 }) {
   const isExternal = href.startsWith("http");
 
@@ -332,7 +396,10 @@ function DesktopContactIconLink({
         <ContactIcon icon={icon} />
       </span>
 
-      <span className="grid min-w-0 translate-x-1 gap-1 pr-4 opacity-0 transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">
+      <span
+        dir={textDirection}
+        className="grid min-w-0 translate-x-1 gap-1 pr-4 opacity-0 transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
+      >
         <span className="text-[0.66rem] uppercase leading-none tracking-[0.2em] text-[#111318]/42 transition-colors duration-300 group-hover:text-[#B8792E]/70 group-focus-visible:text-[#B8792E]/70">
           {label}
         </span>
@@ -345,32 +412,36 @@ function DesktopContactIconLink({
   );
 }
 
-function ContactLinks() {
+function ContactLinks({
+  copy,
+  textDirection,
+}: {
+  copy: ContactCopy;
+  textDirection: TextDirection;
+}) {
+  const contactLinks = getContactLinks(copy);
+
   return (
     <>
       <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:hidden">
         {contactLinks.map((link) => (
           <ContactLinkCard
             key={`${link.label}-${link.value}`}
-            label={link.label}
-            value={link.value}
-            href={link.href}
-            icon={link.icon}
+            {...link}
+            textDirection={textDirection}
           />
         ))}
       </div>
 
       <div
         className="mt-9 hidden items-center gap-2 lg:flex"
-        aria-label="Contact links"
+        aria-label={copy.contactLinksAria}
       >
         {contactLinks.map((link) => (
           <DesktopContactIconLink
             key={`${link.label}-${link.value}`}
-            label={link.label}
-            value={link.value}
-            href={link.href}
-            icon={link.icon}
+            {...link}
+            textDirection={textDirection}
           />
         ))}
       </div>
@@ -378,7 +449,17 @@ function ContactLinks() {
   );
 }
 
-function PrimaryActions() {
+function PrimaryActions({
+  copy,
+  bookingModalCopy,
+  textDirection,
+  resumeHref,
+}: {
+  copy: ContactCopy;
+  bookingModalCopy: BookingModalCopy;
+  textDirection: TextDirection;
+  resumeHref: string;
+}) {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   return (
@@ -393,7 +474,7 @@ function PrimaryActions() {
           aria-haspopup="dialog"
           aria-expanded={isBookingOpen}
         >
-          Book a call
+          <span dir={textDirection}>{copy.bookCall}</span>
           <IconMask
             src="/icons/zoom.svg"
             className="h-4 w-4 transition-transform duration-200 group-hover:scale-110"
@@ -401,11 +482,11 @@ function PrimaryActions() {
         </button>
 
         <a
-          href={RESUME_HREF}
+          href={resumeHref}
           download
           className="group inline-flex min-h-12 w-fit items-center justify-center gap-3 border border-[#111318]/18 bg-transparent px-5 text-[0.88rem] font-medium leading-none tracking-[-0.025em] text-[#111318] transition duration-200 hover:border-[#B8792E] hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
         >
-          Download resume
+          <span dir={textDirection}>{copy.downloadResume}</span>
           <Download
             className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5"
             strokeWidth={1.8}
@@ -419,6 +500,8 @@ function PrimaryActions() {
           setIsBookingOpen(false);
         }}
         bookingUrl={BOOK_CALL_HREF}
+        copy={bookingModalCopy}
+        textDirection={textDirection}
       />
     </>
   );
@@ -442,7 +525,13 @@ function getStatusClassName(statusType: ContactStatus["type"]) {
   return "text-[#111318]/46";
 }
 
-function ContactForm() {
+function ContactForm({
+  copy,
+  textDirection,
+}: {
+  copy: ContactCopy;
+  textDirection: TextDirection;
+}) {
   const [status, setStatus] = useState<ContactStatus>({
     type: "idle",
     message: "",
@@ -459,7 +548,7 @@ function ContactForm() {
     if (honeypot.length > 0) {
       setStatus({
         type: "success",
-        message: "Message sent.",
+        message: copy.status.honeypotSuccess,
       });
       return;
     }
@@ -472,7 +561,7 @@ function ContactForm() {
     if (!name || !email || !message) {
       setStatus({
         type: "error",
-        message: "Name, email, and message are required.",
+        message: copy.status.required,
       });
       return;
     }
@@ -480,7 +569,7 @@ function ContactForm() {
     setIsSubmitting(true);
     setStatus({
       type: "idle",
-      message: "Sending message...",
+      message: copy.status.sending,
     });
 
     try {
@@ -501,7 +590,7 @@ function ContactForm() {
       const data = (await response.json()) as ContactApiResponse;
 
       if (!response.ok || !data.ok) {
-        throw new Error(data.message || "Email could not be sent right now.");
+        throw new Error(data.message || copy.status.failed);
       }
 
       form.reset();
@@ -513,10 +602,7 @@ function ContactForm() {
     } catch (error) {
       setStatus({
         type: "error",
-        message:
-          error instanceof Error
-            ? error.message
-            : "Email could not be sent right now.",
+        message: error instanceof Error ? error.message : copy.status.failed,
       });
     } finally {
       setIsSubmitting(false);
@@ -528,6 +614,7 @@ function ContactForm() {
       onSubmit={handleSubmit}
       aria-labelledby="contact-form-title"
       className="border border-[#111318]/12 bg-[#F8F3EA] p-5 shadow-[0_28px_90px_rgba(17,19,24,0.06)] sm:p-6"
+      dir={textDirection}
     >
       <div className="flex items-start justify-between gap-6 border-b border-[#111318]/10 pb-4">
         <div>
@@ -535,11 +622,11 @@ function ContactForm() {
             id="contact-form-title"
             className="text-[0.72rem] uppercase tracking-[0.24em] text-[#B8792E]"
           >
-            Email form
+            {copy.formTitle}
           </p>
 
           <p className="mt-2 max-w-[25rem] text-[0.85rem] leading-[1.45] tracking-[-0.025em] text-[#111318]/52">
-            Send the rough idea. Short is fine.
+            {copy.formIntro}
           </p>
         </div>
 
@@ -549,7 +636,7 @@ function ContactForm() {
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2">
           <span className="text-[0.68rem] uppercase tracking-[0.2em] text-[#111318]/42">
-            Name
+            {copy.labels.name}
           </span>
           <input
             name="name"
@@ -558,13 +645,13 @@ function ContactForm() {
             required
             disabled={isSubmitting}
             className="min-h-11 border border-[#111318]/12 bg-[#F4EFE8]/55 px-4 text-[0.92rem] leading-none tracking-[-0.025em] text-[#111318] outline-none transition duration-200 placeholder:text-[#111318]/30 focus:border-[#B8792E] focus:bg-[#F4EFE8] disabled:cursor-not-allowed disabled:opacity-60"
-            placeholder="Your name"
+            placeholder={copy.placeholders.name}
           />
         </label>
 
         <label className="grid gap-2">
           <span className="text-[0.68rem] uppercase tracking-[0.2em] text-[#111318]/42">
-            Email
+            {copy.labels.email}
           </span>
           <input
             name="email"
@@ -573,26 +660,26 @@ function ContactForm() {
             required
             disabled={isSubmitting}
             className="min-h-11 border border-[#111318]/12 bg-[#F4EFE8]/55 px-4 text-[0.92rem] leading-none tracking-[-0.025em] text-[#111318] outline-none transition duration-200 placeholder:text-[#111318]/30 focus:border-[#B8792E] focus:bg-[#F4EFE8] disabled:cursor-not-allowed disabled:opacity-60"
-            placeholder="name@example.com"
+            placeholder={copy.placeholders.email}
           />
         </label>
 
         <label className="grid gap-2 sm:col-span-2">
           <span className="text-[0.68rem] uppercase tracking-[0.2em] text-[#111318]/42">
-            Project
+            {copy.labels.project}
           </span>
           <input
             name="project"
             type="text"
             disabled={isSubmitting}
             className="min-h-11 border border-[#111318]/12 bg-[#F4EFE8]/55 px-4 text-[0.92rem] leading-none tracking-[-0.025em] text-[#111318] outline-none transition duration-200 placeholder:text-[#111318]/30 focus:border-[#B8792E] focus:bg-[#F4EFE8] disabled:cursor-not-allowed disabled:opacity-60"
-            placeholder="Store, SaaS, dashboard, MVP..."
+            placeholder={copy.placeholders.project}
           />
         </label>
 
         <label className="grid gap-2 sm:col-span-2">
           <span className="text-[0.68rem] uppercase tracking-[0.2em] text-[#111318]/42">
-            Message
+            {copy.labels.message}
           </span>
           <textarea
             name="message"
@@ -600,19 +687,23 @@ function ContactForm() {
             rows={4}
             disabled={isSubmitting}
             className="resize-none border border-[#111318]/12 bg-[#F4EFE8]/55 px-4 py-3 text-[0.92rem] leading-[1.45] tracking-[-0.025em] text-[#111318] outline-none transition duration-200 placeholder:text-[#111318]/30 focus:border-[#B8792E] focus:bg-[#F4EFE8] disabled:cursor-not-allowed disabled:opacity-60"
-            placeholder="What are you trying to build?"
+            placeholder={copy.placeholders.message}
           />
         </label>
 
         <label className="hidden">
-          Company
+          {copy.labels.company}
           <input name="company" type="text" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
 
       <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="grid gap-2">
-          <FreelancerTimeInline />
+          <FreelancerTimeInline
+            label={copy.timeLabel}
+            fallbackDate={copy.timeFallbackDate}
+            textDirection={textDirection}
+          />
 
           <p
             aria-live="polite"
@@ -630,7 +721,7 @@ function ContactForm() {
           disabled={isSubmitting}
           className="group inline-flex min-h-11 w-fit items-center justify-center gap-3 border border-[#111318] bg-[#111318] px-5 text-[0.84rem] font-medium leading-none tracking-[-0.025em] text-[#F4EFE8] transition duration-200 hover:border-[#B8792E] hover:bg-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F8F3EA] disabled:cursor-not-allowed disabled:border-[#111318]/30 disabled:bg-[#111318]/30"
         >
-          {isSubmitting ? "Sending..." : "Send message"}
+          {isSubmitting ? copy.submitting : copy.submit}
           <Send
             className={[
               "h-3.5 w-3.5 transition-transform duration-200",
@@ -646,40 +737,54 @@ function ContactForm() {
   );
 }
 
-export default function ContactSection() {
+export default function ContactSection({
+  copy,
+  bookingModalCopy,
+  textDirection,
+  locale,
+}: ContactSectionProps) {
+  const resumeHref = RESUME_HREFS[locale];
+
   return (
     <section
       id="contact"
       aria-labelledby="contact-title"
       className="relative isolate flex min-h-svh items-center overflow-hidden bg-[#F4EFE8] py-[clamp(3rem,5vw,5rem)] text-[#111318]"
+      dir="ltr"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#111318]/10" />
 
       <div className="mx-auto grid w-full max-w-[1920px] gap-10 px-5 sm:px-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(28rem,0.58fr)] lg:items-center lg:gap-14 lg:px-10">
         <FadeIn>
-          <p className="text-[clamp(1.15rem,1.9vw,1.65rem)] uppercase tracking-[0.2em] text-[#B8792E]">
-            Contact
-          </p>
+          <div dir={textDirection}>
+            <p className="text-[clamp(1.15rem,1.9vw,1.65rem)] uppercase tracking-[0.2em] text-[#B8792E]">
+              {copy.eyebrow}
+            </p>
 
-          <h2
-            id="contact-title"
-            className="mt-4 max-w-[38rem] text-[clamp(2.25rem,4.6vw,4.9rem)] font-normal leading-[0.9] tracking-[-0.085em] text-[#111318]"
-          >
-            Start with the rough idea.
-          </h2>
+            <h2
+              id="contact-title"
+              className="mt-4 max-w-[38rem] text-[clamp(2.25rem,4.6vw,4.9rem)] font-normal leading-[0.9] tracking-[-0.085em] text-[#111318]"
+            >
+              {copy.title}
+            </h2>
 
-          <p className="mt-6 max-w-[35rem] text-[clamp(0.98rem,1.12vw,1.08rem)] leading-[1.58] tracking-[-0.03em] text-[#111318]/62">
-            Send what you want to build, what it should do, and what would make
-            it useful for the business. Details can come after.
-          </p>
+            <p className="mt-6 max-w-[35rem] text-[clamp(0.98rem,1.12vw,1.08rem)] leading-[1.58] tracking-[-0.03em] text-[#111318]/62">
+              {copy.intro}
+            </p>
+          </div>
 
-          <PrimaryActions />
+          <PrimaryActions
+            copy={copy}
+            bookingModalCopy={bookingModalCopy}
+            textDirection={textDirection}
+            resumeHref={resumeHref}
+          />
 
-          <ContactLinks />
+          <ContactLinks copy={copy} textDirection={textDirection} />
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <ContactForm />
+          <ContactForm copy={copy} textDirection={textDirection} />
         </FadeIn>
       </div>
     </section>

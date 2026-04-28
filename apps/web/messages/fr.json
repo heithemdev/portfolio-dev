@@ -1,0 +1,306 @@
+{
+  "metadata": {
+    "title": "Heithem Chorfi | Ingénieur web full-stack pour apps web, e-commerce, plateformes et SaaS",
+    "description": "Ingénieur web full-stack spécialisé dans les apps web, l’e-commerce, les plateformes, les SaaS, l’UX claire, la logique backend et l’exécution produit scalable."
+  },
+  "navbar": {
+    "logoAria": "Aller au hero",
+    "mainNavigationAria": "Navigation principale",
+    "languageAria": "Changer de langue",
+    "switchLanguageTo": "Passer la langue à",
+    "work": "Projets",
+    "howIWork": "Méthode",
+    "howIWorkMobile": "Méthode",
+    "about": "À propos",
+    "contact": "Contact"
+  },
+  "hero": {
+    "name": "Heithem",
+    "role": "Ingénieur web full-stack",
+    "sideLabel": "ingénieur logiciel",
+    "year": "2026",
+    "intro": "Bonjour. Moi c’est",
+    "description": "Apps web, e-commerce, plateformes et SaaS. Votre solution commence avec le bouton ci-dessous.",
+    "seeWork": "Voir les projets",
+    "contact": "Me contacter",
+    "avatarAlt": "Portrait noir et blanc de Heithem Chorfi",
+    "metrics": {
+      "years": {
+        "value": "2+",
+        "label": "Années à construire des produits web"
+      },
+      "platforms": {
+        "value": "4+",
+        "label": "Plateformes livrées pour startups et entreprises"
+      }
+    }
+  },
+  "projects": {
+    "title": "Projets sélectionnés",
+    "intro": "Des produits web pensés pour vendre, inspirer confiance, contrôler l’admin et servir le business après le lancement.",
+    "techUsed": "Stack utilisée",
+    "accessWebapp": "Accéder à l’app",
+    "closeProjectAria": "Fermer les détails du projet",
+    "openProjectAria": "Voir les détails de",
+    "imageUnavailable": "Image indisponible",
+    "mobileFirst": "Mobile-first",
+    "items": {
+      "laibi": {
+        "number": "01",
+        "title": "Supermarket Laibi 2",
+        "category": "Commerce local",
+        "shortDescription": "Une app de commande pour superette, pensée comme une app mobile sans le coût d’une app native.",
+        "value": "Le propriétaire a gagné un contrôle admin sur les produits, le stock, les catégories, les images et les commandes. Les ventes déclarées ont augmenté de 130% en moyenne.",
+        "role": "App web full-stack",
+        "year": "2026",
+        "images": {
+          "cardAlt": "Carte projet de l’app web Supermarket Laibi 2",
+          "mobileAlt": "Interface mobile de commande Supermarket Laibi 2",
+          "desktopAlt": "Interface desktop web Supermarket Laibi 2"
+        },
+        "showcase": {
+          "lead": {
+            "eyebrow": "Objectif business",
+            "title": "Vendre en ligne sans payer une app native",
+            "body": "La superette avait besoin d’un canal de commande moins coûteux, mais simple à utiliser sur téléphone."
+          },
+          "problem": {
+            "eyebrow": "Problème résolu",
+            "title": "Les commandes étaient difficiles à gérer à la main",
+            "body": "Le propriétaire avait besoin de moins d’appels désorganisés, de mises à jour produits plus claires et d’une réception de commandes plus rapide."
+          },
+          "system": {
+            "eyebrow": "Ce que j’ai construit",
+            "title": "Catalogue, panier et panel admin",
+            "body": "Produits, stock, catégories, images, logique panier et suivi des commandes vivent dans un seul système contrôlé."
+          },
+          "outcome": {
+            "eyebrow": "Résultat revenu",
+            "title": "Plus de commandes avec moins de travail admin",
+            "body": "L’app est devenue la surface digitale principale de vente et a rendu les mises à jour quotidiennes plus simples.",
+            "stat": "130%",
+            "statLabel": "hausse moyenne des ventes déclarées"
+          }
+        }
+      },
+      "rimoochat": {
+        "number": "02",
+        "title": "Rimoochat",
+        "category": "Boutique e-commerce",
+        "shortDescription": "Une boutique de vêtements faits main construite autour de la confiance, de la rareté et d’un parcours d’achat clair.",
+        "value": "La boutique a aidé l’entreprise familiale à transformer l’attention en ligne en ventes. Elle génère maintenant plus de 90% du revenu actuel.",
+        "role": "Frontend et UX",
+        "year": "2025",
+        "images": {
+          "cardAlt": "Carte projet de la boutique e-commerce Rimoochat",
+          "mobileAlt": "Interface mobile de la boutique Rimoochat",
+          "desktopAlt": "Interface desktop de la boutique Rimoochat"
+        },
+        "showcase": {
+          "lead": {
+            "eyebrow": "Objectif business",
+            "title": "Rendre les vêtements faits main plus désirables",
+            "body": "La boutique devait montrer le soin, la rareté et la confiance rapidement pour des mères qui achètent pour leurs enfants."
+          },
+          "problem": {
+            "eyebrow": "Problème résolu",
+            "title": "Un catalogue normal aurait rendu le produit banal",
+            "body": "Les produits avaient besoin d’une histoire douce et d’un chemin direct vers l’achat, pas d’une grille générique."
+          },
+          "system": {
+            "eyebrow": "Ce que j’ai construit",
+            "title": "Une vitrine pensée pour une audience précise",
+            "body": "Le layout, le texte, la présentation produit et le flow mobile soutiennent tous le même groupe client."
+          },
+          "outcome": {
+            "eyebrow": "Résultat revenu",
+            "title": "La boutique est devenue le canal principal",
+            "body": "La famille dépend maintenant du site comme lieu principal où les clientes consultent et achètent.",
+            "stat": "90%+",
+            "statLabel": "du revenu actuel de l’activité"
+          }
+        }
+      },
+      "unimarket": {
+        "number": "03",
+        "title": "Unimarket",
+        "category": "Marketplace étudiante",
+        "shortDescription": "Une marketplace étudiante conçue pour les acheteurs et vendeurs de l’USTHB, au lieu de canaux de vente génériques.",
+        "value": "La plateforme ajoute de la confiance avec l’auth, la vérification email, la modération, les flows vendeur, les flows acheteur et une logique de paiement locale.",
+        "role": "Système full-stack",
+        "year": "2025",
+        "images": {
+          "cardAlt": "Carte projet de la marketplace étudiante Unimarket",
+          "mobileAlt": "Interface mobile de la marketplace Unimarket",
+          "desktopAlt": "Interface desktop de la marketplace Unimarket"
+        },
+        "showcase": {
+          "lead": {
+            "eyebrow": "Objectif business",
+            "title": "Créer une marketplace étudiante fiable",
+            "body": "Les étudiants de l’USTHB avaient besoin d’un seul espace ciblé pour vendre, acheter et échanger dans leur propre environnement universitaire."
+          },
+          "problem": {
+            "eyebrow": "Problème résolu",
+            "title": "Les plateformes génériques manquaient de confiance",
+            "body": "Les étudiants n’avaient pas de flow vendeur dédié, pas de navigation centrée campus et pas de couche de modération."
+          },
+          "system": {
+            "eyebrow": "Ce que j’ai construit",
+            "title": "Logique marketplace depuis zéro",
+            "body": "Auth, vérification email, flow acheteur, flow vendeur, annonces, modération et gestion du paiement à la livraison."
+          },
+          "outcome": {
+            "eyebrow": "Résultat produit",
+            "title": "Un vrai système marketplace",
+            "body": "La plateforme remplace les ventes dispersées par une expérience étudiante plus claire, plus sûre et plus ciblée.",
+            "stat": "2 mois",
+            "statLabel": "pour une plateforme déployable"
+          }
+        }
+      }
+    }
+  },
+  "howIWork": {
+    "eyebrow": "Process",
+    "title": "Méthode de travail",
+    "intro": "Un projet utile commence par le cas business: qui en a besoin, ce qui doit devenir plus simple, où se trouve la valeur et ce qui prouve la réussite.",
+    "reserveCall": "Réserver un appel",
+    "voiceCall": "Appel vocal",
+    "chatHeaderName": "Heithem",
+    "chatHeaderStatus": "Découverte, scope, build",
+    "avatarAlt": "Heithem Chorfi",
+    "notes": {
+      "discovery": {
+        "label": "Appel découverte",
+        "value": "Le contexte projet, les utilisateurs, le workflow actuel, les risques et les métriques de réussite sont cadrés d’abord."
+      },
+      "mvp": {
+        "label": "Forme du MVP",
+        "value": "La première version fonctionnelle est définie clairement. Les fonctionnalités secondaires attendent."
+      },
+      "agreement": {
+        "label": "Accord",
+        "value": "Le scope, l’investissement, le planning, les jalons et les responsabilités sont écrits avant le build."
+      }
+    },
+    "chat": {
+      "clientStart": "Salut Heithem. Je veux lancer une boutique, une startup ou une app web. Qu’est-ce qui doit être clair avant de commencer?",
+      "heithemIntro": "Avec plaisir. Envoie d’abord la version brute: ce que le produit doit faire, qui va l’utiliser, et où il doit générer de l’argent ou économiser du temps.",
+      "heithemCall": "Un appel vocal ou vidéo gratuit de 30 minutes suffit souvent pour cadrer l’idée, les risques, la première version et la métrique de réussite.",
+      "clientInvestment": "Très bien. Quel investissement faut-il prévoir pour l’app web?",
+      "heithemInvestment": "L’investissement devient clair après la découverte. Il dépend du scope, de la complexité, du délai, des intégrations et de ce que la première version doit prouver.",
+      "heithemRange": "Pour une boutique en ligne fonctionnelle avec les parties importantes incluses, l’investissement commence souvent autour de 1.5k$ à 3k$. Les plateformes complexes demandent d’abord une découverte, puis un chiffre clair.",
+      "clientCall": "Logique. Commençons par l’appel.",
+      "callDuration": "38 min",
+      "callNote": "Appel découverte: objectif projet, utilisateurs, scope MVP, risques, planning et métriques de réussite.",
+      "clientNext": "Ok, que se passe-t-il maintenant?",
+      "heithemAgreement": "Ensuite vient un accord court: scope, investissement, planning, jalons, ce qui est inclus et ce qui est attendu de votre côté.",
+      "fileName": "Accord MVP.pdf",
+      "fileMeta": "Scope, investissement, planning",
+      "clientOk": "C’est clair. On peut commencer.",
+      "heithemClose": "Parfait. Dès que vous validez l’accord, le travail commence."
+    }
+  },
+  "about": {
+    "eyebrow": "À propos",
+    "title": "Des apps web qui font avancer le business.",
+    "paragraphs": {
+      "one": "Spécialisé dans la création d’apps web avec une base en ingénierie logicielle, pour transformer des problèmes business complexes en systèmes propres et fonctionnels.",
+      "two": "Le travail convient aux boutiques, startups, dashboards et plateformes où l’app doit gérer une vraie logique, pas seulement être belle sur le premier écran.",
+      "three": "L’objectif est simple: créer un produit qui aide à vendre, gérer, décider ou gagner du temps avec un outil utilisé au quotidien."
+    },
+    "startProject": "Lancer votre projet",
+    "centerTitle": "Tech co-founder",
+    "centerBody": "Je travaille avec 2 startups comme tech co-founder et décideur côté technique du projet.",
+    "imageAlt": "Heithem Chorfi",
+    "valuePoints": {
+      "one": {
+        "id": "01",
+        "title": "Une expérience orientée valeur business.",
+        "text": "Avec 5 ans dans l’ingénierie et 2 ans dans le développement d’apps web pour startups et propriétaires d’entreprises, le focus reste sur des produits ciblés, pensés pour créer de la valeur selon les vrais besoins du projet."
+      },
+      "two": {
+        "id": "02",
+        "title": "Le terrain du client entre dans l’app.",
+        "text": "Les meilleures apps web sont spécifiques. L’expérience métier du client devient une partie du produit, puis elle est transformée en UI claire, vitesse solide, logique sécurisée et app web plus utile."
+      }
+    },
+    "miniFacts": {
+      "base": {
+        "label": "Base",
+        "value": "Béjaïa, Algérie"
+      },
+      "degree": {
+        "label": "Diplôme",
+        "value": "Génie logiciel"
+      },
+      "focus": {
+        "label": "Focus",
+        "value": "Apps web full-stack"
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Commencez avec l’idée brute.",
+    "intro": "Envoyez ce que vous voulez construire, ce que ça doit faire, et ce qui le rendrait utile pour le business. Les détails viennent après.",
+    "bookCall": "Réserver un appel",
+    "downloadResume": "Télécharger le CV",
+    "contactLinksAria": "Liens de contact",
+    "timeLabel": "Heure côté freelance",
+    "timeFallbackDate": "Algérie",
+    "formTitle": "Formulaire email",
+    "formIntro": "Envoyez l’idée brute. Court, c’est très bien.",
+    "labels": {
+      "name": "Nom",
+      "email": "Email",
+      "project": "Projet",
+      "message": "Message",
+      "company": "Entreprise"
+    },
+    "placeholders": {
+      "name": "Votre nom",
+      "email": "nom@example.com",
+      "project": "Boutique, SaaS, dashboard, MVP...",
+      "message": "Qu’est-ce que vous essayez de construire?"
+    },
+    "submit": "Envoyer le message",
+    "submitting": "Envoi...",
+    "status": {
+      "honeypotSuccess": "Message envoyé.",
+      "required": "Le nom, l’email et le message sont obligatoires.",
+      "sending": "Envoi du message...",
+      "failed": "L’email ne peut pas être envoyé maintenant."
+    },
+    "links": {
+      "email": "Email",
+      "call": "Appel",
+      "linkedin": "LinkedIn",
+      "whatsapp": "WhatsApp"
+    }
+  },
+  "bookingModal": {
+    "eyebrow": "Réserver un appel",
+    "title": "Appel découverte projet",
+    "description": "Choisissez un horaire qui vous convient. La réservation reste dans cette fenêtre.",
+    "closeAria": "Fermer la fenêtre de réservation",
+    "loading": "Chargement des horaires disponibles...",
+    "fallback": "Si le calendrier ne charge pas ici, ouvrez directement la même page de réservation.",
+    "openPage": "Ouvrir la page de réservation",
+    "iframeTitle": "Réserver un appel découverte projet"
+  },
+  "footer": {
+    "name": "Heithem Chorfi",
+    "statement": "Avec de bonnes compétences viennent de bons projets.",
+    "copyright": "© {year} Heithem Chorfi. Construit avec soin.",
+    "tagline": "Apps web full-stack, e-commerce, plateformes et SaaS.",
+    "navigationAria": "Navigation du footer",
+    "links": {
+      "work": "Projets",
+      "howIWork": "Méthode",
+      "about": "À propos",
+      "contact": "Contact"
+    }
+  }
+}

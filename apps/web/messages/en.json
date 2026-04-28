@@ -1,0 +1,306 @@
+{
+  "metadata": {
+    "title": "Heithem Chorfi | Full-Stack Web Engineer for Web Apps, E-commerce, Platforms, and SaaS",
+    "description": "Full-stack web engineer focused on web apps, e-commerce, platforms, SaaS, clean UX, backend logic, and scalable product execution."
+  },
+  "navbar": {
+    "logoAria": "Go to hero",
+    "mainNavigationAria": "Main navigation",
+    "languageAria": "Change language",
+    "switchLanguageTo": "Switch language to",
+    "work": "Work",
+    "howIWork": "How I work",
+    "howIWorkMobile": "How",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "name": "Heithem",
+    "role": "Full-stack web engineer",
+    "sideLabel": "software engineer",
+    "year": "2026",
+    "intro": "Hello. I'm",
+    "description": "Web apps, e-commerce, platforms, and SaaS. Your solution starts from the button below.",
+    "seeWork": "See work",
+    "contact": "Contact me",
+    "avatarAlt": "Black and white portrait of Heithem Chorfi",
+    "metrics": {
+      "years": {
+        "value": "2+",
+        "label": "Years building web products"
+      },
+      "platforms": {
+        "value": "4+",
+        "label": "Startup and business platforms shipped"
+      }
+    }
+  },
+  "projects": {
+    "title": "Selected Work",
+    "intro": "Web products built around sales, trust, admin control, and real business use after launch.",
+    "techUsed": "Tech used",
+    "accessWebapp": "Access webapp",
+    "closeProjectAria": "Close project details",
+    "openProjectAria": "View details for",
+    "imageUnavailable": "Image unavailable",
+    "mobileFirst": "Mobile-first",
+    "items": {
+      "laibi": {
+        "number": "01",
+        "title": "Supermarket Laibi 2",
+        "category": "Local commerce",
+        "shortDescription": "A supermarket ordering web app built to work like a mobile app without native app cost.",
+        "value": "It gave the owner admin control over products, stock, categories, images, and orders. Reported sales increased by 130% on average.",
+        "role": "Full-stack web app",
+        "year": "2026",
+        "images": {
+          "cardAlt": "Supermarket Laibi 2 web app project card",
+          "mobileAlt": "Supermarket Laibi 2 mobile ordering interface",
+          "desktopAlt": "Supermarket Laibi 2 desktop web interface"
+        },
+        "showcase": {
+          "lead": {
+            "eyebrow": "Business goal",
+            "title": "Sell online without paying for native apps",
+            "body": "The supermarket needed a cheaper digital ordering channel that still felt easy on phones."
+          },
+          "problem": {
+            "eyebrow": "Problem fixed",
+            "title": "Orders were hard to manage manually",
+            "body": "The owner needed less phone chaos, clearer product updates, and a faster way to receive customer orders."
+          },
+          "system": {
+            "eyebrow": "What I built",
+            "title": "Catalog, cart, and admin panel",
+            "body": "Products, stock, categories, images, cart logic, and order tracking all live in one controlled system."
+          },
+          "outcome": {
+            "eyebrow": "Revenue result",
+            "title": "More orders with less admin work",
+            "body": "The app became the main digital sales surface and made daily store updates easier to manage.",
+            "stat": "130%",
+            "statLabel": "reported average sales lift"
+          }
+        }
+      },
+      "rimoochat": {
+        "number": "02",
+        "title": "Rimoochat",
+        "category": "E-commerce store",
+        "shortDescription": "A handmade clothing store built around trust, rarity, and a clear buying path.",
+        "value": "The store helped the family business turn online attention into sales. It now drives more than 90% of current income.",
+        "role": "Frontend and UX",
+        "year": "2025",
+        "images": {
+          "cardAlt": "Rimoochat e-commerce store project card",
+          "mobileAlt": "Rimoochat mobile store interface",
+          "desktopAlt": "Rimoochat desktop store interface"
+        },
+        "showcase": {
+          "lead": {
+            "eyebrow": "Business goal",
+            "title": "Make handmade clothes feel worth buying",
+            "body": "The store needed to show care, rarity, and trust fast for mothers buying clothes for their kids."
+          },
+          "problem": {
+            "eyebrow": "Problem fixed",
+            "title": "A normal catalog would make it feel cheap",
+            "body": "The products needed a soft story and a direct path to purchase, not a generic product grid."
+          },
+          "system": {
+            "eyebrow": "What I built",
+            "title": "Storefront shaped around one audience",
+            "body": "The layout, copy, product framing, and mobile flow all support a focused customer group."
+          },
+          "outcome": {
+            "eyebrow": "Revenue result",
+            "title": "The store became the main income channel",
+            "body": "The family now relies on the website as the main place where customers browse and buy.",
+            "stat": "90%+",
+            "statLabel": "of current business income"
+          }
+        }
+      },
+      "unimarket": {
+        "number": "03",
+        "title": "Unimarket",
+        "category": "Student marketplace",
+        "shortDescription": "A student marketplace built for USTHB buyers and sellers instead of generic selling channels.",
+        "value": "It added trust with auth, email verification, moderation, seller flows, buyer flows, and local payment logic.",
+        "role": "Full-stack system",
+        "year": "2025",
+        "images": {
+          "cardAlt": "Unimarket student marketplace project card",
+          "mobileAlt": "Unimarket mobile marketplace interface",
+          "desktopAlt": "Unimarket desktop marketplace interface"
+        },
+        "showcase": {
+          "lead": {
+            "eyebrow": "Business goal",
+            "title": "Create a trusted student marketplace",
+            "body": "USTHB students needed one focused place to sell, buy, and trade inside their own university environment."
+          },
+          "problem": {
+            "eyebrow": "Problem fixed",
+            "title": "Generic platforms had weak trust",
+            "body": "Students had no dedicated seller flow, no campus-focused browsing, and no moderation layer."
+          },
+          "system": {
+            "eyebrow": "What I built",
+            "title": "Marketplace logic from zero",
+            "body": "Auth, email verification, buyer flow, seller flow, listings, moderation, and cash-on-delivery handling."
+          },
+          "outcome": {
+            "eyebrow": "Product result",
+            "title": "A real marketplace system",
+            "body": "The platform replaced scattered selling with a cleaner, safer, and more focused student trade experience.",
+            "stat": "2 mo",
+            "statLabel": "to deployable platform"
+          }
+        }
+      }
+    }
+  },
+  "howIWork": {
+    "eyebrow": "Process",
+    "title": "How I work",
+    "intro": "A useful project starts with the business case: who needs it, what should become easier, where the value is, and what counts as a win.",
+    "reserveCall": "Reserve a call",
+    "voiceCall": "Voice call",
+    "chatHeaderName": "Heithem",
+    "chatHeaderStatus": "Discovery, scope, build",
+    "avatarAlt": "Heithem Chorfi",
+    "notes": {
+      "discovery": {
+        "label": "Discovery call",
+        "value": "Project context, target users, current workflow, risks, and success metrics get mapped first."
+      },
+      "mvp": {
+        "label": "MVP shape",
+        "value": "The first working version is defined clearly. Nice-to-have features wait."
+      },
+      "agreement": {
+        "label": "Agreement",
+        "value": "Scope, investment, timeline, milestones, and responsibilities are written before build starts."
+      }
+    },
+    "chat": {
+      "clientStart": "Hey Heithem. I want to launch a store, startup, or web app. What should be clear before we start?",
+      "heithemIntro": "Happy to help. Send the rough version first: what the product should do, who will use it, and where it should make money or save time.",
+      "heithemCall": "A free 30-minute voice or video call is usually enough to map the idea, the risks, the first version, and the success metric.",
+      "clientInvestment": "Good. What kind of investment should I expect for the web app?",
+      "heithemInvestment": "The investment becomes clear after discovery. It depends on scope, complexity, timeline, integrations, and what the first version needs to prove.",
+      "heithemRange": "For a working online store with the important parts included, investment usually starts around $1.5k to $3k. Complex platforms need discovery first, then a clean number.",
+      "clientCall": "Makes sense. Let’s start with the call.",
+      "callDuration": "38 min",
+      "callNote": "Discovery call: project goal, users, MVP scope, risks, timeline, and success metrics.",
+      "clientNext": "Okay, what happens now?",
+      "heithemAgreement": "Next comes a short agreement: scope, investment, timeline, milestones, what is included, and what is needed from your side.",
+      "fileName": "MVP agreement.pdf",
+      "fileMeta": "Scope, investment, timeline",
+      "clientOk": "Clear. We can start.",
+      "heithemClose": "Perfect. Once you give the OK on the agreement, work starts."
+    }
+  },
+  "about": {
+    "eyebrow": "About Me",
+    "title": "Web apps that move the business.",
+    "paragraphs": {
+      "one": "Specialized in building web apps using software engineering knowledge, turning complex business problems into clean, functional systems.",
+      "two": "The work fits stores, startups, dashboards, and platforms where the app needs to handle real logic, not only look good on the first screen.",
+      "three": "The goal is simple: create a product that helps sell, manage, decide, or save time through something people can use every day."
+    },
+    "startProject": "Start your project",
+    "centerTitle": "Tech co-founder",
+    "centerBody": "Working for 2 startups as their tech co-founder and decision maker on the tech side of the work.",
+    "imageAlt": "Heithem Chorfi",
+    "valuePoints": {
+      "one": {
+        "id": "01",
+        "title": "Experience aimed at business value.",
+        "text": "With 5 years in engineering and 2 years developing web apps for startups and business owners, the focus is on targeted products designed to bring value to the investor based on the project’s real needs."
+      },
+      "two": {
+        "id": "02",
+        "title": "The client’s field becomes part of the app.",
+        "text": "The best web apps feel specific. The client’s experience in the field becomes part of the product, then gets shaped into clean UI, strong speed, secure logic, and a web app that brings more value to the table."
+      }
+    },
+    "miniFacts": {
+      "base": {
+        "label": "Base",
+        "value": "Béjaïa, Algeria"
+      },
+      "degree": {
+        "label": "Degree",
+        "value": "Software Engineering"
+      },
+      "focus": {
+        "label": "Focus",
+        "value": "Full-stack web apps"
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Start with the rough idea.",
+    "intro": "Send what you want to build, what it should do, and what would make it useful for the business. Details can come after.",
+    "bookCall": "Book a call",
+    "downloadResume": "Download resume",
+    "contactLinksAria": "Contact links",
+    "timeLabel": "Time in freelancer zone",
+    "timeFallbackDate": "Algeria",
+    "formTitle": "Email form",
+    "formIntro": "Send the rough idea. Short is fine.",
+    "labels": {
+      "name": "Name",
+      "email": "Email",
+      "project": "Project",
+      "message": "Message",
+      "company": "Company"
+    },
+    "placeholders": {
+      "name": "Your name",
+      "email": "name@example.com",
+      "project": "Store, SaaS, dashboard, MVP...",
+      "message": "What are you trying to build?"
+    },
+    "submit": "Send message",
+    "submitting": "Sending...",
+    "status": {
+      "honeypotSuccess": "Message sent.",
+      "required": "Name, email, and message are required.",
+      "sending": "Sending message...",
+      "failed": "Email could not be sent right now."
+    },
+    "links": {
+      "email": "Email",
+      "call": "Call",
+      "linkedin": "LinkedIn",
+      "whatsapp": "WhatsApp"
+    }
+  },
+  "bookingModal": {
+    "eyebrow": "Book a call",
+    "title": "Project discovery call",
+    "description": "Pick a time that works for you. The booking stays inside this window.",
+    "closeAria": "Close booking window",
+    "loading": "Loading available times...",
+    "fallback": "If the calendar does not load here, open the same booking page directly.",
+    "openPage": "Open booking page",
+    "iframeTitle": "Book a project discovery call"
+  },
+  "footer": {
+    "name": "Heithem Chorfi",
+    "statement": "With great skills come great projects.",
+    "copyright": "© {year} Heithem Chorfi. Built with care.",
+    "tagline": "Full-stack web apps, e-commerce, platforms, and SaaS.",
+    "navigationAria": "Footer navigation",
+    "links": {
+      "work": "Work",
+      "howIWork": "How I work",
+      "about": "About",
+      "contact": "Contact"
+    }
+  }
+}
