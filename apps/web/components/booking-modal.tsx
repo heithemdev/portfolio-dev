@@ -49,6 +49,8 @@ export default function BookingModal({
   const shouldReduceMotion = useReducedMotion();
   const panelRef = useRef<HTMLDivElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const onCloseRef = useRef(onClose);
+  const skipNextPopRef = useRef(false);
 
   const [isMounted, setIsMounted] = useState(false);
   const [isCalendarLoading, setIsCalendarLoading] = useState(true);
@@ -56,6 +58,10 @@ export default function BookingModal({
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -86,6 +92,51 @@ export default function BookingModal({
     if (isOpen) {
       setIsCalendarLoading(true);
     }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen || typeof window === "undefined") {
+      return;
+    }
+
+    const isMobileViewport = window.matchMedia("(max-width: 1023px)").matches;
+
+    if (!isMobileViewport) {
+      return;
+    }
+
+    // Push a history entry so mobile back closes the modal.
+    const nextState = {
+      ...(window.history.state ?? {}),
+      modalId: "booking-modal",
+    };
+
+    window.history.pushState(nextState, "");
+
+    function handlePopState() {
+      if (skipNextPopRef.current) {
+        skipNextPopRef.current = false;
+        return;
+      }
+
+      onCloseRef.current();
+    }
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+
+      const currentState = window.history.state as
+        | { modalId?: string }
+        | null
+        | undefined;
+
+      if (currentState?.modalId === "booking-modal") {
+        skipNextPopRef.current = true;
+        window.history.back();
+      }
+    };
   }, [isOpen]);
 
   useEffect(() => {
@@ -158,28 +209,28 @@ export default function BookingModal({
               shouldReduceMotion
                 ? false
                 : {
-                    opacity: 0,
-                    y: 16,
-                    scale: 0.985,
-                  }
+                  opacity: 0,
+                  y: 16,
+                  scale: 0.985,
+                }
             }
             animate={
               shouldReduceMotion
                 ? undefined
                 : {
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                  }
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                }
             }
             exit={
               shouldReduceMotion
                 ? undefined
                 : {
-                    opacity: 0,
-                    y: 10,
-                    scale: 0.985,
-                  }
+                  opacity: 0,
+                  y: 10,
+                  scale: 0.985,
+                }
             }
             transition={{
               duration: 0.26,

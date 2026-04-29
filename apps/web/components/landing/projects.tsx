@@ -9,8 +9,10 @@ import { ArrowUpRight, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { createPortal } from "react-dom";
 import {
+  useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type FocusEvent,
   type KeyboardEvent,
@@ -1124,8 +1126,57 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
   const [mobileProjectId, setMobileProjectId] = useState<Project["id"] | null>(
     null,
   );
+  const closeMobileProject = useCallback(() => {
+    setMobileProjectId(null);
+  }, [setMobileProjectId]);
+  const skipNextPopRef = useRef(false);
 
   useLockedPageScroll(mobileProjectId !== null);
+
+  useEffect(() => {
+    if (
+      !mobileProjectId ||
+      typeof window === "undefined" ||
+      !isMobileViewport()
+    ) {
+      return;
+    }
+
+    const modalStateId = `project-modal:${mobileProjectId}`;
+
+    // Push a history entry so mobile back closes the project modal.
+    const nextState = {
+      ...(window.history.state ?? {}),
+      modalId: modalStateId,
+    };
+
+    window.history.pushState(nextState, "");
+
+    function handlePopState() {
+      if (skipNextPopRef.current) {
+        skipNextPopRef.current = false;
+        return;
+      }
+
+      closeMobileProject();
+    }
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+
+      const currentState = window.history.state as
+        | { modalId?: string }
+        | null
+        | undefined;
+
+      if (currentState?.modalId === modalStateId) {
+        skipNextPopRef.current = true;
+        window.history.back();
+      }
+    };
+  }, [mobileProjectId, closeMobileProject]);
 
   const activeProject = useMemo<Project | null>(() => {
     if (!activeProjectId) {
@@ -1238,7 +1289,7 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
             <MobileDetailPanel
               key={mobileProject.id}
               project={mobileProject}
-              onClose={() => setMobileProjectId(null)}
+              onClose={closeMobileProject}
               copy={copy}
               textDirection={textDirection}
             />
