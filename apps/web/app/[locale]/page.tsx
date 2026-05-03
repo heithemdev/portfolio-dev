@@ -149,7 +149,7 @@ export default async function HomePage({ params }: PageProps) {
                                 value: t("projects.items.laibi.value"),
                                 role: t("projects.items.laibi.role"),
                                 year: t("projects.items.laibi.year"),
-                                href: "https://super-market-laibi-web.vercel.app/",
+                                href: "https://www.superettelaibi.com/",
                                 cardAlt: t("projects.items.laibi.images.cardAlt"),
                                 mobileAlt: t("projects.items.laibi.images.mobileAlt"),
                                 desktopAlt: t("projects.items.laibi.images.desktopAlt"),
