@@ -65,6 +65,14 @@ const languageOptions = [
   { locale: "ar", label: "AR", name: "العربية" },
 ] satisfies ReadonlyArray<LanguageOption>;
 
+const trackedSectionHashes = [
+  "#hero",
+  "#work",
+  "#how-i-work",
+  "#about",
+  "#contact",
+] as const;
+
 function getLocaleFromPathname(pathname: string): Locale {
   const firstSegment = pathname.split("/").filter(Boolean)[0];
 
@@ -96,6 +104,34 @@ function buildLocalizedHref(
   return `/${nextLocale}${normalizedPathname}${normalizedHash}`;
 }
 
+function getActiveSectionHash() {
+  const activationPoint = Math.min(window.innerHeight * 0.38, 360);
+  let activeHash = "";
+
+  for (const hash of trackedSectionHashes) {
+    const section = document.getElementById(hash.slice(1));
+
+    if (!section) {
+      continue;
+    }
+
+    const sectionBounds = section.getBoundingClientRect();
+
+    if (
+      sectionBounds.top <= activationPoint &&
+      sectionBounds.bottom > activationPoint
+    ) {
+      return hash === "#hero" ? "" : hash;
+    }
+
+    if (sectionBounds.top <= activationPoint) {
+      activeHash = hash;
+    }
+  }
+
+  return activeHash === "#hero" ? "" : activeHash;
+}
+
 export default function Navbar({ copy, textDirection }: NavbarProps) {
   const pathname = usePathname();
 
@@ -110,15 +146,34 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
   const mobileLanguageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const syncHash = () => {
-      setActiveHash(window.location.hash || "");
+    let animationFrameId: number | null = null;
+
+    const syncActiveHash = () => {
+      animationFrameId = null;
+      setActiveHash(getActiveSectionHash());
     };
 
-    syncHash();
-    window.addEventListener("hashchange", syncHash);
+    const requestSyncActiveHash = () => {
+      if (animationFrameId !== null) {
+        return;
+      }
+
+      animationFrameId = window.requestAnimationFrame(syncActiveHash);
+    };
+
+    requestSyncActiveHash();
+    window.addEventListener("scroll", requestSyncActiveHash, { passive: true });
+    window.addEventListener("resize", requestSyncActiveHash);
+    window.addEventListener("hashchange", requestSyncActiveHash);
 
     return () => {
-      window.removeEventListener("hashchange", syncHash);
+      if (animationFrameId !== null) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+
+      window.removeEventListener("scroll", requestSyncActiveHash);
+      window.removeEventListener("resize", requestSyncActiveHash);
+      window.removeEventListener("hashchange", requestSyncActiveHash);
     };
   }, []);
 
@@ -280,15 +335,28 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
           </div>
 
           <div className="hidden items-center gap-[clamp(1.65rem,2.5vw,3rem)] md:flex">
-            {navItems.map((item) => (
-              <SmoothSectionLink
-                key={item.href}
-                href={item.href}
-                className={`text-[0.96rem] font-medium leading-none ${trackingClass} text-[#111318] transition-opacity duration-150 hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]`}
-              >
-                <span dir={textDirection}>{item.label}</span>
-              </SmoothSectionLink>
-            ))}
+            {navItems.map((item) => {
+              const isActive = activeHash === item.href;
+
+              return (
+                <SmoothSectionLink
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive ? "location" : undefined}
+                  className={`relative inline-flex pb-1 text-[0.96rem] font-medium leading-none ${trackingClass} text-[#111318] transition-opacity duration-150 hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]`}
+                >
+                  <span dir={textDirection}>{item.label}</span>
+                  <span
+                    aria-hidden="true"
+                    className={`absolute bottom-0 h-px w-full bg-[#111318] transition-transform duration-200 ease-out ${
+                      textDirection === "rtl"
+                        ? "right-0 origin-right"
+                        : "left-0 origin-left"
+                    } ${isActive ? "scale-x-100" : "scale-x-0"}`}
+                  />
+                </SmoothSectionLink>
+              );
+            })}
           </div>
         </div>
 
@@ -332,9 +400,18 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
 
           <SmoothSectionLink
             href="#contact"
-            className={`group inline-flex items-center gap-1.5 border-b border-[#111318] pb-1 text-[0.96rem] font-medium leading-none ${trackingClass} text-[#111318] transition-opacity duration-150 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]`}
+            aria-current={activeHash === "#contact" ? "location" : undefined}
+            className={`group relative inline-flex items-center gap-1.5 pb-1 text-[0.96rem] font-medium leading-none ${trackingClass} text-[#111318] transition-opacity duration-150 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]`}
           >
             <span dir={textDirection}>{copy.contact}</span>
+            <span
+              aria-hidden="true"
+              className={`absolute bottom-0 h-px w-full bg-[#111318] transition-transform duration-200 ease-out ${
+                textDirection === "rtl"
+                  ? "right-0 origin-right"
+                  : "left-0 origin-left"
+              } ${activeHash === "#contact" ? "scale-x-100" : "scale-x-0"}`}
+            />
             <ArrowUpRight
               aria-hidden="true"
               size={17}
@@ -345,16 +422,33 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
         </div>
 
         <div className="flex min-h-11 items-center gap-1 border border-[#111318]/12 bg-[#F4EFE8]/80 px-1.5 md:hidden">
-          {navItems.map((item) => (
-            <SmoothSectionLink
-              key={item.href}
-              href={item.href}
-              aria-label={item.label}
-              className={`inline-flex min-h-9 items-center justify-center px-2 text-[0.8rem] font-medium leading-none ${trackingClass} text-[#111318]/72 transition-colors duration-150 hover:text-[#111318] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4EFE8] max-[380px]:px-1.5 max-[380px]:text-[0.76rem]`}
-            >
-              <span dir={textDirection}>{item.mobileLabel}</span>
-            </SmoothSectionLink>
-          ))}
+          {navItems.map((item) => {
+            const isActive = activeHash === item.href;
+
+            return (
+              <SmoothSectionLink
+                key={item.href}
+                href={item.href}
+                aria-current={isActive ? "location" : undefined}
+                aria-label={item.label}
+                className={`relative inline-flex min-h-9 items-center justify-center px-2 text-[0.8rem] font-medium leading-none ${trackingClass} ${
+                  isActive
+                    ? "text-[#111318]"
+                    : "text-[#111318]/72 hover:text-[#111318]"
+                } transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4EFE8] max-[380px]:px-1.5 max-[380px]:text-[0.76rem]`}
+              >
+                <span dir={textDirection}>{item.mobileLabel}</span>
+                <span
+                  aria-hidden="true"
+                  className={`absolute bottom-1.5 h-px w-[calc(100%-1rem)] bg-[#111318] transition-transform duration-200 ease-out ${
+                    textDirection === "rtl"
+                      ? "right-2 origin-right"
+                      : "left-2 origin-left"
+                  } ${isActive ? "scale-x-100" : "scale-x-0"}`}
+                />
+              </SmoothSectionLink>
+            );
+          })}
 
           <SmoothSectionLink
             href="#contact"
