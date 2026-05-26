@@ -83,8 +83,46 @@
           }
         }
       },
-      "rimoochat": {
+      "said": {
         "number": "02",
+        "title": "Said",
+        "category": "E-commerce de pièces poids lourds",
+        "shortDescription": "Une boutique mobile-first pour les acheteurs algériens qui cherchent la bonne pièce, pas une pièce qui lui ressemble seulement.",
+        "value": "Les références, le stock, la livraison et la commande sont devenus plus clairs. L’application web installable a aidé les clients à reconnaître la boutique plus vite, à revenir plus facilement, et à commander depuis le site avec moins de friction.",
+        "role": "Développement full-stack, UX, structure produit",
+        "year": "2026",
+        "images": {
+          "cardAlt": "Aperçu du projet Said pour la vente de pièces poids lourds",
+          "mobileAlt": "Expérience mobile Said pour l’achat de pièces poids lourds",
+          "desktopAlt": "Expérience desktop Said pour parcourir les pièces"
+        },
+        "showcase": {
+          "lead": {
+            "eyebrow": "Boutique locale",
+            "title": "Une manière plus claire d’acheter des pièces poids lourds",
+            "body": "Said vend des pièces poids lourds en Algérie, dans un marché où les acheteurs vérifient la référence, la marque, le stock et la livraison avant de commander."
+          },
+          "problem": {
+            "eyebrow": "Le problème",
+            "title": "Des pièces qui se ressemblent créent de mauvaises commandes",
+            "body": "Dans les pièces poids lourds, l’image du produit ne suffit pas. L’expérience devait rendre la référence, la marque, le poids et la disponibilité faciles à vérifier avant l’action."
+          },
+          "system": {
+            "eyebrow": "Le système",
+            "title": "Une découverte produit basée sur la confiance",
+            "body": "La boutique utilise la recherche, les catégories, les marques, les produits sauvegardés, le panier, le suivi des commandes et l’administration pour garder l’achat simple côté client et clair côté business."
+          },
+          "outcome": {
+            "eyebrow": "Le résultat",
+            "title": "Plus facile à reconnaître. Plus facile à retrouver.",
+            "body": "L’installation PWA a donné à la boutique une présence proche d’une application, sans créer d’application native. Cela a aidé les clients à revenir plus vite et à passer plus de commandes depuis l’expérience web.",
+            "stat": "PWA",
+            "statLabel": "Expérience web installable"
+          }
+        }
+      },
+      "rimoochat": {
+        "number": "03",
         "title": "Rimoochat",
         "category": "Boutique e-commerce",
         "shortDescription": "Une boutique de vêtements faits main construite autour de la confiance, de la rareté et d’un parcours d’achat clair.",
@@ -122,7 +160,7 @@
         }
       },
       "unimarket": {
-        "number": "03",
+        "number": "04",
         "title": "Unimarket",
         "category": "Marketplace étudiante",
         "shortDescription": "Une marketplace étudiante conçue pour les acheteurs et vendeurs de l’USTHB, au lieu de canaux de vente génériques.",

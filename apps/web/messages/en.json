@@ -83,8 +83,46 @@
           }
         }
       },
-      "rimoochat": {
+      "said": {
         "number": "02",
+        "title": "Said",
+        "category": "Heavy truck parts e-commerce",
+        "shortDescription": "A mobile-first store for Algerian buyers who need the right truck part, not a similar-looking one.",
+        "value": "Part numbers, stock, delivery, and ordering were made clearer. The installable web app helped customers recognise the store faster, return more often, and place orders through the web app with less friction.",
+        "role": "Full-stack development, UX, product structure",
+        "year": "2026",
+        "images": {
+          "cardAlt": "Said heavy truck parts store project preview",
+          "mobileAlt": "Said mobile shopping experience for heavy truck parts",
+          "desktopAlt": "Said desktop product browsing experience"
+        },
+        "showcase": {
+          "lead": {
+            "eyebrow": "Local parts store",
+            "title": "A clearer way to buy heavy truck parts",
+            "body": "Said sells heavy truck parts in Algeria, where buyers care about the correct part number, trusted brands, real stock, and clear delivery before they order."
+          },
+          "problem": {
+            "eyebrow": "The problem",
+            "title": "Similar-looking parts create wrong orders",
+            "body": "In truck parts, a product image is not enough. The experience had to make identification numbers, brand names, product weight, and availability easy to check before the buyer takes action."
+          },
+          "system": {
+            "eyebrow": "The system",
+            "title": "Product discovery built around trust",
+            "body": "The store uses search, categories, brands, saved products, cart flow, order tracking, and admin control to keep buying simple for customers and manageable for the business."
+          },
+          "outcome": {
+            "eyebrow": "The result",
+            "title": "Easier to recognise. Easier to return to.",
+            "body": "The PWA-style install feature made the store feel closer to a real app without building a native app. That helped customers come back faster and pushed more orders through the web experience.",
+            "stat": "PWA",
+            "statLabel": "Installable web app experience"
+          }
+        }
+      },
+      "rimoochat": {
+        "number": "03",
         "title": "Rimoochat",
         "category": "E-commerce store",
         "shortDescription": "A handmade clothing store built around trust, rarity, and a clear buying path.",
@@ -122,7 +160,7 @@
         }
       },
       "unimarket": {
-        "number": "03",
+        "number": "04",
         "title": "Unimarket",
         "category": "Student marketplace",
         "shortDescription": "A student marketplace built for USTHB buyers and sellers instead of generic selling channels.",

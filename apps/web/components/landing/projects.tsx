@@ -172,6 +172,22 @@ const projectImageMap = {
       position: "center",
     },
   },
+  said: {
+    cardImage: {
+      src: "/Projects/said/project%20image%20said.png",
+      position: "center",
+    },
+    mobileImage: {
+      src: "/Projects/said/mobile%20said.png",
+      fallbackSrc: "/Projects/said/project%20image%20said.png",
+      position: "center",
+    },
+    desktopImage: {
+      src: "/Projects/said/laptop%20said.png",
+      fallbackSrc: "/Projects/said/project%20image%20said.png",
+      position: "center",
+    },
+  },
   rimoochat: {
     cardImage: {
       src: "/Projects/rimoochat/card.png",

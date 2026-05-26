@@ -185,6 +185,50 @@ export default async function HomePage({ params }: PageProps) {
                                 },
                             },
                             {
+                                id: "said",
+                                number: t("projects.items.said.number"),
+                                title: t("projects.items.said.title"),
+                                category: t("projects.items.said.category"),
+                                shortDescription: t("projects.items.said.shortDescription"),
+                                value: t("projects.items.said.value"),
+                                role: t("projects.items.said.role"),
+                                year: t("projects.items.said.year"),
+                                href: "https://said-web-seven.vercel.app/",
+                                cardAlt: t("projects.items.said.images.cardAlt"),
+                                mobileAlt: t("projects.items.said.images.mobileAlt"),
+                                desktopAlt: t("projects.items.said.images.desktopAlt"),
+                                showcase: {
+                                    lead: {
+                                        eyebrow: t("projects.items.said.showcase.lead.eyebrow"),
+                                        title: t("projects.items.said.showcase.lead.title"),
+                                        body: t("projects.items.said.showcase.lead.body"),
+                                    },
+                                    problem: {
+                                        eyebrow: t(
+                                            "projects.items.said.showcase.problem.eyebrow",
+                                        ),
+                                        title: t("projects.items.said.showcase.problem.title"),
+                                        body: t("projects.items.said.showcase.problem.body"),
+                                    },
+                                    system: {
+                                        eyebrow: t("projects.items.said.showcase.system.eyebrow"),
+                                        title: t("projects.items.said.showcase.system.title"),
+                                        body: t("projects.items.said.showcase.system.body"),
+                                    },
+                                    outcome: {
+                                        eyebrow: t(
+                                            "projects.items.said.showcase.outcome.eyebrow",
+                                        ),
+                                        title: t("projects.items.said.showcase.outcome.title"),
+                                        body: t("projects.items.said.showcase.outcome.body"),
+                                        stat: t("projects.items.said.showcase.outcome.stat"),
+                                        statLabel: t(
+                                            "projects.items.said.showcase.outcome.statLabel",
+                                        ),
+                                    },
+                                },
+                            },
+                            {
                                 id: "rimoochat",
                                 number: t("projects.items.rimoochat.number"),
                                 title: t("projects.items.rimoochat.title"),
