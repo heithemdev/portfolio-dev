@@ -293,6 +293,7 @@ export default async function HomePage({ params }: PageProps) {
                                 value: t("projects.items.unimarket.value"),
                                 role: t("projects.items.unimarket.role"),
                                 year: t("projects.items.unimarket.year"),
+                                // Note: The URL is correct as of the last update, but may need to be updated if the project changes its domain or is taken down.
                                 href: "https://unimarcket.com/",
                                 cardAlt: t("projects.items.unimarket.images.cardAlt"),
                                 mobileAlt: t("projects.items.unimarket.images.mobileAlt"),
