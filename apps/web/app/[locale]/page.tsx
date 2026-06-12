@@ -116,14 +116,14 @@ export default async function HomePage({ params }: PageProps) {
                         contact: t("hero.contact"),
                         avatarAlt: t("hero.avatarAlt"),
                         metrics: [
-                            {
+                            /*{
                                 value: t("hero.metrics.years.value"),
                                 label: t("hero.metrics.years.label"),
                             },
                             {
                                 value: t("hero.metrics.platforms.value"),
                                 label: t("hero.metrics.platforms.label"),
-                            },
+                            },*/
                         ],
                     }}
                 />
