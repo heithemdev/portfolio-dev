@@ -5,9 +5,7 @@
 import type { MetadataRoute } from "next";
 
 import { LOCALES } from "@/lib/lang/config";
-
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3000";
+import { buildLanguageAlternates, getLocaleUrl } from "@/lib/seo/site";
 
 // Keep this list limited to real routes that exist right now.
 // Add more routes only after those localized pages are created.
@@ -18,15 +16,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return ROUTES.flatMap((route) =>
     LOCALES.map((locale) => ({
-      url: new URL(`/${locale}${route}`, siteUrl).toString(),
+      url: getLocaleUrl(locale, route),
       lastModified,
+      changeFrequency: "monthly",
+      priority: locale === "en" ? 1 : 0.9,
       alternates: {
-        languages: Object.fromEntries(
-          LOCALES.map((alternateLocale) => [
-            alternateLocale,
-            new URL(`/${alternateLocale}${route}`, siteUrl).toString(),
-          ]),
-        ),
+        languages: buildLanguageAlternates(route),
       },
     })),
   );

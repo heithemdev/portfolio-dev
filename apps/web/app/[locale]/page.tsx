@@ -25,6 +25,10 @@ import Projects from "@/components/landing/projects";
 import Navbar from "@/components/navbar";
 import { getDirection, isLocale, type Locale } from "@/lib/lang/config";
 import { getTranslator } from "@/lib/lang/dictionary";
+import {
+    buildStructuredData,
+    getLocalizedMetadata,
+} from "@/lib/seo/site";
 
 const ibmPlexSans = IBM_Plex_Sans({
     subsets: ["latin"],
@@ -59,11 +63,14 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
     const locale = await getSafeLocale(params);
     const { t } = await getTranslator(locale);
+    const title = t("metadata.title");
+    const description = t("metadata.description");
 
-    return {
-        title: t("metadata.title"),
-        description: t("metadata.description"),
-    };
+    return getLocalizedMetadata({
+        locale,
+        title,
+        description,
+    });
 }
 
 export default async function HomePage({ params }: PageProps) {
@@ -84,9 +91,23 @@ export default async function HomePage({ params }: PageProps) {
         openPage: t("bookingModal.openPage"),
         iframeTitle: t("bookingModal.iframeTitle"),
     };
+    const structuredData = buildStructuredData({
+        locale,
+        title: t("metadata.title"),
+        description: t("metadata.description"),
+        jobTitle: t("hero.role"),
+        tagline: t("footer.tagline"),
+    });
 
     return (
         <div className={`${localizedFontClassName} min-h-screen bg-[#F4EFE8]`}>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+                }}
+            />
+
             <Navbar
                 copy={{
                     logoAria: t("navbar.logoAria"),

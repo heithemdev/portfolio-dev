@@ -5,39 +5,20 @@
 import "../globals.css";
 
 import type { Metadata } from "next";
+import type { Viewport } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 
 import { LOCALES, getDirection, isLocale } from "@/lib/lang/config";
+import { getBaseMetadata } from "@/lib/seo/site";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3000";
+export const metadata: Metadata = getBaseMetadata();
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  manifest: "/site.webmanifest",
-  icons: {
-    icon: [
-      {
-        url: "/favicons/favicon-16x16.png",
-        sizes: "16x16",
-        type: "image/png",
-      },
-      {
-        url: "/favicons/favicon-32x32.png",
-        sizes: "32x32",
-        type: "image/png",
-      },
-    ],
-    apple: [
-      {
-        url: "/favicons/apple-touch-icon.png",
-        sizes: "180x180",
-        type: "image/png",
-      },
-    ],
-    shortcut: ["/favicons/favicon-32x32.png"],
-  },
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#F4EFE8",
+  colorScheme: "light",
 };
 
 export const dynamicParams = false;
