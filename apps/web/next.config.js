@@ -18,6 +18,22 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
 
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "heithemdev.com",
+          },
+        ],
+        destination: "https://www.heithemdev.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {
