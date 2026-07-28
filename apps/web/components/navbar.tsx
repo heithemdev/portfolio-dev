@@ -68,8 +68,6 @@ const languageOptions = [
 const trackedSectionHashes = [
   "#hero",
   "#work",
-  "#how-i-work",
-  "#about",
   "#contact",
 ] as const;
 
@@ -136,6 +134,9 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
   const pathname = usePathname();
 
   const currentLocale = getLocaleFromPathname(pathname);
+  const pathnameWithoutLocale = getPathnameWithoutLocale(pathname);
+  const isHomePage = pathnameWithoutLocale === "/";
+  const homeHref = `/${currentLocale}`;
   const currentLanguage =
     languageOptions.find((language) => language.locale === currentLocale) ??
     fallbackLanguageOption;
@@ -146,6 +147,11 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
   const mobileLanguageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!isHomePage) {
+      setActiveHash("");
+      return;
+    }
+
     let animationFrameId: number | null = null;
 
     const syncActiveHash = () => {
@@ -175,7 +181,7 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
       window.removeEventListener("resize", requestSyncActiveHash);
       window.removeEventListener("hashchange", requestSyncActiveHash);
     };
-  }, []);
+  }, [isHomePage]);
 
   useEffect(() => {
     if (!isMobileLanguageOpen) {
@@ -207,13 +213,24 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
   }, [isMobileLanguageOpen]);
 
   const navItems = [
-    { href: "#work", label: copy.work, mobileLabel: copy.work },
     {
-      href: "#how-i-work",
+      href: `${homeHref}#work`,
+      label: copy.work,
+      mobileLabel: copy.work,
+      isActive: isHomePage && activeHash === "#work",
+    },
+    {
+      href: `${homeHref}/how-i-work`,
       label: copy.howIWork,
       mobileLabel: copy.howIWorkMobile,
+      isActive: pathnameWithoutLocale === "/how-i-work",
     },
-    { href: "#about", label: copy.about, mobileLabel: copy.about },
+    {
+      href: `${homeHref}/about`,
+      label: copy.about,
+      mobileLabel: copy.about,
+      isActive: pathnameWithoutLocale === "/about",
+    },
   ] as const;
 
   const trackingClass =
@@ -229,7 +246,7 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
 
   return (
     <header
-      className="fixed inset-x-0 top-0 z-30 bg-[#F4EFE8]/92 text-[#111318] backdrop-blur-sm"
+      className="fixed left-0 top-0 z-30 w-full bg-[#F4EFE8]/92 text-[#111318] backdrop-blur-sm"
       dir="ltr"
     >
       <nav
@@ -238,7 +255,7 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
       >
         <div className="flex items-center gap-2.5 md:gap-[clamp(2rem,3.6vw,4.75rem)]">
           <SmoothSectionLink
-            href="#hero"
+            href={`${homeHref}#hero`}
             aria-label={copy.logoAria}
             className="flex size-12 shrink-0 items-center justify-center transition-opacity duration-150 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
           >
@@ -336,7 +353,7 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
 
           <div className="hidden items-center gap-[clamp(1.65rem,2.5vw,3rem)] md:flex">
             {navItems.map((item) => {
-              const isActive = activeHash === item.href;
+              const isActive = item.isActive;
 
               return (
                 <SmoothSectionLink
@@ -399,7 +416,7 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
           </div>
 
           <SmoothSectionLink
-            href="#contact"
+            href={`${homeHref}#contact`}
             aria-current={activeHash === "#contact" ? "location" : undefined}
             className={`group relative inline-flex items-center gap-1.5 pb-1 text-[0.96rem] font-medium leading-none ${trackingClass} text-[#111318] transition-opacity duration-150 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]`}
           >
@@ -423,7 +440,7 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
 
         <div className="flex min-h-11 items-center gap-1 border border-[#111318]/12 bg-[#F4EFE8]/80 px-1.5 md:hidden">
           {navItems.map((item) => {
-            const isActive = activeHash === item.href;
+            const isActive = item.isActive;
 
             return (
               <SmoothSectionLink
@@ -451,7 +468,7 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
           })}
 
           <SmoothSectionLink
-            href="#contact"
+            href={`${homeHref}#contact`}
             aria-label={copy.contact}
             className="ml-1 inline-flex size-9 shrink-0 items-center justify-center bg-[#111318] text-[#F4EFE8] transition-opacity duration-150 hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4EFE8]"
           >

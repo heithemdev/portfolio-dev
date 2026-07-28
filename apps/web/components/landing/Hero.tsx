@@ -5,11 +5,12 @@
 // Linked files: app/[locale]/page.tsx, components/navbar.tsx, components/smooth-section-link.tsx, lib/lang/config.ts, public/assets/Heithem avatar BNW.png.
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 
 import SmoothSectionLink from "@/components/smooth-section-link";
 import type { TextDirection } from "@/lib/lang/config";
+import { useHydratedReducedMotion } from "@/lib/use-hydrated-reduced-motion";
 
 import heithemAvatar from "../../public/assets/Heithem avatar BNW.png";
 
@@ -107,16 +108,13 @@ function TypedHeroTitle({
   nameCursorClassName,
   roleCursorClassName,
 }: TypedHeroTitleProps) {
-  const shouldReduceMotion = useReducedMotion();
-  const prefersReducedMotion = shouldReduceMotion === true;
+  const prefersReducedMotion = useHydratedReducedMotion();
 
   const nameCharacters = useMemo(() => Array.from(name), [name]);
   const roleCharacters = useMemo(() => Array.from(role), [role]);
   const totalCharacters = nameCharacters.length + roleCharacters.length;
 
-  const [visibleCount, setVisibleCount] = useState(
-    prefersReducedMotion ? totalCharacters : 0,
-  );
+  const [visibleCount, setVisibleCount] = useState(0);
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -177,14 +175,14 @@ function TypedHeroTitle({
 
   return (
     <>
-      <h1
-        id="hero-title"
+      <div
+        aria-hidden="true"
         dir={textDirection}
         className={[
           "mt-4 overflow-visible pb-[0.04em] font-normal text-[#111318] max-lg:text-[clamp(4.25rem,24vw,8rem)]",
           isArabic
             ? "text-[clamp(5.1rem,11.4vw,12.6rem)] leading-[1.04] tracking-normal"
-            : "text-[clamp(5.4rem,12.2vw,13.7rem)] leading-[0.82] tracking-[-0.105em]",
+            : "text-[clamp(5.4rem,12.2vw,13.7rem)] leading-[0.82] tracking-[-0.055em]",
         ].join(" ")}
       >
         <TypedLine
@@ -194,9 +192,10 @@ function TypedHeroTitle({
           cursorClassName={nameCursorClassName}
           textDirection={textDirection}
         />
-      </h1>
+      </div>
 
-      <h2
+      <div
+        aria-hidden="true"
         dir={textDirection}
         className={[
           "mt-6 whitespace-nowrap font-normal text-[#111318] max-lg:mt-4 max-lg:text-[clamp(1.9rem,10vw,3.35rem)]",
@@ -204,7 +203,6 @@ function TypedHeroTitle({
             ? "text-[clamp(2rem,3.1vw,3.45rem)] leading-[1.16] tracking-normal"
             : "text-[clamp(1.9rem,3vw,3.45rem)] leading-[0.98] tracking-[-0.07em]",
         ].join(" ")}
-        aria-label={role}
       >
         <TypedLine
           text={role}
@@ -213,7 +211,7 @@ function TypedHeroTitle({
           cursorClassName={roleCursorClassName}
           textDirection={textDirection}
         />
-      </h2>
+      </div>
     </>
   );
 }
@@ -350,6 +348,10 @@ export default function Hero({ copy, textDirection }: HeroProps) {
         }
       `}</style>
 
+      <h1 id="hero-title" className="sr-only" dir={textDirection}>
+        {copy.name}, {copy.role}
+      </h1>
+
       <div className="hidden h-full lg:block">
         <div className="relative z-20 mx-auto flex h-full w-full max-w-[1920px] flex-col px-5 pb-0 pt-[4.75rem] sm:px-8 lg:px-10">
           <div className="relative grid min-h-0 flex-1 grid-cols-1 items-end gap-10 lg:grid-cols-[minmax(0,0.96fr)_minmax(420px,0.92fr)] lg:gap-0">
@@ -474,7 +476,7 @@ export default function Hero({ copy, textDirection }: HeroProps) {
                   src={heithemAvatar}
                   alt=""
                   placeholder="blur"
-                  preload
+                  loading="eager"
                   sizes="52vw"
                   className="h-[min(89svh,62rem)] w-auto max-w-none select-none object-contain"
                 />
@@ -536,7 +538,7 @@ export default function Hero({ copy, textDirection }: HeroProps) {
               src={heithemAvatar}
               alt={copy.avatarAlt}
               placeholder="blur"
-              preload
+              loading="eager"
               sizes="100vw"
               className="block h-auto w-screen max-w-none select-none object-contain"
             />

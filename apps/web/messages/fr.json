@@ -1,7 +1,11 @@
 {
   "metadata": {
-    "title": "Heithem Chorfi | Ingénieur web full-stack pour apps web, e-commerce, plateformes et SaaS",
-    "description": "Ingénieur web full-stack spécialisé dans les apps web, l’e-commerce, les plateformes, les SaaS, l’UX claire, la logique backend et l’exécution produit scalable."
+    "title": "Heithem Chorfi | Développeur web freelance en Algérie",
+    "description": "Développeur web full-stack freelance en Algérie : applications web sur mesure, SaaS, e-commerce, PWA et MVP pour startups et entreprises à distance.",
+    "aboutTitle": "À propos | Heithem Chorfi, développeur web en Algérie",
+    "aboutDescription": "Découvrez Heithem Chorfi, ingénieur logiciel et cofondateur technique à Béjaïa, spécialisé dans les applications web full-stack pour startups et entreprises.",
+    "howIWorkTitle": "Méthode de développement web freelance | Heithem Chorfi",
+    "howIWorkDescription": "Découvrez comment je cadre et développe des applications web, SaaS, boutiques e-commerce et MVP comme développeur full-stack freelance."
   },
   "navbar": {
     "logoAria": "Aller au hero",
@@ -37,49 +41,47 @@
   },
   "projects": {
     "title": "Projets sélectionnés",
-    "intro": "Des produits web pensés pour vendre, inspirer confiance, contrôler l’admin et servir le business après le lancement.",
+    "intro": "Six produits à des étapes différentes : des projets lancés, un test marché, un prototype présenté honnêtement, une expérience personnelle non commerciale et une startup privée qui n’est pas encore prête à être dévoilée. Pour chacun, je précise ce que j’ai réellement fait.",
     "techUsed": "Stack utilisée",
-    "accessWebapp": "Accéder à l’app",
+    "contributionLabel": "Ma contribution",
+    "resultLabel": "Ce qui a changé",
+    "viewCaseStudy": "Voir l’étude de cas",
+    "selectedPreviewAria": "Aperçu du projet sélectionné",
     "closeProjectAria": "Fermer les détails du projet",
-    "openProjectAria": "Voir les détails de",
     "imageUnavailable": "Image indisponible",
-    "mobileFirst": "Mobile-first",
     "items": {
       "laibi": {
         "number": "01",
         "title": "Supermarket Laibi 2",
         "category": "Commerce local",
-        "shortDescription": "Une app de commande pour superette, pensée comme une app mobile sans le coût d’une app native.",
-        "value": "Le propriétaire a gagné un contrôle admin sur les produits, le stock, les catégories, les images et les commandes. Les ventes déclarées ont augmenté de 130% en moyenne.",
-        "role": "App web full-stack",
+        "status": "En ligne",
+        "summary": "J’ai conçu et développé une PWA de commande pour supermarché, agréable sur mobile et reliée à un seul espace de gestion pour le catalogue et les commandes.",
+        "contribution": "Structure produit, UX, développement full-stack, PWA et outils d’administration.",
+        "result": "Les ventes du premier mois ont atteint environ 1,25 fois leur niveau précédent, avant toute promotion payante.",
+        "linkLabel": "Ouvrir l’application",
         "year": "2026",
         "images": {
           "cardAlt": "Carte projet de l’app web Supermarket Laibi 2",
           "mobileAlt": "Interface mobile de commande Supermarket Laibi 2",
           "desktopAlt": "Interface desktop web Supermarket Laibi 2"
         },
-        "showcase": {
-          "lead": {
-            "eyebrow": "Objectif business",
-            "title": "Vendre en ligne sans payer une app native",
-            "body": "La superette avait besoin d’un canal de commande moins coûteux, mais simple à utiliser sur téléphone."
+        "caseStudy": {
+          "context": {
+            "eyebrow": "Pourquoi ce produit",
+            "title": "Commander en ligne sans financer deux applications natives",
+            "body": "Le propriétaire voulait un canal de commande direct, mais une application mobile séparée aurait absorbé du budget sans résoudre un autre problème."
           },
-          "problem": {
-            "eyebrow": "Problème résolu",
-            "title": "Les commandes étaient difficiles à gérer à la main",
-            "body": "Le propriétaire avait besoin de moins d’appels désorganisés, de mises à jour produits plus claires et d’une réception de commandes plus rapide."
-          },
-          "system": {
+          "build": {
             "eyebrow": "Ce que j’ai construit",
-            "title": "Catalogue, panier et panel admin",
-            "body": "Produits, stock, catégories, images, logique panier et suivi des commandes vivent dans un seul système contrôlé."
+            "title": "Une PWA pour les clients, un système d’administration pour le magasin",
+            "body": "J’ai pris en charge la structure du produit, le catalogue, le panier, l’installation sur mobile, le parcours de commande et la gestion des produits, stocks, catégories, images et commandes."
           },
           "outcome": {
-            "eyebrow": "Résultat revenu",
-            "title": "Plus de commandes avec moins de travail admin",
-            "body": "L’app est devenue la surface digitale principale de vente et a rendu les mises à jour quotidiennes plus simples.",
-            "stat": "130%",
-            "statLabel": "hausse moyenne des ventes déclarées"
+            "eyebrow": "Après le lancement",
+            "title": "Un premier mois à 1,25x sans campagne payante",
+            "body": "Les ventes du premier mois ont atteint environ 1,25 fois leur niveau précédent. Le format PWA a aussi évité au propriétaire de financer une application native séparée.",
+            "highlight": "1,25x",
+            "highlightLabel": "ventes du premier mois"
           }
         }
       },
@@ -87,37 +89,34 @@
         "number": "02",
         "title": "Said",
         "category": "E-commerce de pièces poids lourds",
-        "shortDescription": "Une boutique mobile-first pour les acheteurs algériens qui cherchent la bonne pièce, pas une pièce qui lui ressemble seulement.",
-        "value": "Les références, le stock, la livraison et la commande sont devenus plus clairs. L’application web installable a aidé les clients à reconnaître la boutique plus vite, à revenir plus facilement, et à commander depuis le site avec moins de friction.",
-        "role": "Développement full-stack, UX, structure produit",
+        "status": "Prototype",
+        "summary": "J’ai conçu une boutique de pièces poids lourds centrée sur les références exactes, les marques et le stock, pas seulement sur les photos.",
+        "contribution": "Structure produit, UX mobile, recherche, catalogue et prototype full-stack.",
+        "result": "Le produit utilise encore des données fictives, donc je ne présente pas de résultat commercial ou terrain.",
+        "linkLabel": "Voir le prototype",
         "year": "2026",
         "images": {
           "cardAlt": "Aperçu du projet Said pour la vente de pièces poids lourds",
           "mobileAlt": "Expérience mobile Said pour l’achat de pièces poids lourds",
           "desktopAlt": "Expérience desktop Said pour parcourir les pièces"
         },
-        "showcase": {
-          "lead": {
-            "eyebrow": "Boutique locale",
-            "title": "Une manière plus claire d’acheter des pièces poids lourds",
-            "body": "Said vend des pièces poids lourds en Algérie, dans un marché où les acheteurs vérifient la référence, la marque, le stock et la livraison avant de commander."
+        "caseStudy": {
+          "context": {
+            "eyebrow": "Le problème produit",
+            "title": "Une pièce qui semble correcte peut être la mauvaise",
+            "body": "Les acheteurs doivent vérifier la référence, la marque, le poids, la disponibilité et la livraison avant de pouvoir faire confiance à une fiche."
           },
-          "problem": {
-            "eyebrow": "Le problème",
-            "title": "Des pièces qui se ressemblent créent de mauvaises commandes",
-            "body": "Dans les pièces poids lourds, l’image du produit ne suffit pas. L’expérience devait rendre la référence, la marque, le poids et la disponibilité faciles à vérifier avant l’action."
-          },
-          "system": {
-            "eyebrow": "Le système",
-            "title": "Une découverte produit basée sur la confiance",
-            "body": "La boutique utilise la recherche, les catégories, les marques, les produits sauvegardés, le panier, le suivi des commandes et l’administration pour garder l’achat simple côté client et clair côté business."
+          "build": {
+            "eyebrow": "Ce que j’ai construit",
+            "title": "Un catalogue où l’identification passe avant la décoration",
+            "body": "J’ai structuré la recherche, les catégories, les marques, les favoris, le panier, le suivi des commandes et l’administration autour des informations réellement vérifiées."
           },
           "outcome": {
-            "eyebrow": "Le résultat",
-            "title": "Plus facile à reconnaître. Plus facile à retrouver.",
-            "body": "L’installation PWA a donné à la boutique une présence proche d’une application, sans créer d’application native. Cela a aidé les clients à revenir plus vite et à passer plus de commandes depuis l’expérience web.",
-            "stat": "PWA",
-            "statLabel": "Expérience web installable"
+            "eyebrow": "Étape actuelle",
+            "title": "Prêt pour un vrai stock, sans résultat inventé",
+            "body": "Le produit fonctionne et peut être parcouru, mais il n’est pas encore utilisé au quotidien par l’entreprise. Cette étude de cas s’arrête à ce que j’ai réellement construit.",
+            "highlight": "Prototype",
+            "highlightLabel": "pas encore lancé"
           }
         }
       },
@@ -125,78 +124,162 @@
         "number": "03",
         "title": "Rimoochat",
         "category": "Boutique e-commerce",
-        "shortDescription": "Une boutique de vêtements faits main construite autour de la confiance, de la rareté et d’un parcours d’achat clair.",
-        "value": "La boutique a aidé l’entreprise familiale à transformer l’attention en ligne en ventes. Elle génère maintenant plus de 90% du revenu actuel.",
-        "role": "Frontend et UX",
+        "status": "Utilisé au quotidien",
+        "summary": "J’ai créé Rimoochat pour l’activité de vêtements faits main de ma mère, avec un chemin simple entre la découverte d’une pièce et la bonne conversation.",
+        "contribution": "Développement frontend, UX mobile, présentation des produits et parcours de contact.",
+        "result": "Le site est devenu le principal canal client de l’activité et a réduit les échanges répétitifs des deux côtés.",
+        "linkLabel": "Ouvrir la boutique",
         "year": "2025",
         "images": {
           "cardAlt": "Carte projet de la boutique e-commerce Rimoochat",
           "mobileAlt": "Interface mobile de la boutique Rimoochat",
           "desktopAlt": "Interface desktop de la boutique Rimoochat"
         },
-        "showcase": {
-          "lead": {
-            "eyebrow": "Objectif business",
-            "title": "Rendre les vêtements faits main plus désirables",
-            "body": "La boutique devait montrer le soin, la rareté et la confiance rapidement pour des mères qui achètent pour leurs enfants."
+        "caseStudy": {
+          "context": {
+            "eyebrow": "Une activité familiale",
+            "title": "Le travail de ma mère avait besoin d’un vrai point de repère en ligne",
+            "body": "Les clientes arrivaient par des messages dispersés. Il leur fallait un endroit pour voir les créations, comprendre ce qui était disponible et prendre contact avec plus de contexte."
           },
-          "problem": {
-            "eyebrow": "Problème résolu",
-            "title": "Un catalogue normal aurait rendu le produit banal",
-            "body": "Les produits avaient besoin d’une histoire douce et d’un chemin direct vers l’achat, pas d’une grille générique."
-          },
-          "system": {
+          "build": {
             "eyebrow": "Ce que j’ai construit",
-            "title": "Une vitrine pensée pour une audience précise",
-            "body": "Le layout, le texte, la présentation produit et le flow mobile soutiennent tous le même groupe client."
+            "title": "Une boutique qui mène à une conversation utile",
+            "body": "J’ai centré la présentation et le parcours mobile sur les vêtements faits main, puis rendu la prise de contact assez claire pour éviter les mêmes questions."
           },
           "outcome": {
-            "eyebrow": "Résultat revenu",
-            "title": "La boutique est devenue le canal principal",
-            "body": "La famille dépend maintenant du site comme lieu principal où les clientes consultent et achètent.",
-            "stat": "90%+",
-            "statLabel": "du revenu actuel de l’activité"
+            "eyebrow": "Dans l’usage quotidien",
+            "title": "Moins de temps perdu des deux côtés",
+            "body": "Le site est maintenant le principal endroit où les clientes découvrent l’activité et prennent contact. Ma mère peut aussi mieux organiser ces échanges.",
+            "highlight": "Canal n°1",
+            "highlightLabel": "pour les clientes"
           }
         }
       },
       "unimarket": {
         "number": "04",
         "title": "Unimarket",
-        "category": "Marketplace étudiante",
-        "shortDescription": "Une marketplace étudiante conçue pour les acheteurs et vendeurs de l’USTHB, au lieu de canaux de vente génériques.",
-        "value": "La plateforme ajoute de la confiance avec l’auth, la vérification email, la modération, les flows vendeur, les flows acheteur et une logique de paiement locale.",
-        "role": "Système full-stack",
+        "category": "Commerce social",
+        "status": "Test marché",
+        "summary": "J’ai construit Unimarket comme un réseau de commerce social : le rythme familier des réseaux sociaux, mais avec des produits et des boutiques dans le fil.",
+        "contribution": "Architecture produit, UX, développement full-stack et parcours vendeur et acheteur.",
+        "result": "Le MVP de production a pris un mois et se trouve maintenant en phase de test marché.",
+        "linkLabel": "Ouvrir le test",
         "year": "2025",
         "images": {
           "cardAlt": "Carte projet de la marketplace étudiante Unimarket",
           "mobileAlt": "Interface mobile de la marketplace Unimarket",
           "desktopAlt": "Interface desktop de la marketplace Unimarket"
         },
-        "showcase": {
-          "lead": {
-            "eyebrow": "Objectif business",
-            "title": "Créer une marketplace étudiante fiable",
-            "body": "Les étudiants de l’USTHB avaient besoin d’un seul espace ciblé pour vendre, acheter et échanger dans leur propre environnement universitaire."
+        "caseStudy": {
+          "context": {
+            "eyebrow": "L’idée produit",
+            "title": "Une découverte sociale centrée sur les produits, pas sur les publications",
+            "body": "Le client voulait faire se rencontrer boutiques et acheteurs dans un fil familier, plutôt que dans un catalogue rigide ou un site de petites annonces."
           },
-          "problem": {
-            "eyebrow": "Problème résolu",
-            "title": "Les plateformes génériques manquaient de confiance",
-            "body": "Les étudiants n’avaient pas de flow vendeur dédié, pas de navigation centrée campus et pas de couche de modération."
-          },
-          "system": {
-            "eyebrow": "Ce que j’ai construit",
-            "title": "Logique marketplace depuis zéro",
-            "body": "Auth, vérification email, flow acheteur, flow vendeur, annonces, modération et gestion du paiement à la livraison."
+          "build": {
+            "eyebrow": "La première version",
+            "title": "Un MVP de production en un mois",
+            "body": "J’ai construit la structure du produit, l’authentification, les parcours boutique et acheteur, la découverte, la modération et la base nécessaire à un vrai test marché."
           },
           "outcome": {
-            "eyebrow": "Résultat produit",
-            "title": "Un vrai système marketplace",
-            "body": "La plateforme remplace les ventes dispersées par une expérience étudiante plus claire, plus sûre et plus ciblée.",
-            "stat": "2 mois",
-            "statLabel": "pour une plateforme déployable"
+            "eyebrow": "Étape actuelle",
+            "title": "Une première version que le client était heureux de tester",
+            "body": "Le client était satisfait du résultat. Le produit teste maintenant sa place sur le marché au lieu de présenter l’idée comme déjà validée.",
+            "highlight": "1 mois",
+            "highlightLabel": "jusqu’au MVP de production"
+          },
+          "roadmap": {
+            "eyebrow": "Prévu ensuite",
+            "title": "Enchères, reels produits et connexions avec les livreurs",
+            "body": "Les enchères en direct, les vidéos courtes de produits et les intégrations avec les agences de livraison sont sur la feuille de route. Ces fonctions ne sont pas encore livrées."
+          }
+        }
+      },
+      "duks": {
+        "number": "05",
+        "title": "DUKS Perfume",
+        "category": "Expérience produit",
+        "status": "Projet personnel non commercial",
+        "summary": "J’ai conçu DUKS comme une expérience de parfum ludique pensée d’abord en arabe, avec du mouvement et une direction artistique qui change vraiment entre mobile et desktop.",
+        "contribution": "Concept, direction visuelle, UX en arabe, frontend responsive et design des interactions.",
+        "result": "Une expérience personnelle aboutie autour du storytelling produit, sans lancement client ni objectif commercial.",
+        "linkLabel": "Ouvrir le projet",
+        "year": "2026",
+        "images": {
+          "cardAlt": "Carte du projet expérimental DUKS Perfume",
+          "mobileAlt": "Expérience mobile DUKS Perfume pensée en arabe",
+          "desktopAlt": "Expérience desktop DUKS Perfume conçue comme une campagne"
+        },
+        "caseStudy": {
+          "context": {
+            "eyebrow": "Pourquoi je l’ai créé",
+            "title": "Un terrain de jeu pour un seul produit, pas un catalogue de plus",
+            "body": "Je voulais voir jusqu’où un seul parfum pouvait porter toute une expérience en traitant la page comme une campagne plutôt que comme une boutique ordinaire."
+          },
+          "build": {
+            "eyebrow": "Ce que j’ai exploré",
+            "title": "Une direction artistique arabe pensée pour chaque écran",
+            "body": "J’ai construit le layout responsive, la typographie arabe très présente, les transitions produit, les accès sociaux et contact, avec des compositions distinctes sur mobile et desktop."
+          },
+          "outcome": {
+            "eyebrow": "Ce que c’est",
+            "title": "Une expérience terminée, sans promesse commerciale",
+            "body": "DUKS est un projet personnel créé pour le plaisir. Il n’a pas été commandé et je ne lui attribue ni ventes ni résultat client. Sa valeur est dans l’exploration visuelle et frontend.",
+            "highlight": "Personnel",
+            "highlightLabel": "projet non commercial"
+          }
+        }
+      },
+      "reperto": {
+        "number": "06",
+        "title": "Reperto",
+        "category": "Startup privée",
+        "status": "Bientôt",
+        "summary": "Reperto est terminé. Je l’ai construit en tant que cofondateur technique et copropriétaire, mais le produit reste privé pour le moment.",
+        "contribution": "Cofondation technique, architecture produit, développement full-stack et responsabilité technique.",
+        "result": "Le système est terminé ; je publierai l’étude de cas et le lien une fois la protection de la propriété intellectuelle en place.",
+        "linkLabel": "Bientôt",
+        "year": "2026",
+        "images": {
+          "cardAlt": "Logo orange de la startup Reperto",
+          "mobileAlt": "Logo orange de Reperto dans une composition verticale",
+          "desktopAlt": "Logo orange de la startup Reperto"
+        },
+        "caseStudy": {
+          "context": {
+            "eyebrow": "Pourquoi le projet reste privé",
+            "title": "Le produit est terminé ; sa présentation viendra plus tard",
+            "body": "Nous gardons le produit et son fonctionnement confidentiels jusqu’à ce que la protection de la propriété intellectuelle soit sécurisée."
+          },
+          "build": {
+            "eyebrow": "Mon rôle",
+            "title": "Cofondateur technique et copropriétaire",
+            "body": "Je porte le volet technique, de l’architecture produit et des décisions techniques jusqu’au développement et à la livraison."
+          },
+          "outcome": {
+            "eyebrow": "Étape actuelle",
+            "title": "Terminé, avec la protection avant la publication",
+            "body": "Le système est prêt. Je publierai l’étude de cas et le lien de la startup lorsque nous pourrons les partager sans exposer ce qui doit être protégé.",
+            "highlight": "Terminé",
+            "highlightLabel": "présentation publique bientôt"
           }
         }
       }
+    }
+  },
+  "teasers": {
+    "ariaLabel": "En savoir plus sur Heithem",
+    "howIWork": {
+      "eyebrow": "Méthode",
+      "title": "Comment je transforme une idée brute en produit.",
+      "body": "Découverte, périmètre, investissement et responsabilités deviennent clairs avant le développement.",
+      "action": "Voir ma méthode"
+    },
+    "about": {
+      "eyebrow": "À propos",
+      "title": "La personne derrière le produit.",
+      "body": "Mon parcours d’ingénieur, ma façon de penser le produit et le type de travail qui compte pour moi.",
+      "action": "En savoir plus"
     }
   },
   "howIWork": {

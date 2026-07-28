@@ -14,10 +14,11 @@ import {
   PhoneCall,
   Video,
 } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 
 import BookingModal, { type BookingModalCopy } from "@/components/booking-modal";
 import type { TextDirection } from "@/lib/lang/config";
+import { useHydratedReducedMotion } from "@/lib/use-hydrated-reduced-motion";
 
 import heithemProfilePicture from "../../public/assets/Heithem profile picture.jpg";
 
@@ -53,7 +54,7 @@ type ProcessNote = Readonly<{
   value: string;
 }>;
 
-type HowIWorkCopy = Readonly<{
+export type HowIWorkCopy = Readonly<{
   eyebrow: string;
   title: string;
   intro: string;
@@ -119,7 +120,7 @@ function ChatBubble({
   textDirection: TextDirection;
 }) {
   const isClient = message.author === "client";
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   return (
     <motion.div
@@ -176,7 +177,7 @@ function CallBubble({
   avatarAlt: string;
   textDirection: TextDirection;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   return (
     <motion.div
@@ -232,7 +233,7 @@ function FileBubble({
   avatarAlt: string;
   textDirection: TextDirection;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   return (
     <motion.div
@@ -366,7 +367,7 @@ function ProcessNote({
   index: number;
   textDirection: TextDirection;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   return (
     <motion.article
@@ -421,12 +422,12 @@ export default function HowIWork({
               {copy.eyebrow}
             </p>
 
-            <h2
+            <h1
               id="how-i-work-title"
               className="mt-4 text-[clamp(3rem,7vw,7.4rem)] font-normal leading-[0.86] tracking-[-0.095em] text-[#111318]"
             >
               {copy.title}
-            </h2>
+            </h1>
 
             <p className="mt-6 max-w-[36rem] text-[clamp(1rem,1.2vw,1.14rem)] font-normal leading-[1.58] tracking-[-0.025em] text-[#111318]/62">
               {copy.intro}

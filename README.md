@@ -97,3 +97,37 @@ Then open a Pull Request into `main` and wait for approval.
 - Do not modify sensitive production settings directly.
 
 resume
+
+## SEO Operations
+
+The production canonical origin is fixed to `https://www.heithemdev.com`. Keep
+the apex-domain redirect enabled.
+
+Optional public verification tokens can be configured in the production
+environment:
+
+```bash
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=
+NEXT_PUBLIC_BING_SITE_VERIFICATION=
+NEXT_PUBLIC_YANDEX_VERIFICATION=
+```
+
+After each production SEO change:
+
+```bash
+pnpm --filter web audit:seo
+```
+
+For a deployed build, audit the public origin from PowerShell:
+
+```powershell
+$env:SEO_AUDIT_ORIGIN = "https://www.heithemdev.com"
+pnpm --filter web audit:seo
+Remove-Item Env:SEO_AUDIT_ORIGIN
+```
+
+Create a Google Search Console domain property for `heithemdev.com`, verify it
+with DNS, and submit `https://www.heithemdev.com/sitemap.xml`. Submit the same
+sitemap to Bing Webmaster Tools. After a major release, inspect and request
+indexing for `/en`, `/fr`, `/ar`, and their localized About and How I Work
+pages.

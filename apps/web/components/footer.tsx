@@ -3,7 +3,7 @@
 // Linked files: app/[locale]/page.tsx, components/landing/contact-section.tsx, components/smooth-section-link.tsx, lib/lang/config.ts.
 
 import SmoothSectionLink from "@/components/smooth-section-link";
-import type { TextDirection } from "@/lib/lang/config";
+import type { Locale, TextDirection } from "@/lib/lang/config";
 
 type FooterCopy = Readonly<{
   name: string;
@@ -21,46 +21,56 @@ type FooterCopy = Readonly<{
 
 type FooterProps = Readonly<{
   copy: FooterCopy;
+  locale: Locale;
   textDirection: TextDirection;
 }>;
 
-export default function Footer({ copy, textDirection }: FooterProps) {
+export default function Footer({ copy, locale, textDirection }: FooterProps) {
   const isArabic = textDirection === "rtl";
+  const homeHref = `/${locale}`;
 
   const footerLinks = [
     {
       label: copy.links.work,
-      href: "#work",
+      href: `${homeHref}#work`,
     },
     {
       label: copy.links.howIWork,
-      href: "#how-i-work",
+      href: `${homeHref}/how-i-work`,
     },
     {
       label: copy.links.about,
-      href: "#about",
+      href: `${homeHref}/about`,
     },
     {
       label: copy.links.contact,
-      href: "#contact",
+      href: `${homeHref}#contact`,
     },
   ] as const;
 
   return (
-    <footer className="bg-[#111318] text-[#F4EFE8]" dir="ltr">
-      <div className="mx-auto w-full max-w-[1920px] px-5 py-8 sm:px-8 lg:px-10">
-        <div className="flex flex-col gap-8 border-b border-[#F4EFE8]/12 pb-8 lg:flex-row lg:items-end lg:justify-between">
-          <div className="min-w-0">
-            <p className="text-[0.72rem] uppercase tracking-[0.24em] text-[#B8792E]">
+    <footer className="bg-[#111318] text-[#F4EFE8]" dir={textDirection}>
+      <div className="mx-auto w-full max-w-[1920px] px-5 py-10 sm:px-8 sm:py-12 lg:px-10">
+        <div className="flex flex-col gap-10 border-b border-[#F4EFE8]/12 pb-10 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+          <div className={isArabic ? "min-w-0 text-right" : "min-w-0"}>
+            <p
+              dir={textDirection}
+              className={[
+                "text-[0.72rem] text-[#B8792E]",
+                isArabic
+                  ? "tracking-normal"
+                  : "uppercase tracking-[0.24em]",
+              ].join(" ")}
+            >
               {copy.name}
             </p>
 
             <p
               dir={textDirection}
               className={[
-                "mt-4 max-w-[44rem] font-normal text-[#F4EFE8]",
+                "mt-5 max-w-[48rem] font-normal text-[#F4EFE8]",
                 isArabic
-                  ? "text-[clamp(2.35rem,4.8vw,5rem)] leading-[1.08] tracking-normal"
+                  ? "text-[clamp(2.35rem,4.8vw,5rem)] leading-[1.14] tracking-normal"
                   : "text-[clamp(2.1rem,5vw,5rem)] leading-[0.88] tracking-[-0.09em]",
               ].join(" ")}
             >
@@ -74,8 +84,8 @@ export default function Footer({ copy, textDirection }: FooterProps) {
 
           <nav
             aria-label={copy.navigationAria}
-            className="flex flex-wrap items-center gap-x-5 gap-y-3"
-            dir="ltr"
+            className="flex max-w-[34rem] flex-wrap items-center gap-x-6 gap-y-4"
+            dir={textDirection}
           >
             {footerLinks.map((link) => (
               <SmoothSectionLink
@@ -94,12 +104,12 @@ export default function Footer({ copy, textDirection }: FooterProps) {
 
         <div
           className={[
-            "flex flex-col gap-3 pt-5 text-[0.78rem] leading-[1.4] text-[#F4EFE8]/42 sm:flex-row sm:items-center sm:justify-between",
+            "flex flex-col gap-3 pt-6 text-[0.78rem] leading-[1.5] text-[#F4EFE8]/42 sm:flex-row sm:items-center sm:justify-between",
             isArabic ? "tracking-normal" : "tracking-[-0.02em]",
           ].join(" ")}
-          dir="ltr"
+          dir={textDirection}
         >
-          <p dir="auto">{copy.copyright}</p>
+          <p dir={textDirection}>{copy.copyright}</p>
 
           <p dir={textDirection}>{copy.tagline}</p>
         </div>

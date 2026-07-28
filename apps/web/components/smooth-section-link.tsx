@@ -12,7 +12,7 @@ type SmoothSectionLinkProps = Omit<
   "href" | "onClick"
 > &
   Readonly<{
-    href: `#${string}`;
+    href: string;
     children: ReactNode;
     offset?: number;
     onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
@@ -28,8 +28,21 @@ const SCROLL_DURATION_PER_PIXEL = 0.45;
 let activeAnimationFrameId: number | null = null;
 let activeCancelHandler: (() => void) | null = null;
 
-function getTargetId(hashHref: `#${string}`) {
-  return decodeURIComponent(hashHref.slice(1));
+function getSamePageTarget(href: string) {
+  const targetUrl = new URL(href, window.location.href);
+
+  if (
+    targetUrl.origin !== window.location.origin ||
+    targetUrl.pathname !== window.location.pathname ||
+    !targetUrl.hash
+  ) {
+    return null;
+  }
+
+  return {
+    hash: targetUrl.hash,
+    targetId: decodeURIComponent(targetUrl.hash.slice(1)),
+  };
 }
 
 function getScrollTargetTop(target: HTMLElement, offset: number) {
@@ -163,8 +176,13 @@ export default function SmoothSectionLink({
       return;
     }
 
-    const targetId = getTargetId(href);
-    const target = document.getElementById(targetId);
+    const samePageTarget = getSamePageTarget(href);
+
+    if (!samePageTarget) {
+      return;
+    }
+
+    const target = document.getElementById(samePageTarget.targetId);
 
     if (!target) {
       return;
@@ -177,7 +195,7 @@ export default function SmoothSectionLink({
     ).matches;
     const targetTop = getScrollTargetTop(target, offset);
 
-    window.history.pushState(null, "", href);
+    window.history.pushState(null, "", samePageTarget.hash);
 
     if (prefersReducedMotion) {
       stopActiveScrollAnimation();

@@ -1,6 +1,6 @@
 // components/landing/contact-section.tsx
-// Purpose: Localized final contact CTA section with direct contact links, SMTP-backed email form, booking modal, server-synced Algeria time, and resume download.
-// Linked files: app/[locale]/page.tsx, app/api/freelancer-time/route.ts, app/api/contact/route.ts, components/booking-modal.tsx, lib/lang/config.ts, public/icons/email.svg, public/icons/linkedin.svg, public/icons/whatsapp.svg, public/icons/zoom.svg, public/resume.pdf.
+// Purpose: Localized final contact CTA section with direct contact links, SMTP-backed email form, booking modal, local Algeria time, and resume download.
+// Linked files: app/[locale]/page.tsx, app/api/contact/route.ts, components/booking-modal.tsx, lib/lang/config.ts, public/icons/email.svg, public/icons/linkedin.svg, public/icons/whatsapp.svg, public/icons/zoom.svg.
 
 "use client";
 
@@ -15,10 +15,11 @@ import {
   PhoneCall,
   Send,
 } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 
 import BookingModal, { type BookingModalCopy } from "@/components/booking-modal";
 import type { Locale, TextDirection } from "@/lib/lang/config";
+import { useHydratedReducedMotion } from "@/lib/use-hydrated-reduced-motion";
 
 const CONTACT_EMAIL = "heithem.dev@gmail.com";
 const CONTACT_PHONE_DISPLAY = "+213 794 20 66 55";
@@ -38,21 +39,9 @@ type ContactStatus = Readonly<{
   message: string;
 }>;
 
-type ServerTimeResponse = Readonly<{
-  serverUtcMs: number;
-  timeZone: string;
-  time: string;
-  date: string;
-}>;
-
 type ContactApiResponse = Readonly<{
   ok: boolean;
   message: string;
-}>;
-
-type SyncedClockState = Readonly<{
-  syncedServerUtcMs: number;
-  syncedAtPerformanceMs: number;
 }>;
 
 type AlgeriaTimeSnapshot = Readonly<{
@@ -151,7 +140,6 @@ function formatAlgeriaTime(utcMs: number): AlgeriaTimeSnapshot {
       timeZone: ALGERIA_TIME_ZONE,
       hour: "2-digit",
       minute: "2-digit",
-      second: "2-digit",
       hour12: false,
     }).format(date),
     date: new Intl.DateTimeFormat("en-GB", {
@@ -172,7 +160,7 @@ function FadeIn({
   className?: string;
   delay?: number;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   return (
     <motion.div
@@ -216,75 +204,25 @@ function IconMask({
   );
 }
 
-function useServerSyncedAlgeriaTime() {
-  const [clockState, setClockState] = useState<SyncedClockState | null>(null);
-  const [, setRenderTick] = useState(0);
+function useAlgeriaTime() {
+  const [snapshot, setSnapshot] = useState<AlgeriaTimeSnapshot | null>(null);
 
   useEffect(() => {
-    let isMounted = true;
-
-    async function syncServerTime() {
-      try {
-        const requestStartedAt = performance.now();
-
-        const response = await fetch("/api/freelancer-time", {
-          cache: "no-store",
-        });
-
-        if (!response.ok) {
-          throw new Error("Unable to sync freelancer time.");
-        }
-
-        const requestFinishedAt = performance.now();
-        const data = (await response.json()) as ServerTimeResponse;
-
-        const estimatedNetworkHalfRoundTrip =
-          (requestFinishedAt - requestStartedAt) / 2;
-
-        if (!isMounted) {
-          return;
-        }
-
-        setClockState({
-          syncedServerUtcMs: data.serverUtcMs + estimatedNetworkHalfRoundTrip,
-          syncedAtPerformanceMs: requestFinishedAt,
-        });
-      } catch {
-        if (!isMounted) {
-          return;
-        }
-
-        setClockState(null);
-      }
+    function updateTime() {
+      setSnapshot(formatAlgeriaTime(Date.now()));
     }
 
-    syncServerTime();
-
-    const resyncIntervalId = window.setInterval(syncServerTime, 60_000);
+    updateTime();
+    const intervalId = window.setInterval(updateTime, 60_000);
+    document.addEventListener("visibilitychange", updateTime);
 
     return () => {
-      isMounted = false;
-      window.clearInterval(resyncIntervalId);
+      window.clearInterval(intervalId);
+      document.removeEventListener("visibilitychange", updateTime);
     };
   }, []);
 
-  useEffect(() => {
-    const tickIntervalId = window.setInterval(() => {
-      setRenderTick((currentTick) => currentTick + 1);
-    }, 1000);
-
-    return () => {
-      window.clearInterval(tickIntervalId);
-    };
-  }, []);
-
-  if (!clockState) {
-    return null;
-  }
-
-  const elapsedSinceSync = performance.now() - clockState.syncedAtPerformanceMs;
-
-  return formatAlgeriaTime(clockState.syncedServerUtcMs + elapsedSinceSync);
+  return snapshot;
 }
 
 function FreelancerTimeInline({
@@ -296,7 +234,7 @@ function FreelancerTimeInline({
   fallbackDate: string;
   textDirection: TextDirection;
 }) {
-  const snapshot = useServerSyncedAlgeriaTime();
+  const snapshot = useAlgeriaTime();
 
   return (
     <div className="flex items-center gap-3 text-[#111318]">
@@ -309,7 +247,7 @@ function FreelancerTimeInline({
 
         <p className="mt-1 text-[0.82rem] leading-none tracking-[-0.025em] text-[#111318]/66">
           <span className="font-mono text-[#111318]">
-            {snapshot?.time ?? "--:--:--"}
+            {snapshot?.time ?? "--:--"}
           </span>
           <span className="mx-2 text-[#111318]/24">·</span>
           <span>{snapshot?.date ?? fallbackDate}</span>

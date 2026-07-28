@@ -1,7 +1,11 @@
 {
   "metadata": {
-    "title": "Heithem Chorfi | Full-Stack Web Engineer for Web Apps, E-commerce, Platforms, and SaaS",
-    "description": "Full-stack web engineer focused on web apps, e-commerce, platforms, SaaS, clean UX, backend logic, and scalable product execution."
+    "title": "Heithem Chorfi | Freelance Full-Stack Developer in Algeria",
+    "description": "Freelance full-stack developer in Algeria building custom web apps, SaaS platforms, e-commerce stores, PWAs, and MVPs for startups and businesses worldwide.",
+    "aboutTitle": "About Heithem Chorfi | Full-Stack Developer in Algeria",
+    "aboutDescription": "Meet Heithem Chorfi, a software engineer and technical co-founder in Bejaia, Algeria, building full-stack web products for startups and businesses.",
+    "howIWorkTitle": "Web Development Process | Heithem Chorfi",
+    "howIWorkDescription": "See how I scope and build custom web apps, SaaS products, e-commerce stores, and MVPs as a freelance full-stack developer."
   },
   "navbar": {
     "logoAria": "Go to hero",
@@ -37,49 +41,47 @@
   },
   "projects": {
     "title": "Selected Work",
-    "intro": "Web products built around sales, trust, admin control, and real business use after launch.",
+    "intro": "Six products at different stages: launched work, a market test, an honest prototype, one non-commercial experiment, and a private startup that is not ready to be shared yet. Each one says what I actually did and what happened next.",
     "techUsed": "Tech used",
-    "accessWebapp": "Access webapp",
+    "contributionLabel": "My contribution",
+    "resultLabel": "What changed",
+    "viewCaseStudy": "View case study",
+    "selectedPreviewAria": "Selected project preview",
     "closeProjectAria": "Close project details",
-    "openProjectAria": "View details for",
     "imageUnavailable": "Image unavailable",
-    "mobileFirst": "Mobile-first",
     "items": {
       "laibi": {
         "number": "01",
         "title": "Supermarket Laibi 2",
         "category": "Local commerce",
-        "shortDescription": "A supermarket ordering web app built to work like a mobile app without native app cost.",
-        "value": "It gave the owner admin control over products, stock, categories, images, and orders. Reported sales increased by 130% on average.",
-        "role": "Full-stack web app",
+        "status": "Launched",
+        "summary": "I built a supermarket ordering PWA that feels at home on a phone and gives the owner one place to run the catalog and orders.",
+        "contribution": "Product structure, UX, full-stack development, PWA, and admin workflows.",
+        "result": "First-month sales reached roughly 1.25 times their previous level, before any paid promotion.",
+        "linkLabel": "Open live app",
         "year": "2026",
         "images": {
           "cardAlt": "Supermarket Laibi 2 web app project card",
           "mobileAlt": "Supermarket Laibi 2 mobile ordering interface",
           "desktopAlt": "Supermarket Laibi 2 desktop web interface"
         },
-        "showcase": {
-          "lead": {
-            "eyebrow": "Business goal",
-            "title": "Sell online without paying for native apps",
-            "body": "The supermarket needed a cheaper digital ordering channel that still felt easy on phones."
+        "caseStudy": {
+          "context": {
+            "eyebrow": "Why it existed",
+            "title": "Online ordering without funding two native apps",
+            "body": "The owner wanted a direct digital ordering channel, but a separate mobile build would have swallowed budget without solving a different problem."
           },
-          "problem": {
-            "eyebrow": "Problem fixed",
-            "title": "Orders were hard to manage manually",
-            "body": "The owner needed less phone chaos, clearer product updates, and a faster way to receive customer orders."
-          },
-          "system": {
+          "build": {
             "eyebrow": "What I built",
-            "title": "Catalog, cart, and admin panel",
-            "body": "Products, stock, categories, images, cart logic, and order tracking all live in one controlled system."
+            "title": "One PWA for customers, one admin system for the store",
+            "body": "I handled the product structure, catalog, cart, installable mobile experience, order flow, and the admin tools for products, stock, categories, images, and orders."
           },
           "outcome": {
-            "eyebrow": "Revenue result",
-            "title": "More orders with less admin work",
-            "body": "The app became the main digital sales surface and made daily store updates easier to manage.",
-            "stat": "130%",
-            "statLabel": "reported average sales lift"
+            "eyebrow": "After launch",
+            "title": "A 1.25x first month without a paid campaign",
+            "body": "First-month sales reached roughly 1.25 times their previous level. Because the product is a PWA, the owner also avoided paying for a separate native app.",
+            "highlight": "1.25x",
+            "highlightLabel": "first-month sales"
           }
         }
       },
@@ -87,37 +89,34 @@
         "number": "02",
         "title": "Said",
         "category": "Heavy truck parts e-commerce",
-        "shortDescription": "A mobile-first store for Algerian buyers who need the right truck part, not a similar-looking one.",
-        "value": "Part numbers, stock, delivery, and ordering were made clearer. The installable web app helped customers recognise the store faster, return more often, and place orders through the web app with less friction.",
-        "role": "Full-stack development, UX, product structure",
+        "status": "Prototype",
+        "summary": "I designed and built a heavy-truck-parts storefront around exact references, brands, and stock, not just product photos.",
+        "contribution": "Product structure, mobile UX, search and catalog flows, and a full-stack prototype.",
+        "result": "It still uses mock data, so I am not presenting a launch or sales result yet.",
+        "linkLabel": "View prototype",
         "year": "2026",
         "images": {
           "cardAlt": "Said heavy truck parts store project preview",
           "mobileAlt": "Said mobile shopping experience for heavy truck parts",
           "desktopAlt": "Said desktop product browsing experience"
         },
-        "showcase": {
-          "lead": {
-            "eyebrow": "Local parts store",
-            "title": "A clearer way to buy heavy truck parts",
-            "body": "Said sells heavy truck parts in Algeria, where buyers care about the correct part number, trusted brands, real stock, and clear delivery before they order."
+        "caseStudy": {
+          "context": {
+            "eyebrow": "The product problem",
+            "title": "A part that looks right can still be wrong",
+            "body": "Truck-parts buyers need the exact reference, brand, weight, availability, and delivery details before they can trust a listing."
           },
-          "problem": {
-            "eyebrow": "The problem",
-            "title": "Similar-looking parts create wrong orders",
-            "body": "In truck parts, a product image is not enough. The experience had to make identification numbers, brand names, product weight, and availability easy to check before the buyer takes action."
-          },
-          "system": {
-            "eyebrow": "The system",
-            "title": "Product discovery built around trust",
-            "body": "The store uses search, categories, brands, saved products, cart flow, order tracking, and admin control to keep buying simple for customers and manageable for the business."
+          "build": {
+            "eyebrow": "What I built",
+            "title": "A catalog that puts identification before decoration",
+            "body": "I shaped the search, categories, brands, saved products, cart, order tracking, and admin flow around the information buyers actually check."
           },
           "outcome": {
-            "eyebrow": "The result",
-            "title": "Easier to recognise. Easier to return to.",
-            "body": "The PWA-style install feature made the store feel closer to a real app without building a native app. That helped customers come back faster and pushed more orders through the web experience.",
-            "stat": "PWA",
-            "statLabel": "Installable web app experience"
+            "eyebrow": "Current stage",
+            "title": "Ready for real inventory, without a made-up result",
+            "body": "The product is functional and browsable, but it has not entered day-to-day business use. This case study stops at what I actually built.",
+            "highlight": "Prototype",
+            "highlightLabel": "not launched yet"
           }
         }
       },
@@ -125,37 +124,34 @@
         "number": "03",
         "title": "Rimoochat",
         "category": "E-commerce store",
-        "shortDescription": "A handmade clothing store built around trust, rarity, and a clear buying path.",
-        "value": "The store helped the family business turn online attention into sales. It now drives more than 90% of current income.",
-        "role": "Frontend and UX",
+        "status": "In use",
+        "summary": "I built Rimoochat for my mother's handmade clothing business, with a simple path from seeing a piece to starting the right conversation.",
+        "contribution": "Frontend development, mobile UX, product presentation, and the customer contact flow.",
+        "result": "It became the business's main customer channel and cut repeated back-and-forth for both sides.",
+        "linkLabel": "Open live store",
         "year": "2025",
         "images": {
           "cardAlt": "Rimoochat e-commerce store project card",
           "mobileAlt": "Rimoochat mobile store interface",
           "desktopAlt": "Rimoochat desktop store interface"
         },
-        "showcase": {
-          "lead": {
-            "eyebrow": "Business goal",
-            "title": "Make handmade clothes feel worth buying",
-            "body": "The store needed to show care, rarity, and trust fast for mothers buying clothes for their kids."
+        "caseStudy": {
+          "context": {
+            "eyebrow": "A family business",
+            "title": "My mother's work needed one clear home online",
+            "body": "Customers were arriving through scattered messages. They needed a place to see the work first, understand what was available, and get in touch with better context."
           },
-          "problem": {
-            "eyebrow": "Problem fixed",
-            "title": "A normal catalog would make it feel cheap",
-            "body": "The products needed a soft story and a direct path to purchase, not a generic product grid."
-          },
-          "system": {
+          "build": {
             "eyebrow": "What I built",
-            "title": "Storefront shaped around one audience",
-            "body": "The layout, copy, product framing, and mobile flow all support a focused customer group."
+            "title": "A storefront that leads into a useful conversation",
+            "body": "I focused the product presentation and mobile flow around handmade clothing, then made the contact path clear enough to reduce repeated questions."
           },
           "outcome": {
-            "eyebrow": "Revenue result",
-            "title": "The store became the main income channel",
-            "body": "The family now relies on the website as the main place where customers browse and buy.",
-            "stat": "90%+",
-            "statLabel": "of current business income"
+            "eyebrow": "In daily use",
+            "title": "Less time lost on both sides",
+            "body": "The website is now the main place customers discover the business and make contact. It also gives my mother a clearer way to manage those conversations.",
+            "highlight": "Main",
+            "highlightLabel": "customer channel"
           }
         }
       },
@@ -163,40 +159,127 @@
         "number": "04",
         "title": "Unimarket",
         "category": "Student marketplace",
-        "shortDescription": "A student marketplace built for USTHB buyers and sellers instead of generic selling channels.",
-        "value": "It added trust with auth, email verification, moderation, seller flows, buyer flows, and local payment logic.",
-        "role": "Full-stack system",
+        "status": "Market testing",
+        "summary": "I built Unimarket as social commerce: the familiar rhythm of social media, but the feed is made of products and stores.",
+        "contribution": "Product architecture, UX, full-stack development, and the seller and buyer flows.",
+        "result": "The production MVP took one month and is now being tested in the market.",
+        "linkLabel": "Open market test",
         "year": "2025",
         "images": {
           "cardAlt": "Unimarket student marketplace project card",
           "mobileAlt": "Unimarket mobile marketplace interface",
           "desktopAlt": "Unimarket desktop marketplace interface"
         },
-        "showcase": {
-          "lead": {
-            "eyebrow": "Business goal",
-            "title": "Create a trusted student marketplace",
-            "body": "USTHB students needed one focused place to sell, buy, and trade inside their own university environment."
+        "caseStudy": {
+          "context": {
+            "eyebrow": "The product idea",
+            "title": "Social discovery built around products, not posts",
+            "body": "The client wanted stores and buyers to meet through a familiar feed instead of another rigid catalog or classified-ads page."
           },
-          "problem": {
-            "eyebrow": "Problem fixed",
-            "title": "Generic platforms had weak trust",
-            "body": "Students had no dedicated seller flow, no campus-focused browsing, and no moderation layer."
-          },
-          "system": {
-            "eyebrow": "What I built",
-            "title": "Marketplace logic from zero",
-            "body": "Auth, email verification, buyer flow, seller flow, listings, moderation, and cash-on-delivery handling."
+          "build": {
+            "eyebrow": "The first release",
+            "title": "A production MVP in one month",
+            "body": "I built the product structure, authentication, store and buyer flows, product discovery, moderation, and the working foundation needed for a real market test."
           },
           "outcome": {
-            "eyebrow": "Product result",
-            "title": "A real marketplace system",
-            "body": "The platform replaced scattered selling with a cleaner, safer, and more focused student trade experience.",
-            "stat": "2 mo",
-            "statLabel": "to deployable platform"
+            "eyebrow": "Current stage",
+            "title": "A first version the client was happy to test",
+            "body": "The client was satisfied with the result and the product is now testing its place in the market rather than pretending the idea is already proven.",
+            "highlight": "1 mo",
+            "highlightLabel": "to production MVP"
+          },
+          "roadmap": {
+            "eyebrow": "Planned next",
+            "title": "Auctions, product reels, and delivery connections",
+            "body": "Live auctions, short product videos, and delivery-agency integrations are on the roadmap. They are planned features, not shipped claims."
+          }
+        }
+      },
+      "duks": {
+        "number": "05",
+        "title": "DUKS Perfume",
+        "category": "Experimental product site",
+        "status": "Non-commercial fun project",
+        "summary": "I designed and built DUKS as a playful Arabic-first perfume experience, using motion and responsive art direction to make one product feel like a campaign.",
+        "contribution": "Concept, visual direction, Arabic-first UX, responsive frontend, and interaction design.",
+        "result": "A finished personal experiment in cinematic product storytelling, not a commercial client launch.",
+        "linkLabel": "Open fun project",
+        "year": "2026",
+        "images": {
+          "cardAlt": "DUKS perfume experimental website project card",
+          "mobileAlt": "Arabic-first DUKS perfume experience on mobile",
+          "desktopAlt": "DUKS perfume campaign-style desktop experience"
+        },
+        "caseStudy": {
+          "context": {
+            "eyebrow": "Why I made it",
+            "title": "A playground for one product, not another catalog",
+            "body": "I wanted to see how far one perfume could carry an entire experience when the page was treated like a campaign instead of an ordinary storefront."
+          },
+          "build": {
+            "eyebrow": "What I explored",
+            "title": "Arabic-first art direction across desktop and mobile",
+            "body": "I built the responsive layout, oversized Arabic type, product transitions, social and contact paths, and separate compositions for wide and narrow screens."
+          },
+          "outcome": {
+            "eyebrow": "What it is",
+            "title": "A finished experiment, with no commercial claim",
+            "body": "DUKS is a personal fun project. It was not commissioned, and I am not attaching sales or client results to it. Its value is the visual and frontend exploration.",
+            "highlight": "Personal",
+            "highlightLabel": "non-commercial project"
+          }
+        }
+      },
+      "reperto": {
+        "number": "06",
+        "title": "Reperto",
+        "category": "Private startup",
+        "status": "Coming soon",
+        "summary": "Reperto is complete. I built it as technical co-founder and co-owner, but the product itself stays private for now.",
+        "contribution": "Technical co-founding, product architecture, full-stack implementation, and technical ownership.",
+        "result": "The system is complete; I will share the case study and link after its intellectual-property protection is in place.",
+        "linkLabel": "Coming soon",
+        "year": "2026",
+        "images": {
+          "cardAlt": "Orange Reperto startup logo",
+          "mobileAlt": "Orange Reperto startup logo in a portrait composition",
+          "desktopAlt": "Orange Reperto startup logo"
+        },
+        "caseStudy": {
+          "context": {
+            "eyebrow": "Why it stays private",
+            "title": "The product is finished; the public reveal comes later",
+            "body": "We are keeping the product and its operating details private until the necessary intellectual-property protection is secured."
+          },
+          "build": {
+            "eyebrow": "My role",
+            "title": "Technical co-founder and co-owner",
+            "body": "I own the technical side, from product architecture and technical decisions through implementation and delivery."
+          },
+          "outcome": {
+            "eyebrow": "Current stage",
+            "title": "Complete, with protection before publication",
+            "body": "The system is done. I will publish the case study and startup link when we can share them without exposing what needs protection.",
+            "highlight": "Done",
+            "highlightLabel": "public reveal coming soon"
           }
         }
       }
+    }
+  },
+  "teasers": {
+    "ariaLabel": "More about Heithem",
+    "howIWork": {
+      "eyebrow": "Process",
+      "title": "How I take a project from rough idea to build.",
+      "body": "Discovery, scope, investment, and responsibilities get clear before development starts.",
+      "action": "See how I work"
+    },
+    "about": {
+      "eyebrow": "About",
+      "title": "The person behind the build.",
+      "body": "A little more about my engineering background, product thinking, and the kind of work I care about.",
+      "action": "More about me"
     }
   },
   "howIWork": {

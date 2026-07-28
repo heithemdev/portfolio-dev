@@ -31,6 +31,11 @@ const nextConfig = {
         destination: "https://www.heithemdev.com/:path*",
         permanent: true,
       },
+      {
+        source: "/resume/:path*",
+        destination: "/Heithem_Chorfi_Resume.pdf",
+        permanent: true,
+      },
     ];
   },
 
@@ -54,6 +59,33 @@ const nextConfig = {
           {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+      {
+        source: "/api/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow, nosnippet",
+          },
+        ],
+      },
+      {
+        source: "/Heithem_Chorfi_Resume.pdf",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, follow",
+          },
+        ],
+      },
+      {
+        source: "/Heithem_Chorfi_CV_FR.pdf",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, follow",
           },
         ],
       },

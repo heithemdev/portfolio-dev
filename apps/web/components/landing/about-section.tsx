@@ -6,11 +6,19 @@
 
 import Image from "next/image";
 import type { ReactNode } from "react";
-import { ArrowDown, GraduationCap, MapPin, Route } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import {
+  ArrowDown,
+  ChartNoAxesCombined,
+  GraduationCap,
+  MapPin,
+  Route,
+  Workflow,
+} from "lucide-react";
+import { motion } from "motion/react";
 
 import SmoothSectionLink from "@/components/smooth-section-link";
 import type { TextDirection } from "@/lib/lang/config";
+import { useHydratedReducedMotion } from "@/lib/use-hydrated-reduced-motion";
 
 type ValuePoint = Readonly<{
   id: string;
@@ -28,7 +36,7 @@ type MiniFact = MiniFactCopy &
     icon: typeof MapPin;
   }>;
 
-type AboutCopy = Readonly<{
+export type AboutCopy = Readonly<{
   eyebrow: string;
   title: string;
   paragraphs: ReadonlyArray<string>;
@@ -42,6 +50,7 @@ type AboutCopy = Readonly<{
 
 type AboutSectionProps = Readonly<{
   copy: AboutCopy;
+  contactHref: string;
   textDirection: TextDirection;
 }>;
 
@@ -49,6 +58,7 @@ const ABOUT_IMAGE_SRC = "/assets/Heithem about.png";
 const SOFTWARE_ENGINEER_ICON_SRC = "/icons/software-engineer.svg";
 
 const miniFactIcons = [MapPin, GraduationCap, Route] as const;
+const valuePointIcons = [ChartNoAxesCombined, Workflow] as const;
 
 function buildMiniFacts(copy: ReadonlyArray<MiniFactCopy>): ReadonlyArray<MiniFact> {
   return copy.map((fact, index) => ({
@@ -66,7 +76,7 @@ function FadeIn({
   className?: string;
   delay?: number;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   return (
     <motion.div
@@ -82,28 +92,6 @@ function FadeIn({
     >
       {children}
     </motion.div>
-  );
-}
-
-function FilledStarIcon({ className = "h-7 w-7" }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      className={className}
-      fill="none"
-    >
-      <path
-        d="M12 2.75L14.65 9.35L21.25 12L14.65 14.65L12 21.25L9.35 14.65L2.75 12L9.35 9.35L12 2.75Z"
-        fill="#B8792E"
-      />
-      <path
-        d="M12 2.75L14.65 9.35L21.25 12L14.65 14.65L12 21.25L9.35 14.65L2.75 12L9.35 9.35L12 2.75Z"
-        stroke="#B8792E"
-        strokeWidth="1.35"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }
 
@@ -154,15 +142,23 @@ function MiniFactItem({
 
 function ValuePointItem({
   point,
+  index,
   textDirection,
 }: {
   point: ValuePoint;
+  index: number;
   textDirection: TextDirection;
 }) {
+  const Icon = valuePointIcons[index] ?? Workflow;
+
   return (
     <article className="grid grid-cols-[2.8rem_1fr] gap-4" dir={textDirection}>
-      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#111318]">
-        <FilledStarIcon />
+      <div className="flex h-11 w-11 items-center justify-center border border-[#111318]/16 bg-[#111318]">
+        <Icon
+          aria-hidden="true"
+          className="h-5 w-5 text-[#B8792E]"
+          strokeWidth={1.8}
+        />
       </div>
 
       <div>
@@ -183,15 +179,17 @@ function ValuePointItem({
 }
 
 function ProjectButton({
+  href,
   label,
   textDirection,
 }: {
+  href: string;
   label: string;
   textDirection: TextDirection;
 }) {
   return (
     <SmoothSectionLink
-      href="#contact"
+      href={href}
       className="group mt-9 inline-flex w-fit items-center gap-3 border border-[#111318] bg-[#111318] px-5 py-4 text-[0.88rem] font-medium leading-none tracking-[-0.025em] text-[#F4EFE8] transition duration-200 hover:border-[#B8792E] hover:bg-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8]"
     >
       <span dir={textDirection}>{label}</span>
@@ -233,7 +231,8 @@ function CenterImpactCard({
           fill
           sizes="(min-width: 1280px) 24vw, (min-width: 1024px) 32vw, 100vw"
           className="object-contain object-center"
-          priority={false}
+          loading="eager"
+          fetchPriority="high"
         />
       </div>
 
@@ -254,12 +253,13 @@ function RightColumn({
   return (
     <div className="flex h-full flex-col justify-end gap-10 lg:pt-20">
       <div className="grid gap-8">
-        {copy.valuePoints.map((point) => (
-          <ValuePointItem
-            key={point.id}
-            point={point}
-            textDirection={textDirection}
-          />
+          {copy.valuePoints.map((point, index) => (
+            <ValuePointItem
+              key={point.id}
+              point={point}
+              index={index}
+              textDirection={textDirection}
+            />
         ))}
       </div>
 
@@ -278,6 +278,7 @@ function RightColumn({
 
 export default function AboutSection({
   copy,
+  contactHref,
   textDirection,
 }: AboutSectionProps) {
   return (
@@ -296,12 +297,12 @@ export default function AboutSection({
               {copy.eyebrow}
             </p>
 
-            <h2
+            <h1
               id="about-title"
               className="mt-4 max-w-[36rem] text-[clamp(2.15rem,4vw,4.25rem)] font-normal leading-[0.92] tracking-[-0.08em] text-[#111318]"
             >
               {copy.title}
-            </h2>
+            </h1>
 
             <div className="relative mt-7 max-w-[40rem]">
               <div className="relative z-10 space-y-4 text-[clamp(1rem,1.18vw,1.12rem)] leading-[1.6] tracking-[-0.03em] text-[#111318]/64">
@@ -313,6 +314,7 @@ export default function AboutSection({
           </div>
 
           <ProjectButton
+            href={contactHref}
             label={copy.startProject}
             textDirection={textDirection}
           />

@@ -7,9 +7,10 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ArrowUpRight, X } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 
 import type { TextDirection } from "@/lib/lang/config";
+import { useHydratedReducedMotion } from "@/lib/use-hydrated-reduced-motion";
 
 export type BookingModalCopy = Readonly<{
   eyebrow: string;
@@ -46,7 +47,7 @@ export default function BookingModal({
   copy,
   textDirection,
 }: BookingModalProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
   const panelRef = useRef<HTMLDivElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const onCloseRef = useRef(onClose);

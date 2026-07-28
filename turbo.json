@@ -4,7 +4,8 @@
   "globalEnv": [
     "CONTACT_FROM_NAME",
     "DATABASE_URL",
-    "DIRECT_URL"
+    "DIRECT_URL",
+    "SEO_AUDIT_ORIGIN"
   ],
   "tasks": {
     "build": {
