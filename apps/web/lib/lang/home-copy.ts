@@ -3,8 +3,11 @@
 
 import "server-only";
 
+import { PROJECTS } from "@/lib/projects";
+
 import type {
   ProjectCopyItem,
+  ProjectGroup,
   ProjectsCopy,
 } from "@/components/landing/projects";
 import type { TranslationValues } from "@/lib/lang/dictionary";
@@ -12,44 +15,23 @@ import type { TranslationValues } from "@/lib/lang/dictionary";
 type Translator = (key: string, values?: TranslationValues) => string;
 
 type ProjectConfig = Readonly<{
-  key: "laibi" | "said" | "rimoochat" | "unimarket" | "duks" | "reperto";
+  key:
+    | "laibi"
+    | "said"
+    | "rimoochat"
+    | "unimarket"
+    | "duks"
+    | "reperto"
+    | "tahwisa"
+    | "waity"
+    | "awid";
   id: string;
+  group: ProjectGroup;
   href?: string;
   hasRoadmap?: boolean;
 }>;
 
-const projectConfigs: ReadonlyArray<ProjectConfig> = [
-  {
-    key: "laibi",
-    id: "supermarket-laibi-2",
-    href: "https://www.superettelaibi.com/",
-  },
-  {
-    key: "said",
-    id: "said",
-    href: "https://said-web-seven.vercel.app/",
-  },
-  {
-    key: "rimoochat",
-    id: "rimoochat",
-    href: "https://rimoochat.com/",
-  },
-  {
-    key: "unimarket",
-    id: "unimarket",
-    href: "https://unimarcket.com/",
-    hasRoadmap: true,
-  },
-  {
-    key: "duks",
-    id: "duks",
-    href: "https://duks-perfume.vercel.app/",
-  },
-  {
-    key: "reperto",
-    id: "reperto",
-  },
-];
+const projectConfigs: ReadonlyArray<ProjectConfig> = PROJECTS;
 
 function getProjectCopyItem(
   t: Translator,
@@ -76,6 +58,7 @@ function getProjectCopyItem(
     year: t(`${baseKey}.year`),
     href: config.href ?? "",
     linkLabel: t(`${baseKey}.linkLabel`),
+    group: config.group,
     cardAlt: t(`${baseKey}.images.cardAlt`),
     mobileAlt: t(`${baseKey}.images.mobileAlt`),
     desktopAlt: t(`${baseKey}.images.desktopAlt`),
@@ -113,6 +96,17 @@ export function getProjectsCopy(t: Translator): ProjectsCopy {
     closeProjectAria: t("projects.closeProjectAria"),
     imageUnavailable: t("projects.imageUnavailable"),
     selectedPreviewAria: t("projects.selectedPreviewAria"),
+    previousImageAria: t("projects.previousImageAria"),
+    nextImageAria: t("projects.nextImageAria"),
+    slidePosition: t("projects.slidePosition"),
+    filters: {
+      ariaLabel: t("projects.filters.ariaLabel"),
+      all: t("projects.filters.all"),
+      ecommerce: t("projects.filters.ecommerce"),
+      platforms: t("projects.filters.platforms"),
+      saas: t("projects.filters.saas"),
+      internal: t("projects.filters.internal"),
+    },
     items: projectConfigs.map((config) => getProjectCopyItem(t, config)),
   };
 }

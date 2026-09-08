@@ -10,6 +10,8 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
+        // Includes search and AI discovery crawlers. Keep pages, images, CSS,
+        // and JavaScript crawlable; API endpoints are not search content.
         userAgent: "*",
         allow: "/",
         disallow: ["/api/"],

@@ -41,24 +41,35 @@
   },
   "projects": {
     "title": "Projets sélectionnés",
-    "intro": "Six produits à des étapes différentes : des projets lancés, un test marché, un prototype présenté honnêtement, une expérience personnelle non commerciale et une startup privée qui n’est pas encore prête à être dévoilée. Pour chacun, je précise ce que j’ai réellement fait.",
+    "intro": "",
     "techUsed": "Stack utilisée",
     "contributionLabel": "Ma contribution",
-    "resultLabel": "Ce qui a changé",
-    "viewCaseStudy": "Voir l’étude de cas",
+    "resultLabel": "Résultat / objectif",
+    "viewCaseStudy": "Détails du projet",
     "selectedPreviewAria": "Aperçu du projet sélectionné",
     "closeProjectAria": "Fermer les détails du projet",
     "imageUnavailable": "Image indisponible",
+    "previousImageAria": "Image précédente du projet",
+    "nextImageAria": "Image suivante du projet",
+    "slidePosition": "Image du projet",
+    "filters": {
+      "ariaLabel": "Filtrer les projets",
+      "all": "Tous",
+      "ecommerce": "E-commerce",
+      "platforms": "Plateformes",
+      "saas": "Apps SaaS",
+      "internal": "Systèmes internes"
+    },
     "items": {
       "laibi": {
         "number": "01",
-        "title": "Supermarket Laibi 2",
-        "category": "Commerce local",
-        "status": "En ligne",
-        "summary": "J’ai conçu et développé une PWA de commande pour supermarché, agréable sur mobile et reliée à un seul espace de gestion pour le catalogue et les commandes.",
-        "contribution": "Structure produit, UX, développement full-stack, PWA et outils d’administration.",
-        "result": "Les ventes du premier mois ont atteint environ 1,25 fois leur niveau précédent, avant toute promotion payante.",
-        "linkLabel": "Ouvrir l’application",
+        "title": "Superette Laibi",
+        "category": "E-commerce · PWA",
+        "status": "En production",
+        "summary": "J’ai construit un site de courses pour un supermarché à Bouira. Les clients commandent depuis chez eux. Le gérant utilise le même système pour mettre à jour le magasin et suivre les commandes.",
+        "contribution": "J’ai défini le produit, conçu les écrans clients et admin, construit tout le système et assuré sa mise en ligne.",
+        "result": "Une seule petite campagne a généré environ 50 % de ROI pendant les 27 premiers jours. 94,4 % des commandes ont été livrées.",
+        "linkLabel": "Visiter le site",
         "year": "2026",
         "images": {
           "cardAlt": "Carte projet de l’app web Supermarket Laibi 2",
@@ -68,20 +79,20 @@
         "caseStudy": {
           "context": {
             "eyebrow": "Pourquoi ce produit",
-            "title": "Commander en ligne sans financer deux applications natives",
-            "body": "Le propriétaire voulait un canal de commande direct, mais une application mobile séparée aurait absorbé du budget sans résoudre un autre problème."
+            "title": "Le supermarché vendait seulement aux clients présents sur place",
+            "body": "Le gérant voulait recevoir des commandes en ligne sans passer des heures à mettre à jour un second système. Le stock, les prix, les photos et les commandes devaient rester simples à gérer."
           },
           "build": {
             "eyebrow": "Ce que j’ai construit",
-            "title": "Une PWA pour les clients, un système d’administration pour le magasin",
-            "body": "J’ai pris en charge la structure du produit, le catalogue, le panier, l’installation sur mobile, le parcours de commande et la gestion des produits, stocks, catégories, images et commandes."
+            "title": "J’ai construit la boutique et les outils de gestion",
+            "body": "Les clients parcourent les produits, cherchent, filtrent, ajoutent au panier et commandent. Le gérant suit les produits, le stock, les images et les commandes, avec import Excel et alertes. Nous avons utilisé une PWA pour le site et l’app à installer. Le système tourne sur un VPS Oracle derrière Cloudflare."
           },
           "outcome": {
             "eyebrow": "Après le lancement",
-            "title": "Un premier mois à 1,25x sans campagne payante",
-            "body": "Les ventes du premier mois ont atteint environ 1,25 fois leur niveau précédent. Le format PWA a aussi évité au propriétaire de financer une application native séparée.",
-            "highlight": "1,25x",
-            "highlightLabel": "ventes du premier mois"
+            "title": "Une petite campagne a apporté de vraies commandes",
+            "body": "La plateforme a atteint environ 50 % de ROI pendant les 27 premiers jours. Le gérant a lancé une seule petite campagne et 94,4 % des commandes ont été livrées.",
+            "highlight": "≈50 %",
+            "highlightLabel": "de ROI en 27 jours"
           }
         }
       },
@@ -90,10 +101,10 @@
         "title": "Said",
         "category": "E-commerce de pièces poids lourds",
         "status": "Prototype",
-        "summary": "J’ai conçu une boutique de pièces poids lourds centrée sur les références exactes, les marques et le stock, pas seulement sur les photos.",
-        "contribution": "Structure produit, UX mobile, recherche, catalogue et prototype full-stack.",
-        "result": "Le produit utilise encore des données fictives, donc je ne présente pas de résultat commercial ou terrain.",
-        "linkLabel": "Voir le prototype",
+        "summary": "J’ai construit un catalogue en ligne pour un vendeur de pièces poids lourds à Alger. Les clients cherchent par référence, marque, modèle de camion et stock avant d’appeler ou de commander.",
+        "contribution": "J’ai défini le catalogue, conçu le parcours mobile, construit la recherche et les pages de commande, puis livré le prototype.",
+        "result": "Le but est de toucher des clients dans toute l’Algérie et de passer moins de temps à envoyer des photos ou répondre sur le stock. La boutique utilise encore des données de test.",
+        "linkLabel": "Ouvrir la démo",
         "year": "2026",
         "images": {
           "cardAlt": "Aperçu du projet Said pour la vente de pièces poids lourds",
@@ -103,18 +114,18 @@
         "caseStudy": {
           "context": {
             "eyebrow": "Le problème produit",
-            "title": "Une pièce qui semble correcte peut être la mauvaise",
-            "body": "Les acheteurs doivent vérifier la référence, la marque, le poids, la disponibilité et la livraison avant de pouvoir faire confiance à une fiche."
+            "title": "Les clients posaient toujours les mêmes questions",
+            "body": "Avez-vous cette pièce ? Quelle est la référence ? Convient-elle à mon camion ? Est-elle en stock ? Le vendeur devait répondre à chaque personne à la main."
           },
           "build": {
             "eyebrow": "Ce que j’ai construit",
-            "title": "Un catalogue où l’identification passe avant la décoration",
-            "body": "J’ai structuré la recherche, les catégories, les marques, les favoris, le panier, le suivi des commandes et l’administration autour des informations réellement vérifiées."
+            "title": "J’ai rendu le stock simple à chercher",
+            "body": "J’ai construit la recherche, les catégories, les marques, les fiches produit, les favoris, le panier, le suivi des commandes et les outils admin. Nous avons mis la référence et la compatibilité en premier."
           },
           "outcome": {
             "eyebrow": "Étape actuelle",
-            "title": "Prêt pour un vrai stock, sans résultat inventé",
-            "body": "Le produit fonctionne et peut être parcouru, mais il n’est pas encore utilisé au quotidien par l’entreprise. Cette étude de cas s’arrête à ce que j’ai réellement construit.",
+            "title": "Prêt pour le vrai stock du vendeur",
+            "body": "Le prototype est prêt à recevoir les vrais produits. Il n’a pas servi pour des ventes réelles, donc je ne présente aucun résultat commercial.",
             "highlight": "Prototype",
             "highlightLabel": "pas encore lancé"
           }
@@ -123,12 +134,12 @@
       "rimoochat": {
         "number": "03",
         "title": "Rimoochat",
-        "category": "Boutique e-commerce",
-        "status": "Utilisé au quotidien",
-        "summary": "J’ai créé Rimoochat pour l’activité de vêtements faits main de ma mère, avec un chemin simple entre la découverte d’une pièce et la bonne conversation.",
-        "contribution": "Développement frontend, UX mobile, présentation des produits et parcours de contact.",
-        "result": "Le site est devenu le principal canal client de l’activité et a réduit les échanges répétitifs des deux côtés.",
-        "linkLabel": "Ouvrir la boutique",
+        "category": "E-commerce artisanal",
+        "status": "En ligne · Utilisé",
+        "summary": "J’ai construit Rimoochat pour vendre des robes et des textiles faits main en ligne. Les clients voient toute la gamme, ouvrent chaque produit et commandent sans chercher dans les anciens posts ou messages.",
+        "contribution": "J’ai défini la boutique, conçu les pages, construit le frontend et créé le parcours de commande mobile.",
+        "result": "La boutique a aidé à augmenter les ventes pendant les derniers mois. Elle donne aussi aux clients un seul endroit pour parcourir les produits et commander.",
+        "linkLabel": "Ouvrir la démo",
         "year": "2025",
         "images": {
           "cardAlt": "Carte projet de la boutique e-commerce Rimoochat",
@@ -137,21 +148,21 @@
         },
         "caseStudy": {
           "context": {
-            "eyebrow": "Une activité familiale",
-            "title": "Le travail de ma mère avait besoin d’un vrai point de repère en ligne",
-            "body": "Les clientes arrivaient par des messages dispersés. Il leur fallait un endroit pour voir les créations, comprendre ce qui était disponible et prendre contact avec plus de contexte."
+            "eyebrow": "Le problème produit",
+            "title": "Vendre par messages rendait chaque commande plus difficile",
+            "body": "Les clients devaient demander les produits disponibles, attendre les photos et répéter les mêmes questions. Dans un fil chargé, les pièces faites main ressemblaient aussi à des produits ordinaires."
           },
           "build": {
             "eyebrow": "Ce que j’ai construit",
-            "title": "Une boutique qui mène à une conversation utile",
-            "body": "J’ai centré la présentation et le parcours mobile sur les vêtements faits main, puis rendu la prise de contact assez claire pour éviter les mêmes questions."
+            "title": "J’ai donné une page à chaque produit",
+            "body": "J’ai construit une boutique simple avec des photos claires, les prix, les détails et un parcours de commande court. Nous avons gardé un design doux pour mettre le travail fait main au centre."
           },
           "outcome": {
-            "eyebrow": "Dans l’usage quotidien",
-            "title": "Moins de temps perdu des deux côtés",
-            "body": "Le site est maintenant le principal endroit où les clientes découvrent l’activité et prennent contact. Ma mère peut aussi mieux organiser ces échanges.",
-            "highlight": "Canal n°1",
-            "highlightLabel": "pour les clientes"
+            "eyebrow": "Étape actuelle",
+            "title": "Plus de ventes pendant les derniers mois",
+            "body": "Rimoochat est maintenant utilisé. Il a aidé l’activité à vendre plus et donne aux clients un parcours plus simple pour voir les produits et commander.",
+            "highlight": "En ligne",
+            "highlightLabel": "les ventes ont augmenté"
           }
         }
       },
@@ -159,11 +170,11 @@
         "number": "04",
         "title": "Unimarket",
         "category": "Commerce social",
-        "status": "Test marché",
-        "summary": "J’ai construit Unimarket comme un réseau de commerce social : le rythme familier des réseaux sociaux, mais avec des produits et des boutiques dans le fil.",
-        "contribution": "Architecture produit, UX, développement full-stack et parcours vendeur et acheteur.",
-        "result": "Le MVP de production a pris un mois et se trouve maintenant en phase de test marché.",
-        "linkLabel": "Ouvrir le test",
+        "status": "En cours de lancement",
+        "summary": "J’ai construit Unimarket pour réunir le shopping social et les boutiques en ligne dans une app. Les utilisateurs suivent les vendeurs, voient les nouveaux produits, gardent leurs favoris et commandent.",
+        "contribution": "J’ai défini le produit, conçu les parcours vendeur et acheteur, puis construit toute la plateforme.",
+        "result": "Le produit principal est prêt et Unimarket est maintenant en phase de lancement. Les chiffres de vente et d’usage viendront après le lancement.",
+        "linkLabel": "Ouvrir la démo",
         "year": "2025",
         "images": {
           "cardAlt": "Carte projet de la marketplace étudiante Unimarket",
@@ -173,20 +184,20 @@
         "caseStudy": {
           "context": {
             "eyebrow": "L’idée produit",
-            "title": "Une découverte sociale centrée sur les produits, pas sur les publications",
-            "body": "Le client voulait faire se rencontrer boutiques et acheteurs dans un fil familier, plutôt que dans un catalogue rigide ou un site de petites annonces."
+            "title": "Une publication produit disparaît vite",
+            "body": "Les vendeurs doivent publier sans arrêt et payer pour toucher des acheteurs. Les anciens produits descendent dans le fil et les commandes se mélangent aux messages normaux."
           },
           "build": {
-            "eyebrow": "La première version",
-            "title": "Un MVP de production en un mois",
-            "body": "J’ai construit la structure du produit, l’authentification, les parcours boutique et acheteur, la découverte, la modération et la base nécessaire à un vrai test marché."
+            "eyebrow": "Ce que j’ai construit",
+            "title": "J’ai réuni le fil et la boutique",
+            "body": "Les vendeurs ont des boutiques, des produits, des abonnés et des outils de commande. Les acheteurs suivent, aiment, gardent, partagent et commandent. Nous avions prévu la vente en direct et les enchères, sans les livrer."
           },
           "outcome": {
             "eyebrow": "Étape actuelle",
-            "title": "Une première version que le client était heureux de tester",
-            "body": "Le client était satisfait du résultat. Le produit teste maintenant sa place sur le marché au lieu de présenter l’idée comme déjà validée.",
-            "highlight": "1 mois",
-            "highlightLabel": "jusqu’au MVP de production"
+            "title": "Unimarket prépare son lancement",
+            "body": "Les principaux parcours vendeur et acheteur sont prêts. Le travail actuel porte sur le lancement, donc il n’y a pas encore de chiffres publics.",
+            "highlight": "Lancement",
+            "highlightLabel": "phase actuelle"
           },
           "roadmap": {
             "eyebrow": "Prévu ensuite",
@@ -198,12 +209,12 @@
       "duks": {
         "number": "05",
         "title": "DUKS Perfume",
-        "category": "Expérience produit",
-        "status": "Projet personnel non commercial",
-        "summary": "J’ai conçu DUKS comme une expérience de parfum ludique pensée d’abord en arabe, avec du mouvement et une direction artistique qui change vraiment entre mobile et desktop.",
-        "contribution": "Concept, direction visuelle, UX en arabe, frontend responsive et design des interactions.",
-        "result": "Une expérience personnelle aboutie autour du storytelling produit, sans lancement client ni objectif commercial.",
-        "linkLabel": "Ouvrir le projet",
+        "category": "Expérience de site pour parfum",
+        "status": "Projet pour le plaisir",
+        "summary": "J’ai créé un site en arabe pour DUKS Perfume, pour le plaisir. Il utilise des photos fortes, du texte, une mise en page et du mouvement pour donner au parfum son propre univers.",
+        "contribution": "J’ai créé l’idée, le style visuel, les pages en arabe, la version mobile et le frontend.",
+        "result": "DUKS a beaucoup aimé le prototype, mais il ne pouvait pas l’utiliser à cause de son contrat avec Ayor.",
+        "linkLabel": "Ouvrir la démo",
         "year": "2026",
         "images": {
           "cardAlt": "Carte du projet expérimental DUKS Perfume",
@@ -213,20 +224,20 @@
         "caseStudy": {
           "context": {
             "eyebrow": "Pourquoi je l’ai créé",
-            "title": "Un terrain de jeu pour un seul produit, pas un catalogue de plus",
-            "body": "Je voulais voir jusqu’où un seul parfum pouvait porter toute une expérience en traitant la page comme une campagne plutôt que comme une boutique ordinaire."
+            "title": "La page d’un parfum doit ressembler au produit",
+            "body": "Je voulais voir jusqu’où un parfum pouvait porter tout un site avec son propre style, son rythme et son histoire."
           },
           "build": {
-            "eyebrow": "Ce que j’ai exploré",
-            "title": "Une direction artistique arabe pensée pour chaque écran",
-            "body": "J’ai construit le layout responsive, la typographie arabe très présente, les transitions produit, les accès sociaux et contact, avec des compositions distinctes sur mobile et desktop."
+            "eyebrow": "Ce que j’ai conçu",
+            "title": "J’ai construit toute la page autour d’un parfum",
+            "body": "J’ai utilisé des photos fortes, du texte arabe, du mouvement et une histoire courte. Nous avons gardé la page simple et créé une mise en page propre au desktop et au mobile."
           },
           "outcome": {
-            "eyebrow": "Ce que c’est",
-            "title": "Une expérience terminée, sans promesse commerciale",
-            "body": "DUKS est un projet personnel créé pour le plaisir. Il n’a pas été commandé et je ne lui attribue ni ventes ni résultat client. Sa valeur est dans l’exploration visuelle et frontend.",
-            "highlight": "Personnel",
-            "highlightLabel": "projet non commercial"
+            "eyebrow": "Ce que le projet est devenu",
+            "title": "Un projet de design et frontend pour le plaisir",
+            "body": "J’ai gardé le prototype terminé comme expérience visuelle et frontend.",
+            "highlight": "Fun",
+            "highlightLabel": "expérience personnelle"
           }
         }
       },
@@ -234,10 +245,10 @@
         "number": "06",
         "title": "Reperto",
         "category": "Startup privée",
-        "status": "Bientôt",
-        "summary": "Reperto est terminé. Je l’ai construit en tant que cofondateur technique et copropriétaire, mais le produit reste privé pour le moment.",
-        "contribution": "Cofondation technique, architecture produit, développement full-stack et responsabilité technique.",
-        "result": "Le système est terminé ; je publierai l’étude de cas et le lien une fois la protection de la propriété intellectuelle en place.",
+        "status": "Privé · Accord en attente",
+        "summary": "Je dirige le travail technique sur Reperto. Le client n’a pas accepté la publication, donc je garde le produit et ses écrans privés.",
+        "contribution": "Je définis la structure du produit, prends les décisions techniques, construis le système et dirige la livraison.",
+        "result": "Il n’y a pas de lien public. Je partagerai le projet complet après l’accord du client.",
         "linkLabel": "Bientôt",
         "year": "2026",
         "images": {
@@ -248,20 +259,125 @@
         "caseStudy": {
           "context": {
             "eyebrow": "Pourquoi le projet reste privé",
-            "title": "Le produit est terminé ; sa présentation viendra plus tard",
-            "body": "Nous gardons le produit et son fonctionnement confidentiels jusqu’à ce que la protection de la propriété intellectuelle soit sécurisée."
+            "title": "Le projet reste privé pour le moment",
+            "body": "Le client n’a pas accepté une étude publique. Je garde le produit, les écrans et les détails du business privés."
           },
           "build": {
             "eyebrow": "Mon rôle",
-            "title": "Cofondateur technique et copropriétaire",
-            "body": "Je porte le volet technique, de l’architecture produit et des décisions techniques jusqu’au développement et à la livraison."
+            "title": "Je dirige le travail technique",
+            "body": "Je définis le produit, prends les décisions techniques, construis le système et dirige la livraison."
           },
           "outcome": {
             "eyebrow": "Étape actuelle",
-            "title": "Terminé, avec la protection avant la publication",
-            "body": "Le système est prêt. Je publierai l’étude de cas et le lien de la startup lorsque nous pourrons les partager sans exposer ce qui doit être protégé.",
-            "highlight": "Terminé",
-            "highlightLabel": "présentation publique bientôt"
+            "title": "En attente de l’accord du client",
+            "body": "J’ajouterai l’étude complète et le lien après son accord.",
+            "highlight": "Privé",
+            "highlightLabel": "accord du client attendu"
+          }
+        }
+      },
+      "tahwisa": {
+        "title": "Tahwisa",
+        "category": "Agence de voyages · PWA",
+        "status": "Utilisé · Système interne",
+        "summary": "J’ai construit Tahwisa pour une agence de voyages. L’équipe l’utilise chaque jour pour suivre les clients, réservations, paiements, dettes, dépenses et l’argent détenu par chaque employé.",
+        "contribution": "J’ai défini le système, construit les parcours d’argent et de réservation, développé toute l’app et rendu son installation possible.",
+        "result": "L’agence vérifie maintenant les impayés, les dates, les demandes clients, les coûts, le bénéfice et les transferts entre employés dans un seul endroit.",
+        "number": "07",
+        "year": "2026",
+        "linkLabel": "",
+        "images": {
+          "cardAlt": "Tableau de bord de gestion Tahwisa",
+          "mobileAlt": "Interface mobile de gestion Tahwisa",
+          "desktopAlt": "Interface desktop de gestion Tahwisa"
+        },
+        "caseStudy": {
+          "context": {
+            "eyebrow": "Le besoin",
+            "title": "L’agence perdait le fil de l’argent et des tâches",
+            "body": "Les clients paient en plusieurs fois. Les employés se passent de l’argent. Les réservations, dates, coûts et demandes clients étaient répartis entre les messages et la mémoire."
+          },
+          "build": {
+            "eyebrow": "Ce que j’ai construit",
+            "title": "J’ai donné une trace claire à chaque paiement",
+            "body": "Chaque paiement montre le client, le service, le montant et l’employé qui l’a reçu. Nous suivons aussi les dettes, les dates, les coûts, le bénéfice, les demandes et les transferts d’argent."
+          },
+          "outcome": {
+            "eyebrow": "Usage actuel",
+            "title": "L’agence l’utilise maintenant chaque jour",
+            "body": "Le gérant voit ce que les clients doivent, ce que chaque employé détient, les dépenses et le bénéfice de chaque service. Tahwisa est un outil interne, donc il n’a pas de lien public.",
+            "highlight": "Utilisé",
+            "highlightLabel": "dans l’agence"
+          }
+        }
+      },
+      "waity": {
+        "title": "Waity",
+        "category": "Files d’attente · SaaS",
+        "status": "Produit en développement",
+        "summary": "Je construis Waity pour les cliniques. Les patients voient leur place sur le téléphone, attendent à proximité et reviennent quand leur tour approche.",
+        "contribution": "J’ai défini le produit, conçu les écrans des patients et du personnel, puis construit la première app web.",
+        "result": "Le but est de réduire le nombre de personnes dans la salle, les questions à l’accueil et le temps passé à gérer la file. Waity est encore en développement.",
+        "number": "08",
+        "year": "2026",
+        "linkLabel": "",
+        "images": {
+          "cardAlt": "Tableau de bord de gestion des files Waity",
+          "mobileAlt": "Interface mobile patient et clinique de Waity",
+          "desktopAlt": "Interface de gestion des files Waity"
+        },
+        "caseStudy": {
+          "context": {
+            "eyebrow": "Le besoin",
+            "title": "Les patients attendent des heures dans la clinique",
+            "body": "La salle se remplit. Les patients se fatiguent et l’accueil répond toute la journée à la même question : quand vient mon tour ?"
+          },
+          "build": {
+            "eyebrow": "La réalisation",
+            "title": "J’ai mis la file d’attente sur le téléphone",
+            "body": "Il voit sa place, le nombre de personnes devant lui et le bon moment pour revenir. Le personnel gère la file sur un seul écran."
+          },
+          "outcome": {
+            "eyebrow": "Impact et avancement",
+            "title": "Encore en développement",
+            "body": "Le but est une salle plus calme et moins de travail à l’accueil. Nous avons besoin d’un vrai usage en clinique avant de mesurer le résultat.",
+            "highlight": "Moins d’attente",
+            "highlightLabel": "dans la clinique"
+          }
+        }
+      },
+      "awid": {
+        "title": "Awid",
+        "category": "Livraison locale · Application mobile",
+        "status": "Bientôt",
+        "summary": "Je construis Awid pour la livraison locale en Algérie. Un client publie une liste de courses, un retrait ou un colis. Un livreur proche propose ensuite un prix.",
+        "contribution": "J’ai défini le produit, la recherche des livreurs proches, les étapes de livraison et la première app.",
+        "result": "Le but est une livraison locale simple pour les clients et plus de travail payé pour les livreurs indépendants. Awid arrive bientôt.",
+        "number": "09",
+        "year": "2026",
+        "linkLabel": "",
+        "images": {
+          "cardAlt": "Awid bientôt disponible et en développement",
+          "mobileAlt": "Application mobile Awid bientôt disponible et en développement",
+          "desktopAlt": "Plateforme Awid bientôt disponible et en développement"
+        },
+        "caseStudy": {
+          "context": {
+            "eyebrow": "Le besoin",
+            "title": "La plupart des apps livrent seulement les repas",
+            "body": "Les gens ont aussi besoin de courses, de retraits en magasin et de colis à déplacer en ville. Ces demandes passent souvent par les appels et les messages."
+          },
+          "build": {
+            "eyebrow": "Ce que je construis",
+            "title": "J’ai rendu la demande et le prix clairs",
+            "body": "Le client publie la course. Awid trouve des livreurs proches. L’un propose un prix, puis le client accepte ou refuse."
+          },
+          "outcome": {
+            "eyebrow": "Impact et avancement",
+            "title": "Bientôt disponible",
+            "body": "Je construis la première version. Elle n’a pas encore d’utilisateurs ni de résultat de lancement.",
+            "highlight": "Bientôt",
+            "highlightLabel": "En développement"
           }
         }
       }
@@ -321,6 +437,29 @@
       "fileMeta": "Scope, investissement, planning",
       "clientOk": "C’est clair. On peut commencer.",
       "heithemClose": "Parfait. Dès que vous validez l’accord, le travail commence."
+    },
+    "faq": {
+      "eyebrow": "Questions courantes",
+      "title": "Ce que les clients demandent avant de commencer",
+      "intro": "Voici les questions que mes clients me posent le plus souvent.",
+      "items": {
+        "installation": {
+          "question": "Devez-vous venir dans mon entreprise pour installer le système ?",
+          "answer": "Non. Nous faisons toute l’installation en ligne. Une app web s’ouvre avec un lien. Pour un système local sur ordinateur, vous installez un petit lanceur et entrez la clé de licence. Je vous envoie le lien admin et vos jetons d’accès."
+        },
+        "hosting": {
+          "question": "Où déployez-vous l’app et qui paie l’hébergement ?",
+          "answer": "Vous choisissez le nom de domaine disponible que vous voulez et je peux le configurer. Je propose un hébergement selon le nombre d’utilisateurs et les besoins de l’app. Vercel et Netlify ont des offres gratuites. Les options payantes incluent Hostinger, Oracle Cloud, un VPS ou AWS pour les grands systèmes. Si vous avez déjà choisi un service, nous l’utilisons. Vous payez directement le domaine et l’hébergement."
+        },
+        "price": {
+          "question": "Combien coûte un projet ?",
+          "answer": "Le prix dépend du travail, du temps et de la taille du projet. Je chiffre chaque projet après notre accord sur le périmètre."
+        },
+        "maintenance": {
+          "question": "Proposez-vous un service après le lancement ?",
+          "answer": "Oui. Les questions simples et l’aide après la livraison sont gratuites. La maintenance continue et l’aide technique sont disponibles à la demande avec un abonnement mensuel."
+        }
+      }
     }
   },
   "about": {

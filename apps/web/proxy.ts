@@ -18,15 +18,17 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const locale = detectPreferredLocale(
-    request.headers.get("accept-language"),
-  );
+  const locale = detectPreferredLocale(request.headers.get("accept-language"));
 
   const redirectUrl = request.nextUrl.clone();
   redirectUrl.pathname =
     pathname === "/" ? `/${locale}` : `/${locale}${pathname}`;
 
-  return NextResponse.redirect(redirectUrl);
+  const response = NextResponse.redirect(redirectUrl);
+  // The same bare URL can lead to different languages. Do not share a cached redirect.
+  response.headers.set("Vary", "Accept-Language");
+  response.headers.set("Cache-Control", "private, no-store");
+  return response;
 }
 
 export const config = {

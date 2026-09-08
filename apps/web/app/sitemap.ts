@@ -5,6 +5,7 @@
 import type { MetadataRoute } from "next";
 
 import { LOCALES } from "@/lib/lang/config";
+import { PROJECTS, getProjectPath } from "@/lib/projects";
 import {
   buildLanguageAlternates,
   getAbsoluteUrl,
@@ -23,17 +24,28 @@ const ROUTE_IMAGES: Record<(typeof ROUTES)[number], ReadonlyArray<string>> = {
     "/Projects/rimoochat/card.webp",
     "/Projects/unimarket/card.webp",
     "/Projects/duks/card.webp",
-    "/Projects/reperto/cover.png",
+    "/Projects/reperto/cover.webp",
+    "/Projects/tahwisa/tahwisa%20main%20image%20desktop.webp",
+    "/Projects/waity/waity%20admin.webp",
   ],
   "/about": ["/assets/Heithem%20profile%20picture.jpg"],
   "/how-i-work": ["/assets/Heithem%20avatar%20BNW.png"],
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return ROUTES.flatMap((route) =>
+  const routes = [
+    ...ROUTES,
+    ...PROJECTS.map((project) => getProjectPath(project.id)),
+  ];
+  return routes.flatMap((route) =>
     LOCALES.map((locale) => ({
       url: getLocaleUrl(locale, route),
-      images: ROUTE_IMAGES[route].map((image) => getAbsoluteUrl(image)),
+      images: (route in ROUTE_IMAGES
+        ? ROUTE_IMAGES[route as keyof typeof ROUTE_IMAGES]
+        : PROJECTS.filter(
+            (project) => getProjectPath(project.id) === route,
+          ).flatMap((project) => (project.image ? [project.image] : []))
+      ).map((image) => getAbsoluteUrl(image)),
       alternates: {
         languages: buildLanguageAlternates(route),
       },

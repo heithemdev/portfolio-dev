@@ -127,6 +127,29 @@ export function getHowIWorkCopy(t: Translator): HowIWorkCopy {
         body: t("howIWork.chat.heithemClose"),
       },
     ],
+    faq: {
+      eyebrow: t("howIWork.faq.eyebrow"),
+      title: t("howIWork.faq.title"),
+      intro: t("howIWork.faq.intro"),
+      items: [
+        {
+          question: t("howIWork.faq.items.installation.question"),
+          answer: t("howIWork.faq.items.installation.answer"),
+        },
+        {
+          question: t("howIWork.faq.items.hosting.question"),
+          answer: t("howIWork.faq.items.hosting.answer"),
+        },
+        {
+          question: t("howIWork.faq.items.price.question"),
+          answer: t("howIWork.faq.items.price.answer"),
+        },
+        {
+          question: t("howIWork.faq.items.maintenance.question"),
+          answer: t("howIWork.faq.items.maintenance.answer"),
+        },
+      ],
+    },
   };
 }
 

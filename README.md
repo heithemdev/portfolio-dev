@@ -100,6 +100,9 @@ resume
 
 ## SEO Operations
 
+See [the SEO release and search submission guide](docs/seo-launch.md) for the
+favicon fix, Vercel domain setting, crawler policy, and ongoing checks.
+
 The production canonical origin is fixed to `https://www.heithemdev.com`. Keep
 the apex-domain redirect enabled.
 

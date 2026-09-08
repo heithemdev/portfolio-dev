@@ -5,6 +5,7 @@
 import type { Metadata } from "next";
 
 import { DEFAULT_LOCALE, LOCALES, type Locale } from "@/lib/lang/config";
+import { getProjectPath } from "@/lib/projects";
 
 export const SITE_URL = "https://www.heithemdev.com";
 export const SITE_NAME = "Heithem Chorfi";
@@ -157,6 +158,9 @@ export function getIndexingRobots(): Metadata["robots"] {
   return {
     index: true,
     follow: true,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+    "max-video-preview": -1,
     googleBot: {
       index: true,
       follow: true,
@@ -176,7 +180,8 @@ export function getBaseMetadata(): Metadata {
     publisher: SITE_AUTHOR,
     referrer: "strict-origin-when-cross-origin",
     category: "technology",
-    classification: "Freelance full-stack web development portfolio and services",
+    classification:
+      "Freelance full-stack web development portfolio and services",
     manifest: "/site.webmanifest",
     robots: getIndexingRobots(),
     verification: getSiteVerification(),
@@ -192,6 +197,11 @@ export function getBaseMetadata(): Metadata {
     },
     icons: {
       icon: [
+        {
+          url: "/favicons/favicon-96x96.png",
+          sizes: "96x96",
+          type: "image/png",
+        },
         {
           url: "/favicons/favicon-16x16.png",
           sizes: "16x16",
@@ -210,7 +220,7 @@ export function getBaseMetadata(): Metadata {
           type: "image/png",
         },
       ],
-      shortcut: ["/favicons/favicon-32x32.png"],
+      shortcut: ["/favicon.ico"],
     },
   };
 }
@@ -220,14 +230,23 @@ export function getLocalizedMetadata({
   title,
   description,
   pathname = "",
+  image,
 }: {
   locale: Locale;
   title: string;
   description: string;
   pathname?: string;
+  // Undefined uses the site card; null clears inherited images for projects without one.
+  image?: { url: string; alt: string } | null;
 }): Metadata {
   const canonicalUrl = getLocaleUrl(locale, pathname);
   const socialImageUrl = getSocialImageUrl(locale);
+  const images =
+    image === null
+      ? []
+      : image
+        ? [{ url: getAbsoluteUrl(image.url), alt: image.alt }]
+        : [{ url: socialImageUrl, width: 1200, height: 630, alt: title }];
   const openGraphLocale = OPEN_GRAPH_LOCALES[locale];
   const alternateOpenGraphLocales = LOCALES.map(
     (alternateLocale) => OPEN_GRAPH_LOCALES[alternateLocale],
@@ -251,20 +270,13 @@ export function getLocalizedMetadata({
       emails: [SITE_EMAIL],
       phoneNumbers: [SITE_PHONE],
       countryName: "Algeria",
-      images: [
-        {
-          url: socialImageUrl,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
+      images,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [socialImageUrl],
+      images,
     },
   };
 }
@@ -459,7 +471,7 @@ export function buildStructuredData({
       numberOfItems: portfolioItems.length,
       itemListOrder: "https://schema.org/ItemListOrderAscending",
       itemListElement: portfolioItems.map((project, index) => {
-        const projectUrl = project.href || `${pageUrl}#work`;
+        const projectUrl = getLocaleUrl(locale, getProjectPath(project.id));
 
         return {
           "@type": "ListItem",
@@ -467,13 +479,14 @@ export function buildStructuredData({
           url: projectUrl,
           item: {
             "@type": "CreativeWork",
-            "@id": `${pageUrl}#project-${project.id}`,
+            "@id": `${projectUrl}#project`,
             name: project.title,
             description: project.summary,
             genre: project.category,
             dateCreated: project.year,
             inLanguage: locale,
             url: projectUrl,
+            ...(project.href ? { sameAs: project.href } : {}),
             creator: {
               "@id": personId,
             },

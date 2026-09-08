@@ -41,24 +41,35 @@
   },
   "projects": {
     "title": "Selected Work",
-    "intro": "Six products at different stages: launched work, a market test, an honest prototype, one non-commercial experiment, and a private startup that is not ready to be shared yet. Each one says what I actually did and what happened next.",
+    "intro": "",
     "techUsed": "Tech used",
     "contributionLabel": "My contribution",
-    "resultLabel": "What changed",
-    "viewCaseStudy": "View case study",
+    "resultLabel": "Result / goal",
+    "viewCaseStudy": "Project details",
     "selectedPreviewAria": "Selected project preview",
     "closeProjectAria": "Close project details",
     "imageUnavailable": "Image unavailable",
+    "previousImageAria": "Previous project image",
+    "nextImageAria": "Next project image",
+    "slidePosition": "Project image",
+    "filters": {
+      "ariaLabel": "Filter projects",
+      "all": "All",
+      "ecommerce": "E-commerce",
+      "platforms": "Platforms",
+      "saas": "SaaS apps",
+      "internal": "Internal systems"
+    },
     "items": {
       "laibi": {
         "number": "01",
-        "title": "Supermarket Laibi 2",
-        "category": "Local commerce",
-        "status": "Launched",
-        "summary": "I built a supermarket ordering PWA that feels at home on a phone and gives the owner one place to run the catalog and orders.",
-        "contribution": "Product structure, UX, full-stack development, PWA, and admin workflows.",
-        "result": "First-month sales reached roughly 1.25 times their previous level, before any paid promotion.",
-        "linkLabel": "Open live app",
+        "title": "Superette Laibi",
+        "category": "E-commerce · PWA",
+        "status": "Live in production",
+        "summary": "I built a supermarket website for people in Bouira to order groceries from home. The owner uses the same system to update the store and manage every order.",
+        "contribution": "I planned the product, designed the customer and admin screens, built the full system, and put it online.",
+        "result": "One small ad campaign brought about 50% ROI in the first 27 days. 94.4% of orders were delivered.",
+        "linkLabel": "Visit website",
         "year": "2026",
         "images": {
           "cardAlt": "Supermarket Laibi 2 web app project card",
@@ -68,20 +79,20 @@
         "caseStudy": {
           "context": {
             "eyebrow": "Why it existed",
-            "title": "Online ordering without funding two native apps",
-            "body": "The owner wanted a direct digital ordering channel, but a separate mobile build would have swallowed budget without solving a different problem."
+            "title": "The supermarket only sold to people who came in",
+            "body": "The owner wanted online orders without spending hours updating a second system. Stock, prices, photos, and orders had to stay simple."
           },
           "build": {
             "eyebrow": "What I built",
-            "title": "One PWA for customers, one admin system for the store",
-            "body": "I handled the product structure, catalog, cart, installable mobile experience, order flow, and the admin tools for products, stock, categories, images, and orders."
+            "title": "I built the store and the tools behind it",
+            "body": "Customers browse, search, filter, add to cart, and order. The owner manages products, stock, images, and orders, with Excel imports and instant alerts. We used a PWA for the website and installable phone app. It runs on an Oracle VPS behind Cloudflare."
           },
           "outcome": {
             "eyebrow": "After launch",
-            "title": "A 1.25x first month without a paid campaign",
-            "body": "First-month sales reached roughly 1.25 times their previous level. Because the product is a PWA, the owner also avoided paying for a separate native app.",
-            "highlight": "1.25x",
-            "highlightLabel": "first-month sales"
+            "title": "One small campaign brought real orders",
+            "body": "The platform reached about 50% ROI in its first 27 days. The owner ran one small ad campaign, and 94.4% of orders were delivered.",
+            "highlight": "≈50%",
+            "highlightLabel": "ROI within 27 days"
           }
         }
       },
@@ -90,10 +101,10 @@
         "title": "Said",
         "category": "Heavy truck parts e-commerce",
         "status": "Prototype",
-        "summary": "I designed and built a heavy-truck-parts storefront around exact references, brands, and stock, not just product photos.",
-        "contribution": "Product structure, mobile UX, search and catalog flows, and a full-stack prototype.",
-        "result": "It still uses mock data, so I am not presenting a launch or sales result yet.",
-        "linkLabel": "View prototype",
+        "summary": "I built an online catalog for a heavy-truck-parts seller in Algiers. Buyers search by part number, brand, truck model, and stock before they call or order.",
+        "contribution": "I planned the catalog, designed the mobile flow, built the search and order pages, and made the working prototype.",
+        "result": "The goal is to reach buyers across Algeria and spend less time sending photos or answering stock questions. The store still uses test data.",
+        "linkLabel": "Open demo",
         "year": "2026",
         "images": {
           "cardAlt": "Said heavy truck parts store project preview",
@@ -103,18 +114,18 @@
         "caseStudy": {
           "context": {
             "eyebrow": "The product problem",
-            "title": "A part that looks right can still be wrong",
-            "body": "Truck-parts buyers need the exact reference, brand, weight, availability, and delivery details before they can trust a listing."
+            "title": "Buyers kept asking the same questions",
+            "body": "Do you have this part? What is the number? Does it fit my truck? Is it in stock? The seller had to answer each person by hand."
           },
           "build": {
             "eyebrow": "What I built",
-            "title": "A catalog that puts identification before decoration",
-            "body": "I shaped the search, categories, brands, saved products, cart, order tracking, and admin flow around the information buyers actually check."
+            "title": "I made the stock easy to search",
+            "body": "I built search, categories, brand pages, part details, saved items, a cart, order tracking, and admin tools. We placed the part number and fit details first."
           },
           "outcome": {
             "eyebrow": "Current stage",
-            "title": "Ready for real inventory, without a made-up result",
-            "body": "The product is functional and browsable, but it has not entered day-to-day business use. This case study stops at what I actually built.",
+            "title": "Ready for the seller’s real stock",
+            "body": "The prototype is ready for real product data. It has not been used for live sales, so I do not show sales results.",
             "highlight": "Prototype",
             "highlightLabel": "not launched yet"
           }
@@ -123,12 +134,12 @@
       "rimoochat": {
         "number": "03",
         "title": "Rimoochat",
-        "category": "E-commerce store",
-        "status": "In use",
-        "summary": "I built Rimoochat for my mother's handmade clothing business, with a simple path from seeing a piece to starting the right conversation.",
-        "contribution": "Frontend development, mobile UX, product presentation, and the customer contact flow.",
-        "result": "It became the business's main customer channel and cut repeated back-and-forth for both sides.",
-        "linkLabel": "Open live store",
+        "category": "Handmade e-commerce",
+        "status": "Live · In use",
+        "summary": "I built Rimoochat to sell handmade dresses and home textiles online. Customers see the full range, check each item, and order without digging through old posts or messages.",
+        "contribution": "I planned the store, designed the pages, built the frontend, and made the mobile order flow.",
+        "result": "The store has helped increase sales over the last few months. It also gives customers one clear place to browse and order.",
+        "linkLabel": "Open demo",
         "year": "2025",
         "images": {
           "cardAlt": "Rimoochat e-commerce store project card",
@@ -137,33 +148,33 @@
         },
         "caseStudy": {
           "context": {
-            "eyebrow": "A family business",
-            "title": "My mother's work needed one clear home online",
-            "body": "Customers were arriving through scattered messages. They needed a place to see the work first, understand what was available, and get in touch with better context."
+            "eyebrow": "The product problem",
+            "title": "Selling through messages made each order harder",
+            "body": "Customers had to ask what was available, wait for photos, and repeat the same questions. Busy social feeds also made handmade pieces look like common products."
           },
           "build": {
             "eyebrow": "What I built",
-            "title": "A storefront that leads into a useful conversation",
-            "body": "I focused the product presentation and mobile flow around handmade clothing, then made the contact path clear enough to reduce repeated questions."
+            "title": "I gave every product its own page",
+            "body": "I built a simple store with clear photos, prices, product details, and a short order flow. We kept the design soft so the handmade work stays in focus."
           },
           "outcome": {
-            "eyebrow": "In daily use",
-            "title": "Less time lost on both sides",
-            "body": "The website is now the main place customers discover the business and make contact. It also gives my mother a clearer way to manage those conversations.",
-            "highlight": "Main",
-            "highlightLabel": "customer channel"
+            "eyebrow": "Current stage",
+            "title": "More sales in recent months",
+            "body": "Rimoochat is now in use. It has helped the business sell more while giving customers a simpler way to browse and order.",
+            "highlight": "Live",
+            "highlightLabel": "sales have increased"
           }
         }
       },
       "unimarket": {
         "number": "04",
         "title": "Unimarket",
-        "category": "Student marketplace",
-        "status": "Market testing",
-        "summary": "I built Unimarket as social commerce: the familiar rhythm of social media, but the feed is made of products and stores.",
-        "contribution": "Product architecture, UX, full-stack development, and the seller and buyer flows.",
-        "result": "The production MVP took one month and is now being tested in the market.",
-        "linkLabel": "Open market test",
+        "category": "Social commerce platform",
+        "status": "Launching",
+        "summary": "I built Unimarket to put social shopping and online stores in one app. People follow sellers, see new products, save items, and place orders.",
+        "contribution": "I planned the product, designed the seller and buyer flows, and built the full platform.",
+        "result": "The main product is ready and Unimarket is now in its launch stage. Sales and user results will come after the launch.",
+        "linkLabel": "Open demo",
         "year": "2025",
         "images": {
           "cardAlt": "Unimarket student marketplace project card",
@@ -173,20 +184,20 @@
         "caseStudy": {
           "context": {
             "eyebrow": "The product idea",
-            "title": "Social discovery built around products, not posts",
-            "body": "The client wanted stores and buyers to meet through a familiar feed instead of another rigid catalog or classified-ads page."
+            "title": "A product post disappears fast",
+            "body": "Sellers keep posting and paying to reach buyers. Old products move down the feed, and orders end up mixed with normal messages."
           },
           "build": {
-            "eyebrow": "The first release",
-            "title": "A production MVP in one month",
-            "body": "I built the product structure, authentication, store and buyer flows, product discovery, moderation, and the working foundation needed for a real market test."
+            "eyebrow": "What I built",
+            "title": "I joined the feed and the store",
+            "body": "Sellers get store pages, products, followers, and order tools. Buyers follow, like, save, share, and order. We planned live sales and bidding, but did not ship them."
           },
           "outcome": {
             "eyebrow": "Current stage",
-            "title": "A first version the client was happy to test",
-            "body": "The client was satisfied with the result and the product is now testing its place in the market rather than pretending the idea is already proven.",
-            "highlight": "1 mo",
-            "highlightLabel": "to production MVP"
+            "title": "Unimarket is getting ready to launch",
+            "body": "The main seller and buyer flows are ready. The current work is focused on launch, so there are no public sales or user numbers yet.",
+            "highlight": "Launching",
+            "highlightLabel": "current stage"
           },
           "roadmap": {
             "eyebrow": "Planned next",
@@ -198,12 +209,12 @@
       "duks": {
         "number": "05",
         "title": "DUKS Perfume",
-        "category": "Experimental product site",
-        "status": "Non-commercial fun project",
-        "summary": "I designed and built DUKS as a playful Arabic-first perfume experience, using motion and responsive art direction to make one product feel like a campaign.",
-        "contribution": "Concept, visual direction, Arabic-first UX, responsive frontend, and interaction design.",
-        "result": "A finished personal experiment in cinematic product storytelling, not a commercial client launch.",
-        "linkLabel": "Open fun project",
+        "category": "Perfume website experiment",
+        "status": "Fun project",
+        "summary": "I made a fun Arabic-first website for DUKS Perfume. It uses bold photos, type, layout, and motion to give the perfume its own visual world.",
+        "contribution": "I made the idea, visual style, Arabic pages, mobile layout, and frontend.",
+        "result": "DUKS liked the prototype a lot, but he could not use it because of his contract with Ayor.",
+        "linkLabel": "Open demo",
         "year": "2026",
         "images": {
           "cardAlt": "DUKS perfume experimental website project card",
@@ -213,20 +224,20 @@
         "caseStudy": {
           "context": {
             "eyebrow": "Why I made it",
-            "title": "A playground for one product, not another catalog",
-            "body": "I wanted to see how far one perfume could carry an entire experience when the page was treated like a campaign instead of an ordinary storefront."
+            "title": "A perfume page should feel like the product",
+            "body": "I wanted to see how far one perfume could carry a full website when the page had its own look, pace, and story."
           },
           "build": {
-            "eyebrow": "What I explored",
-            "title": "Arabic-first art direction across desktop and mobile",
-            "body": "I built the responsive layout, oversized Arabic type, product transitions, social and contact paths, and separate compositions for wide and narrow screens."
+            "eyebrow": "What I designed",
+            "title": "I built the whole page around one perfume",
+            "body": "I used strong photos, Arabic type, motion, and a short product story. We kept the page focused and gave desktop and mobile their own layout."
           },
           "outcome": {
-            "eyebrow": "What it is",
-            "title": "A finished experiment, with no commercial claim",
-            "body": "DUKS is a personal fun project. It was not commissioned, and I am not attaching sales or client results to it. Its value is the visual and frontend exploration.",
-            "highlight": "Personal",
-            "highlightLabel": "non-commercial project"
+            "eyebrow": "What it became",
+            "title": "A fun design and frontend project",
+            "body": "I kept the finished prototype as a visual and frontend experiment.",
+            "highlight": "Fun",
+            "highlightLabel": "personal experiment"
           }
         }
       },
@@ -234,10 +245,10 @@
         "number": "06",
         "title": "Reperto",
         "category": "Private startup",
-        "status": "Coming soon",
-        "summary": "Reperto is complete. I built it as technical co-founder and co-owner, but the product itself stays private for now.",
-        "contribution": "Technical co-founding, product architecture, full-stack implementation, and technical ownership.",
-        "result": "The system is complete; I will share the case study and link after its intellectual-property protection is in place.",
+        "status": "Private · Awaiting approval",
+        "summary": "I lead the technical work on Reperto. The client has not approved public details, so I am keeping the product and its screens private.",
+        "contribution": "I plan the product structure, make the technical choices, build the system, and lead delivery.",
+        "result": "There is no public link. I will share the full project after the client approves it.",
         "linkLabel": "Coming soon",
         "year": "2026",
         "images": {
@@ -248,20 +259,125 @@
         "caseStudy": {
           "context": {
             "eyebrow": "Why it stays private",
-            "title": "The product is finished; the public reveal comes later",
-            "body": "We are keeping the product and its operating details private until the necessary intellectual-property protection is secured."
+            "title": "The project stays private for now",
+            "body": "The client has not approved a public case study. I keep the product, screens, and business details private."
           },
           "build": {
             "eyebrow": "My role",
-            "title": "Technical co-founder and co-owner",
-            "body": "I own the technical side, from product architecture and technical decisions through implementation and delivery."
+            "title": "I lead the technical work",
+            "body": "I plan the product, make the technical choices, build the system, and lead delivery."
           },
           "outcome": {
             "eyebrow": "Current stage",
-            "title": "Complete, with protection before publication",
-            "body": "The system is done. I will publish the case study and startup link when we can share them without exposing what needs protection.",
-            "highlight": "Done",
-            "highlightLabel": "public reveal coming soon"
+            "title": "Waiting for approval to share",
+            "body": "I will add the full case study and link after the client approves them.",
+            "highlight": "Private",
+            "highlightLabel": "awaiting client approval"
+          }
+        }
+      },
+      "tahwisa": {
+        "title": "Tahwisa",
+        "category": "Travel agency · PWA",
+        "status": "In use · Internal system",
+        "summary": "I built Tahwisa for a travel agency. The team uses it every day to track clients, bookings, payments, debts, expenses, and the money held by each worker.",
+        "contribution": "I planned the system, built the money and booking flows, developed the full app, and made it installable.",
+        "result": "The agency now checks unpaid balances, due dates, client requests, costs, profit, and staff cash transfers in one place.",
+        "number": "07",
+        "year": "2026",
+        "linkLabel": "",
+        "images": {
+          "cardAlt": "Tahwisa travel agency management dashboard",
+          "mobileAlt": "Tahwisa mobile management interface",
+          "desktopAlt": "Tahwisa desktop management interface"
+        },
+        "caseStudy": {
+          "context": {
+            "eyebrow": "The challenge",
+            "title": "The agency was losing track of money and tasks",
+            "body": "Clients pay in parts. Workers pass money between each other. Bookings, due dates, costs, and client requests were spread across messages and memory."
+          },
+          "build": {
+            "eyebrow": "What I built",
+            "title": "I gave every payment a clear record",
+            "body": "Each payment shows the client, service, amount, and worker who received it. We also track debt, due dates, costs, profit, requests, and cash transfers."
+          },
+          "outcome": {
+            "eyebrow": "Current use",
+            "title": "The agency now uses it every day",
+            "body": "The owner sees what clients owe, what each worker holds, what the agency spent, and the profit on each service. Tahwisa is an internal tool, so it has no public link.",
+            "highlight": "In use",
+            "highlightLabel": "inside the agency"
+          }
+        }
+      },
+      "waity": {
+        "title": "Waity",
+        "category": "Queue management · SaaS",
+        "status": "Product in development",
+        "summary": "I am building Waity for clinics. Patients check their place in line on a phone, wait nearby, and return when their turn gets close.",
+        "contribution": "I planned the product, designed the patient and staff screens, and built the first web app.",
+        "result": "The goal is fewer people in the waiting room, fewer questions at reception, and less time spent managing the line. Waity is still in development.",
+        "number": "08",
+        "year": "2026",
+        "linkLabel": "",
+        "images": {
+          "cardAlt": "Waity clinic queue management dashboard",
+          "mobileAlt": "Waity patient and clinic mobile queue interface",
+          "desktopAlt": "Waity clinic queue management interface"
+        },
+        "caseStudy": {
+          "context": {
+            "eyebrow": "The challenge",
+            "title": "Patients wait for hours inside the clinic",
+            "body": "The waiting room fills up. Patients get tired, and reception answers the same question all day: when is my turn?"
+          },
+          "build": {
+            "eyebrow": "What I am building",
+            "title": "I put the waiting line on the phone",
+            "body": "Patients see their place, how many people are ahead, and when to return. Staff move the line from one simple screen."
+          },
+          "outcome": {
+            "eyebrow": "Expected impact",
+            "title": "Still in development",
+            "body": "The goal is a calmer waiting room and less work at reception. We need real clinic use before we measure the result.",
+            "highlight": "Less waiting",
+            "highlightLabel": "inside the clinic"
+          }
+        }
+      },
+      "awid": {
+        "title": "Awid",
+        "category": "Local delivery · Mobile app",
+        "status": "Coming soon",
+        "summary": "I am building Awid for local delivery in Algeria. A customer posts a shopping list, pickup, or package. A nearby driver then offers a price.",
+        "contribution": "I planned the product, the nearby-driver search, the delivery steps, and the first app.",
+        "result": "The goal is simple local delivery for customers and more paid work for independent drivers. Awid is coming soon.",
+        "number": "09",
+        "year": "2026",
+        "linkLabel": "",
+        "images": {
+          "cardAlt": "Awid coming soon and under development",
+          "mobileAlt": "Awid mobile app coming soon and under development",
+          "desktopAlt": "Awid platform coming soon and under development"
+        },
+        "caseStudy": {
+          "context": {
+            "eyebrow": "The challenge",
+            "title": "Most delivery apps stop at food",
+            "body": "People also need groceries, store pickups, and packages moved across town. Those jobs are often arranged through calls and messages."
+          },
+          "build": {
+            "eyebrow": "What I am building",
+            "title": "I made the request and price clear",
+            "body": "The customer posts the job. Awid finds nearby drivers. One driver offers a price, and the customer accepts or refuses it."
+          },
+          "outcome": {
+            "eyebrow": "Expected impact",
+            "title": "Coming soon",
+            "body": "I am building the first version now. It has no users or launch results yet.",
+            "highlight": "Soon",
+            "highlightLabel": "Under development"
           }
         }
       }
@@ -321,6 +437,29 @@
       "fileMeta": "Scope, investment, timeline",
       "clientOk": "Clear. We can start.",
       "heithemClose": "Perfect. Once you give the OK on the agreement, work starts."
+    },
+    "faq": {
+      "eyebrow": "Common questions",
+      "title": "What clients ask before we start",
+      "intro": "These are the questions clients ask me most often.",
+      "items": {
+        "installation": {
+          "question": "Do you need to visit my business to install the system?",
+          "answer": "No. We handle the full setup online. Web apps open from a link. For a local desktop system, you install a small launcher and enter the licence key. I send you the admin link and your access tokens."
+        },
+        "hosting": {
+          "question": "Where do you deploy the app, and who pays for it?",
+          "answer": "You choose any available domain, and I can set it up for you. I suggest hosting based on the number of users and the app’s needs. Free plans include Vercel and Netlify. Paid options include Hostinger, Oracle Cloud, a VPS, or AWS for large company systems. If you already chose a provider, we use it. You pay the domain and hosting fees directly."
+        },
+        "price": {
+          "question": "How much does a project cost?",
+          "answer": "The price depends on the work, time, and project size. I price each project after we agree on the scope."
+        },
+        "maintenance": {
+          "question": "Do you offer support after launch?",
+          "answer": "Yes. Basic questions and help after handover are free. Ongoing maintenance and technical support are available when needed for a monthly fee."
+        }
+      }
     }
   },
   "about": {

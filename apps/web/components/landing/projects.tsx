@@ -5,7 +5,15 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  X,
+} from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { createPortal } from "react-dom";
 import {
@@ -14,7 +22,6 @@ import {
   useMemo,
   useRef,
   useState,
-  type FocusEvent as ReactFocusEvent,
   type KeyboardEvent as ReactKeyboardEvent,
   type MouseEvent,
   type ReactNode,
@@ -22,6 +29,7 @@ import {
 } from "react";
 
 import type { TextDirection } from "@/lib/lang/config";
+import { getProjectPath } from "@/lib/projects";
 import { useHydratedReducedMotion } from "@/lib/use-hydrated-reduced-motion";
 
 type TechId =
@@ -35,11 +43,16 @@ type TechId =
 
 type ProjectImageFit = "cover" | "contain";
 
+export type ProjectGroup = "ecommerce" | "platforms" | "saas" | "internal";
+type ProjectFilter = "all" | ProjectGroup;
+
 type ProjectImageAsset = Readonly<{
   src: string;
   fallbackSrc?: string;
   alt: string;
   position?: string;
+  placeholderTitle?: string;
+  placeholderBody?: string;
 }>;
 
 type CaseStudySection = Readonly<{
@@ -63,8 +76,8 @@ type ProjectCaseStudyCopy = Readonly<{
 
 type ProjectCaseStudy = ProjectCaseStudyCopy &
   Readonly<{
-    desktopImage: ProjectImageAsset;
-    mobileImage: ProjectImageAsset;
+    desktopImages: ReadonlyArray<ProjectImageAsset>;
+    mobileImages: ReadonlyArray<ProjectImageAsset>;
   }>;
 
 export type ProjectCopyItem = Readonly<{
@@ -79,6 +92,7 @@ export type ProjectCopyItem = Readonly<{
   year: string;
   href: string;
   linkLabel: string;
+  group: ProjectGroup;
   cardAlt: string;
   mobileAlt: string;
   desktopAlt: string;
@@ -95,6 +109,17 @@ export type ProjectsCopy = Readonly<{
   closeProjectAria: string;
   imageUnavailable: string;
   selectedPreviewAria: string;
+  previousImageAria: string;
+  nextImageAria: string;
+  slidePosition: string;
+  filters: Readonly<{
+    ariaLabel: string;
+    all: string;
+    ecommerce: string;
+    platforms: string;
+    saas: string;
+    internal: string;
+  }>;
   items: ReadonlyArray<ProjectCopyItem>;
 }>;
 
@@ -132,116 +157,177 @@ const techIconMap = {
   postgresql: { label: "PostgreSQL", src: "/icons/postgresql.svg" },
 } satisfies Record<TechId, { label: string; src: string }>;
 
-const projectImageMap = {
+const projectImageMap: Record<
+  string,
+  {
+    cardImage: Omit<ProjectImageAsset, "alt">;
+    mobileImages: ReadonlyArray<Omit<ProjectImageAsset, "alt">>;
+    desktopImages: ReadonlyArray<Omit<ProjectImageAsset, "alt">>;
+  }
+> = {
   "supermarket-laibi-2": {
     cardImage: {
       src: "/Projects/superete%20laibi%202/card.webp",
       position: "center",
     },
-    mobileImage: {
-      src: "/Projects/superete%20laibi%202/mobile.webp",
-      fallbackSrc: "/Projects/superete%20laibi%202/card.webp",
-      position: "center",
-    },
-    desktopImage: {
-      src: "/Projects/superete%20laibi%202/desktop.webp",
-      fallbackSrc: "/Projects/superete%20laibi%202/card.webp",
-      position: "center",
-    },
+    mobileImages: [
+      {
+        src: "/Projects/superete%20laibi%202/mobile.webp",
+        fallbackSrc: "/Projects/superete%20laibi%202/card.webp",
+        position: "center",
+      },
+    ],
+    desktopImages: [
+      {
+        src: "/Projects/superete%20laibi%202/desktop.webp",
+        fallbackSrc: "/Projects/superete%20laibi%202/card.webp",
+        position: "center",
+      },
+    ],
   },
   said: {
     cardImage: {
       src: "/Projects/said/card.webp",
       position: "center",
     },
-    mobileImage: {
-      src: "/Projects/said/mobile.webp",
-      fallbackSrc: "/Projects/said/card.webp",
-      position: "center",
-    },
-    desktopImage: {
-      src: "/Projects/said/desktop.webp",
-      fallbackSrc: "/Projects/said/card.webp",
-      position: "center",
-    },
+    mobileImages: [
+      {
+        src: "/Projects/said/mobile.webp",
+        fallbackSrc: "/Projects/said/card.webp",
+        position: "center",
+      },
+    ],
+    desktopImages: [
+      {
+        src: "/Projects/said/desktop.webp",
+        fallbackSrc: "/Projects/said/card.webp",
+        position: "center",
+      },
+    ],
   },
   rimoochat: {
     cardImage: {
       src: "/Projects/rimoochat/card.webp",
       position: "center",
     },
-    mobileImage: {
-      src: "/Projects/rimoochat/mobile.webp",
-      fallbackSrc: "/Projects/rimoochat/card.webp",
-      position: "center",
-    },
-    desktopImage: {
-      src: "/Projects/rimoochat/desktop.webp",
-      fallbackSrc: "/Projects/rimoochat/card.webp",
-      position: "center",
-    },
+    mobileImages: [
+      {
+        src: "/Projects/rimoochat/mobile.webp",
+        fallbackSrc: "/Projects/rimoochat/card.webp",
+        position: "center",
+      },
+    ],
+    desktopImages: [
+      {
+        src: "/Projects/rimoochat/desktop.webp",
+        fallbackSrc: "/Projects/rimoochat/card.webp",
+        position: "center",
+      },
+    ],
   },
   unimarket: {
     cardImage: {
       src: "/Projects/unimarket/card.webp",
       position: "center",
     },
-    mobileImage: {
-      src: "/Projects/unimarket/mobile.webp",
-      fallbackSrc: "/Projects/unimarket/card.webp",
-      position: "center",
-    },
-    desktopImage: {
-      src: "/Projects/unimarket/desktop.webp",
-      fallbackSrc: "/Projects/unimarket/card.webp",
-      position: "center",
-    },
+    mobileImages: [
+      {
+        src: "/Projects/unimarket/mobile.webp",
+        fallbackSrc: "/Projects/unimarket/card.webp",
+        position: "center",
+      },
+    ],
+    desktopImages: [
+      {
+        src: "/Projects/unimarket/desktop.webp",
+        fallbackSrc: "/Projects/unimarket/card.webp",
+        position: "center",
+      },
+    ],
   },
   duks: {
     cardImage: {
       src: "/Projects/duks/card.webp",
       position: "center",
     },
-    mobileImage: {
-      src: "/Projects/duks/mobile.webp",
-      fallbackSrc: "/Projects/duks/card.webp",
-      position: "center",
-    },
-    desktopImage: {
-      src: "/Projects/duks/desktop.webp",
-      fallbackSrc: "/Projects/duks/card.webp",
-      position: "center",
-    },
+    mobileImages: [
+      {
+        src: "/Projects/duks/mobile.webp",
+        fallbackSrc: "/Projects/duks/card.webp",
+        position: "center",
+      },
+    ],
+    desktopImages: [
+      {
+        src: "/Projects/duks/desktop.webp",
+        fallbackSrc: "/Projects/duks/card.webp",
+        position: "center",
+      },
+    ],
   },
   reperto: {
     cardImage: {
-      src: "/Projects/reperto/cover.png",
+      src: "/Projects/reperto/cover.webp",
       position: "center",
     },
-    mobileImage: {
-      src: "/Projects/reperto/mobile.png",
-      fallbackSrc: "/Projects/reperto/cover.png",
-      position: "center",
-    },
-    desktopImage: {
-      src: "/Projects/reperto/cover.png",
-      position: "center",
-    },
+    mobileImages: [
+      {
+        src: "/Projects/reperto/mobile.webp",
+        fallbackSrc: "/Projects/reperto/cover.webp",
+        position: "center",
+      },
+    ],
+    desktopImages: [
+      {
+        src: "/Projects/reperto/cover.webp",
+        position: "center",
+      },
+    ],
   },
-} as const satisfies Record<
-  string,
-  {
-    cardImage: Omit<ProjectImageAsset, "alt">;
-    mobileImage: Omit<ProjectImageAsset, "alt">;
-    desktopImage: Omit<ProjectImageAsset, "alt">;
-  }
->;
-
-type ProjectImageKey = keyof typeof projectImageMap;
-
-function isProjectImageKey(value: string): value is ProjectImageKey {
-  return Object.prototype.hasOwnProperty.call(projectImageMap, value);
-}
+  tahwisa: {
+    cardImage: {
+      src: "/Projects/tahwisa/tahwisa%20main%20image%20desktop.webp",
+    },
+    desktopImages: [
+      { src: "/Projects/tahwisa/tahwisa%20main%20image%20desktop.webp" },
+      { src: "/Projects/tahwisa/tahwisa%20dashboard.webp" },
+      { src: "/Projects/tahwisa/tahwisa%20statestics.webp" },
+      { src: "/Projects/tahwisa/tahwisa%20clients.webp" },
+      { src: "/Projects/tahwisa/tahwisa%20services.webp" },
+      { src: "/Projects/tahwisa/tahwisa%20demands.webp" },
+      { src: "/Projects/tahwisa/tahwisa%20gestion.webp" },
+      { src: "/Projects/tahwisa/tahwisa%20dashboard%202.webp" },
+      { src: "/Projects/tahwisa/tahwisa%20statestics%202.webp" },
+    ],
+    mobileImages: [
+      { src: "/Projects/tahwisa/tahwisa%20main%20image%20mobile.webp" },
+      { src: "/Projects/tahwisa/tahwisa%20mobile%20dashboard.webp" },
+      { src: "/Projects/tahwisa/tahwisa%20mobile%20clients.webp" },
+      { src: "/Projects/tahwisa/tahwisa%20mobile%20statestics.webp" },
+    ],
+  },
+  waity: {
+    cardImage: {
+      src: "/Projects/waity/waity%20main%20image%20desktop.webp",
+    },
+    desktopImages: [
+      { src: "/Projects/waity/waity%20main%20image%20desktop.webp" },
+      { src: "/Projects/waity/waity%20admin.webp" },
+      { src: "/Projects/waity/waity%20admin%20history.webp" },
+    ],
+    mobileImages: [
+      { src: "/Projects/waity/waity%20main%20image%20mobile.webp" },
+      { src: "/Projects/waity/waity%20waiter.webp" },
+      { src: "/Projects/waity/waity%20waiter%20turn.webp" },
+      { src: "/Projects/waity/waity%20admin%20mobile.webp" },
+    ],
+  },
+  awid: {
+    cardImage: { src: "" },
+    desktopImages: [{ src: "" }],
+    mobileImages: [{ src: "" }],
+  },
+};
 
 function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
@@ -260,17 +346,12 @@ function getBodyClass(textDirection: TextDirection) {
 }
 
 function getTitleClass(textDirection: TextDirection) {
-  return textDirection === "rtl"
-    ? "tracking-normal"
-    : "tracking-[-0.06em]";
+  return textDirection === "rtl" ? "tracking-normal" : "tracking-[-0.06em]";
 }
 
 function buildProjects(items: ReadonlyArray<ProjectCopyItem>) {
   return items.map<Project>((item) => {
-    const imageKey = isProjectImageKey(item.id)
-      ? item.id
-      : "supermarket-laibi-2";
-    const images = projectImageMap[imageKey];
+    const images = projectImageMap[item.id] ?? projectImageMap.awid!;
 
     return {
       id: item.id,
@@ -284,20 +365,33 @@ function buildProjects(items: ReadonlyArray<ProjectCopyItem>) {
       year: item.year,
       href: item.href,
       linkLabel: item.linkLabel,
+      group: item.group,
       cardImage: {
         ...images.cardImage,
         alt: item.cardAlt,
+        placeholderTitle: images.cardImage.src ? undefined : item.status,
+        placeholderBody: images.cardImage.src
+          ? undefined
+          : item.caseStudy.outcome.highlightLabel,
       },
       caseStudy: {
         ...item.caseStudy,
-        desktopImage: {
-          ...images.desktopImage,
+        desktopImages: images.desktopImages.map((image) => ({
+          ...image,
           alt: item.desktopAlt,
-        },
-        mobileImage: {
-          ...images.mobileImage,
+          placeholderTitle: image.src ? undefined : item.status,
+          placeholderBody: image.src
+            ? undefined
+            : item.caseStudy.outcome.highlightLabel,
+        })),
+        mobileImages: images.mobileImages.map((image) => ({
+          ...image,
           alt: item.mobileAlt,
-        },
+          placeholderTitle: image.src ? undefined : item.status,
+          placeholderBody: image.src
+            ? undefined
+            : item.caseStudy.outcome.highlightLabel,
+        })),
       },
     };
   });
@@ -413,6 +507,41 @@ function ProjectImage({
     setHasError(false);
   }, [image.src]);
 
+  // Reserve the image space until this project's own screenshots are supplied.
+  if (!image.src) {
+    return (
+      <div
+        role="img"
+        aria-label={
+          image.alt ||
+          [image.placeholderTitle, image.placeholderBody]
+            .filter(Boolean)
+            .join(". ")
+        }
+        className={cn(
+          "relative flex items-center justify-center overflow-hidden bg-[#EAE3D8] p-4 text-center",
+          className,
+        )}
+      >
+        <span className="absolute inset-3 border border-[#111318]/12" />
+        <span className="absolute left-3 top-3 h-7 w-7 border-l border-t border-[#B8792E]/70" />
+        <span className="absolute bottom-3 right-3 h-7 w-7 border-b border-r border-[#B8792E]/70" />
+
+        <span className="relative z-10">
+          <span className="mx-auto block h-px w-8 bg-[#B8792E]" />
+          <span className="mt-3 block text-[clamp(0.9rem,1.8vw,1.35rem)] font-medium uppercase tracking-[0.08em] text-[#111318]">
+            {image.placeholderTitle ?? unavailableLabel}
+          </span>
+          {image.placeholderBody ? (
+            <span className="mt-2 block text-[0.62rem] font-medium uppercase tracking-[0.18em] text-[#111318]/48">
+              {image.placeholderBody}
+            </span>
+          ) : null}
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className={cn("relative overflow-hidden bg-[#EAE3D8]", className)}>
       {hasError ? (
@@ -448,6 +577,119 @@ function ProjectImage({
           }}
         />
       )}
+    </div>
+  );
+}
+
+function ProjectImageCarousel({
+  images,
+  className,
+  sizes,
+  unavailableLabel,
+  previousImageAria,
+  nextImageAria,
+  slidePosition,
+  controls = false,
+}: {
+  images: ReadonlyArray<ProjectImageAsset>;
+  className: string;
+  sizes: string;
+  unavailableLabel: string;
+  previousImageAria: string;
+  nextImageAria: string;
+  slidePosition: string;
+  controls?: boolean;
+}) {
+  const shouldReduceMotion = useHydratedReducedMotion();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const manualNavigationRef = useRef(false);
+  const imageCount = images.length;
+  const currentIndex = imageCount > 0 ? activeIndex % imageCount : 0;
+  const currentImage = images[currentIndex] ?? {
+    src: "",
+    alt: "",
+  };
+
+  useEffect(() => {
+    setActiveIndex(0);
+    manualNavigationRef.current = false;
+  }, [images]);
+
+  useEffect(() => {
+    if (shouldReduceMotion || isHovered || imageCount < 2) {
+      return;
+    }
+
+    const delay = manualNavigationRef.current ? 8000 : 3000;
+    const timeoutId = window.setTimeout(() => {
+      manualNavigationRef.current = false;
+      setActiveIndex((index) => (index + 1) % imageCount);
+    }, delay);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [activeIndex, imageCount, isHovered, shouldReduceMotion]);
+
+  function moveTo(direction: -1 | 1) {
+    manualNavigationRef.current = true;
+    setActiveIndex((index) => (index + direction + imageCount) % imageCount);
+  }
+
+  return (
+    <div
+      className={cn("group/carousel relative overflow-hidden", className)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <AnimatePresence initial={false} mode="wait">
+        <motion.div
+          key={currentImage.src}
+          className="absolute inset-0"
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.22 }}
+        >
+          <ProjectImage
+            image={currentImage}
+            className="h-full w-full bg-[#F4EFE8]"
+            sizes={sizes}
+            unavailableLabel={unavailableLabel}
+            fit="contain"
+          />
+        </motion.div>
+      </AnimatePresence>
+
+      {imageCount > 1 ? (
+        <>
+          {controls ? (
+            <div className="absolute inset-x-3 top-1/2 z-20 flex -translate-y-1/2 justify-between">
+              <button
+                type="button"
+                aria-label={previousImageAria}
+                onClick={() => moveTo(-1)}
+                className="inline-flex h-9 w-9 items-center justify-center border border-[#111318]/18 bg-[#F4EFE8]/94 text-[#111318] transition-colors hover:border-[#B8792E] hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E]"
+              >
+                <ChevronLeft aria-hidden="true" className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                aria-label={nextImageAria}
+                onClick={() => moveTo(1)}
+                className="inline-flex h-9 w-9 items-center justify-center border border-[#111318]/18 bg-[#F4EFE8]/94 text-[#111318] transition-colors hover:border-[#B8792E] hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E]"
+              >
+                <ChevronRight aria-hidden="true" className="h-4 w-4" />
+              </button>
+            </div>
+          ) : null}
+
+          <span className="absolute bottom-2 right-2 z-20 bg-[#111318] px-2 py-1 font-mono text-[0.62rem] text-[#F4EFE8]">
+            <span className="sr-only">{slidePosition} </span>
+            {String(currentIndex + 1).padStart(2, "0")} /{" "}
+            {String(imageCount).padStart(2, "0")}
+          </span>
+        </>
+      ) : null}
     </div>
   );
 }
@@ -513,6 +755,59 @@ function TechStackStrip({
   );
 }
 
+function ProjectFilters({
+  activeFilter,
+  onChange,
+  copy,
+  textDirection,
+}: {
+  activeFilter: ProjectFilter;
+  onChange: (filter: ProjectFilter) => void;
+  copy: ProjectsCopy["filters"];
+  textDirection: TextDirection;
+}) {
+  const filters: ReadonlyArray<{ id: ProjectFilter; label: string }> = [
+    { id: "all", label: copy.all },
+    { id: "ecommerce", label: copy.ecommerce },
+    { id: "platforms", label: copy.platforms },
+    { id: "saas", label: copy.saas },
+    { id: "internal", label: copy.internal },
+  ];
+
+  return (
+    <div
+      role="group"
+      aria-label={copy.ariaLabel}
+      className="mt-7 flex flex-wrap gap-2"
+      dir={textDirection}
+    >
+      {filters.map((filter) => {
+        const isSelected = activeFilter === filter.id;
+
+        return (
+          <button
+            key={filter.id}
+            type="button"
+            aria-pressed={isSelected}
+            onClick={() => onChange(filter.id)}
+            className={cn(
+              "min-h-9 border px-3 text-[0.72rem] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-3 focus-visible:ring-offset-[#F4EFE8]",
+              textDirection === "rtl"
+                ? "tracking-normal"
+                : "uppercase tracking-[0.12em]",
+              isSelected
+                ? "border-[#111318] bg-[#111318] text-[#F4EFE8]"
+                : "border-[#111318]/24 bg-transparent text-[#111318]/68 hover:border-[#111318]/60 hover:text-[#111318]",
+            )}
+          >
+            {filter.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 function ProjectAccessLink({
   project,
   textDirection,
@@ -531,40 +826,34 @@ function ProjectAccessLink({
   }
 
   if (!project.href) {
-    return (
-      <span
-        dir={textDirection}
-        className={cn(
-          "inline-flex min-h-10 w-fit cursor-default items-center px-1 text-[0.8rem] font-semibold text-[#111318]/44",
-          textDirection === "rtl" ? "tracking-normal" : "tracking-[-0.02em]",
-        )}
-      >
-        {project.linkLabel}
-      </span>
-    );
+    return null;
   }
 
   return (
     <a
       href={project.href}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       aria-label={`${project.linkLabel}: ${project.title}`}
       title={project.linkLabel}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       className={cn(
-        "inline-flex min-h-10 w-fit items-center gap-1.5 px-1 text-[0.8rem] font-semibold text-[#111318]/66 transition-colors hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-3 focus-visible:ring-offset-[#F4EFE8]",
+        "inline-flex min-h-11 w-fit items-center gap-2 px-1 text-[0.82rem] font-semibold text-[#111318] transition-colors hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-3 focus-visible:ring-offset-[#F4EFE8]",
         textDirection === "rtl" ? "tracking-normal" : "tracking-[-0.02em]",
       )}
     >
       <span
         dir={textDirection}
-        className="[@media(min-width:1180px)_and_(max-width:1399px)_and_(min-height:650px)]:hidden"
+        className="underline decoration-[#111318]/40 underline-offset-4"
       >
         {project.linkLabel}
       </span>
-      <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.8} />
+      <ArrowUpRight
+        aria-hidden="true"
+        className="h-3.5 w-3.5"
+        strokeWidth={1.8}
+      />
     </a>
   );
 }
@@ -588,54 +877,22 @@ function ProjectCard({
 }) {
   const isArabic = textDirection === "rtl";
 
-  function isInteractiveElement(target: EventTarget | null) {
-    return target instanceof HTMLElement
-      ? Boolean(target.closest("a, button"))
-      : false;
-  }
-
-  function handleCardClick(event: MouseEvent<HTMLElement>) {
-    if (isInteractiveElement(event.target)) {
-      return;
-    }
-
-    event.currentTarget.focus({ preventScroll: true });
-    onActivate();
-    onOpenDetails();
-  }
-
-  function handleCardKeyDown(event: ReactKeyboardEvent<HTMLElement>) {
-    if (
-      (event.key !== "Enter" && event.key !== " ") ||
-      event.defaultPrevented ||
-      isInteractiveElement(event.target)
-    ) {
-      return;
-    }
-
-    event.preventDefault();
-    onActivate();
-    onOpenDetails();
-  }
-
   function handleDetailsClick(event: MouseEvent<HTMLButtonElement>) {
     event.stopPropagation();
     onActivate();
     onOpenDetails();
   }
 
+  const locale = usePathname().split("/")[1] || "en";
+
   return (
     <article
-      tabIndex={0}
-      aria-label={`${copy.viewCaseStudy}: ${project.title}`}
-      aria-haspopup="dialog"
+      aria-labelledby={`${project.id}-card-title`}
       dir={textDirection}
-      onClick={handleCardClick}
-      onKeyDown={handleCardKeyDown}
       onMouseEnter={onActivate}
       onFocusCapture={onActivate}
       className={cn(
-        "group relative cursor-pointer overflow-hidden border bg-[#F4EFE8] outline-none transition-[border-color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4EFE8] motion-reduce:transition-none",
+        "group relative overflow-hidden border bg-[#F4EFE8] transition-[border-color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
         isActive
           ? "-translate-y-1 border-[#111318]/70 bg-[#111318]/[0.018] shadow-[0_18px_48px_rgba(17,19,24,0.08)] motion-reduce:translate-y-0"
           : "border-[#111318]/18 hover:-translate-y-1 hover:border-[#111318]/58 hover:bg-[#111318]/[0.012] hover:shadow-[0_16px_42px_rgba(17,19,24,0.06)] motion-reduce:hover:translate-y-0",
@@ -686,13 +943,19 @@ function ProjectCard({
           </div>
 
           <h3
+            id={`${project.id}-card-title`}
             className={cn(
               "mt-3 text-[clamp(1.75rem,2.5vw,2.3rem)] font-medium leading-[1] text-[#111318]",
               getTitleClass(textDirection),
             )}
             dir={textDirection}
           >
-            {project.title}
+            <Link
+              href={`/${locale}${getProjectPath(project.id)}`}
+              className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#B8792E]"
+            >
+              {project.title}
+            </Link>
           </h3>
 
           <p
@@ -705,12 +968,14 @@ function ProjectCard({
             {project.summary}
           </p>
 
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
             <button
               type="button"
+              aria-haspopup="dialog"
+              aria-label={`${copy.viewCaseStudy}: ${project.title}`}
               onClick={handleDetailsClick}
               className={cn(
-                "inline-flex min-h-10 items-center gap-2 px-1 text-[0.82rem] font-semibold text-[#111318] transition-colors hover:text-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-3 focus-visible:ring-offset-[#F4EFE8]",
+                "inline-flex min-h-11 cursor-pointer items-center gap-2 border border-[#111318] bg-[#111318] px-3.5 text-[0.82rem] font-medium text-[#F4EFE8] transition-colors hover:border-[#B8792E] hover:bg-[#B8792E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8792E] focus-visible:ring-offset-3 focus-visible:ring-offset-[#F4EFE8]",
                 isArabic ? "tracking-normal" : "tracking-[-0.02em]",
               )}
             >
@@ -762,13 +1027,9 @@ function PreviewFrame({
         "absolute overflow-hidden border border-[#111318]/16 bg-[#F4EFE8] shadow-[0_24px_70px_rgba(17,19,24,0.13)]",
         className,
       )}
-      initial={
-        shouldReduceMotion ? false : { opacity: 0, y: 18, scale: 0.985 }
-      }
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 18, scale: 0.985 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={
-        shouldReduceMotion ? undefined : { opacity: 0, y: 10, scale: 0.99 }
-      }
+      exit={shouldReduceMotion ? undefined : { opacity: 0, y: 10, scale: 0.99 }}
       transition={{
         delay: shouldReduceMotion ? 0 : delay,
         duration: shouldReduceMotion ? 0 : 0.34,
@@ -845,7 +1106,7 @@ function ProjectPreview({
   return (
     <motion.div
       key={project.id}
-      className="pointer-events-none relative h-full min-h-0 w-full overflow-hidden"
+      className="relative h-full min-h-0 w-full overflow-hidden"
       dir={textDirection}
       initial={shouldReduceMotion ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -858,7 +1119,7 @@ function ProjectPreview({
 
       <PreviewFrame
         className={cn(
-          "top-[3%] z-20 w-[76%]",
+          "top-[3%] z-20 w-[69%]",
           isArabic ? "right-[2%]" : "left-[2%]",
         )}
         delay={0}
@@ -868,16 +1129,8 @@ function ProjectPreview({
           textDirection={textDirection}
         />
 
-        <div className="project-preview-main-content grid grid-cols-[minmax(0,0.48fr)_minmax(0,0.52fr)] items-start gap-4 p-4">
+        <div className="project-preview-main-content grid grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)] items-start gap-3 p-3">
           <div className="min-w-0" dir={textDirection}>
-            <p
-              className={cn(
-                "inline-flex border-b border-[#B8792E]/55 pb-1 text-[0.56rem] font-semibold leading-[1.35] text-[#B8792E]",
-                isArabic ? "tracking-normal" : "uppercase tracking-[0.12em]",
-              )}
-            >
-              {project.status}
-            </p>
             <h4
               className={cn(
                 "mt-2 text-[clamp(1.05rem,1.6vw,1.45rem)] font-medium text-[#111318]",
@@ -897,13 +1150,14 @@ function ProjectPreview({
             </p>
           </div>
 
-          <ProjectImage
-            image={project.caseStudy.desktopImage}
+          <ProjectImageCarousel
+            images={project.caseStudy.desktopImages}
             className="aspect-video w-full border border-[#111318]/10 bg-[#F4EFE8]"
             sizes="(min-width: 1180px) 22vw, 100vw"
             unavailableLabel={copy.imageUnavailable}
-            fit="contain"
-            loading="lazy"
+            previousImageAria={copy.previousImageAria}
+            nextImageAria={copy.nextImageAria}
+            slidePosition={copy.slidePosition}
           />
         </div>
 
@@ -929,8 +1183,8 @@ function ProjectPreview({
 
       <PreviewFrame
         className={cn(
-          "top-[15%] z-30 w-[25%] max-w-[14rem]",
-          isArabic ? "left-[2%]" : "right-[2%]",
+          "top-[8%] z-30 w-[28%] max-w-[16rem]",
+          isArabic ? "left-[1%]" : "right-[1%]",
         )}
         delay={0.06}
       >
@@ -938,22 +1192,23 @@ function ProjectPreview({
           eyebrow={project.caseStudy.build.eyebrow}
           textDirection={textDirection}
         />
-        <div className="project-preview-phone-content p-3.5">
-          <ProjectImage
-            image={project.caseStudy.mobileImage}
+        <div className="project-preview-phone-content p-2.5">
+          <ProjectImageCarousel
+            images={project.caseStudy.mobileImages}
             className="aspect-[1122/1402] w-full border border-[#111318]/10 bg-[#F4EFE8]"
             sizes="(min-width: 1180px) 12vw, 100vw"
             unavailableLabel={copy.imageUnavailable}
-            fit="contain"
-            loading="lazy"
+            previousImageAria={copy.previousImageAria}
+            nextImageAria={copy.nextImageAria}
+            slidePosition={copy.slidePosition}
           />
         </div>
       </PreviewFrame>
 
       <PreviewFrame
         className={cn(
-          "project-preview-outcome top-[70%] z-40 w-[72%]",
-          isArabic ? "right-[10%]" : "left-[10%]",
+          "project-preview-outcome top-[63%] z-40 w-[82%]",
+          isArabic ? "right-[6%]" : "left-[6%]",
         )}
         delay={0.12}
       >
@@ -961,7 +1216,7 @@ function ProjectPreview({
           eyebrow={project.caseStudy.outcome.eyebrow}
           textDirection={textDirection}
         />
-        <div className="grid grid-cols-[0.62fr_1fr]">
+        <div className="grid grid-cols-[0.48fr_1.25fr]">
           <div
             className={cn(
               "project-preview-outcome-cell flex min-w-0 flex-col justify-end p-3",
@@ -973,7 +1228,7 @@ function ProjectPreview({
           >
             <p
               className={cn(
-                "max-w-full whitespace-nowrap text-[clamp(1.25rem,1.8vw,1.8rem)] font-medium text-[#B8792E]",
+                "max-w-full break-words text-[clamp(1.25rem,1.8vw,1.8rem)] font-medium text-[#B8792E]",
                 isArabic
                   ? "leading-[1.18] tracking-normal"
                   : "leading-[1.1] tracking-[-0.035em]",
@@ -981,15 +1236,14 @@ function ProjectPreview({
             >
               {project.caseStudy.outcome.highlight}
             </p>
-            <p className={cn("mt-2 text-[0.56rem]", getMetaClass(textDirection))}>
+            <p
+              className={cn("mt-2 text-[0.56rem]", getMetaClass(textDirection))}
+            >
               {project.caseStudy.outcome.highlightLabel}
             </p>
           </div>
 
-          <div
-            className="project-preview-outcome-cell p-3"
-            dir={textDirection}
-          >
+          <div className="project-preview-outcome-cell p-3" dir={textDirection}>
             <p
               className={cn(
                 "text-[0.9rem] font-medium text-[#111318]",
@@ -1271,22 +1525,26 @@ function ProjectShowcaseOverlay({
             </div>
 
             <div className="mt-7 grid gap-4 border-y border-[#111318]/12 bg-[#111318]/[0.018] p-4 lg:grid-cols-[minmax(0,1fr)_minmax(13rem,0.31fr)]">
-              <ProjectImage
-                image={project.caseStudy.desktopImage}
+              <ProjectImageCarousel
+                images={project.caseStudy.desktopImages}
                 className="aspect-video w-full border border-[#111318]/10 bg-[#F4EFE8]"
                 sizes="(min-width: 1024px) 62vw, 100vw"
                 unavailableLabel={copy.imageUnavailable}
-                fit="contain"
-                loading="eager"
+                previousImageAria={copy.previousImageAria}
+                nextImageAria={copy.nextImageAria}
+                slidePosition={copy.slidePosition}
+                controls
               />
 
-              <ProjectImage
-                image={project.caseStudy.mobileImage}
+              <ProjectImageCarousel
+                images={project.caseStudy.mobileImages}
                 className="mx-auto aspect-[1122/1402] w-full max-w-[20rem] border border-[#111318]/10 bg-[#F4EFE8] lg:max-w-none"
                 sizes="(min-width: 1024px) 22vw, 72vw"
                 unavailableLabel={copy.imageUnavailable}
-                fit="contain"
-                loading="eager"
+                previousImageAria={copy.previousImageAria}
+                nextImageAria={copy.nextImageAria}
+                slidePosition={copy.slidePosition}
+                controls
               />
             </div>
 
@@ -1333,8 +1591,13 @@ function ProjectShowcaseOverlay({
             </div>
 
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <div className="border-l-2 border-[#B8792E] pl-4" dir={textDirection}>
-                <p className={cn("text-[0.62rem]", getMetaClass(textDirection))}>
+              <div
+                className="border-l-2 border-[#B8792E] pl-4"
+                dir={textDirection}
+              >
+                <p
+                  className={cn("text-[0.62rem]", getMetaClass(textDirection))}
+                >
                   {copy.contributionLabel}
                 </p>
                 <p
@@ -1347,8 +1610,13 @@ function ProjectShowcaseOverlay({
                 </p>
               </div>
 
-              <div className="border-l-2 border-[#111318]/20 pl-4" dir={textDirection}>
-                <p className={cn("text-[0.62rem]", getMetaClass(textDirection))}>
+              <div
+                className="border-l-2 border-[#111318]/20 pl-4"
+                dir={textDirection}
+              >
+                <p
+                  className={cn("text-[0.62rem]", getMetaClass(textDirection))}
+                >
                   {copy.resultLabel}
                 </p>
                 <p
@@ -1371,6 +1639,7 @@ function ProjectShowcaseOverlay({
 export default function Projects({ copy, textDirection }: ProjectsProps) {
   const projects = useMemo(() => buildProjects(copy.items), [copy.items]);
   const isDesktopPreviewEnabled = useDesktopPreviewEnabled();
+  const [activeFilter, setActiveFilter] = useState<ProjectFilter>("all");
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
   const [openProjectId, setOpenProjectId] = useState<string | null>(null);
   const modalHistoryEntryRef = useRef(false);
@@ -1389,14 +1658,22 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
 
   useLockedPageScroll(openProjectId !== null);
 
+  const visibleProjects = useMemo(
+    () =>
+      activeFilter === "all"
+        ? projects
+        : projects.filter((project) => project.group === activeFilter),
+    [activeFilter, projects],
+  );
+
   useEffect(() => {
     if (
       activeProjectId &&
-      !projects.some((project) => project.id === activeProjectId)
+      !visibleProjects.some((project) => project.id === activeProjectId)
     ) {
       setActiveProjectId(null);
     }
-  }, [activeProjectId, projects]);
+  }, [activeProjectId, visibleProjects]);
 
   useEffect(() => {
     if (!openProjectId || !isMobileViewport()) {
@@ -1425,23 +1702,10 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
   }, [openProjectId]);
 
   const activeProject =
-    projects.find((project) => project.id === activeProjectId) ?? null;
+    visibleProjects.find((project) => project.id === activeProjectId) ?? null;
   const openProject =
     projects.find((project) => project.id === openProjectId) ?? null;
   const isArabic = textDirection === "rtl";
-
-  function handleProjectListBlur(event: ReactFocusEvent<HTMLDivElement>) {
-    const nextFocusedElement = event.relatedTarget;
-
-    if (
-      nextFocusedElement instanceof Node &&
-      event.currentTarget.contains(nextFocusedElement)
-    ) {
-      return;
-    }
-
-    setActiveProjectId(null);
-  }
 
   return (
     <section
@@ -1467,18 +1731,24 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
             {copy.title}
           </h2>
 
-          <p
-            className={cn(
-              "mt-6 max-w-[40rem] text-[clamp(1rem,1.24vw,1.18rem)] leading-[1.68]",
-              isArabic && "ml-auto",
-              getBodyClass(textDirection),
-            )}
-          >
-            {copy.intro}
-          </p>
+          {copy.intro ? (
+            <p
+              className={cn(
+                "mt-6 max-w-[40rem] text-[clamp(1rem,1.24vw,1.18rem)] leading-[1.68]",
+                isArabic && "ml-auto",
+                getBodyClass(textDirection),
+              )}
+            >
+              {copy.intro}
+            </p>
+          ) : null}
 
-          <TechStackStrip
-            label={copy.techUsed}
+          <TechStackStrip label={copy.techUsed} textDirection={textDirection} />
+
+          <ProjectFilters
+            activeFilter={activeFilter}
+            onChange={setActiveFilter}
+            copy={copy.filters}
             textDirection={textDirection}
           />
         </div>
@@ -1487,18 +1757,14 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
           className="projects-layout mt-14 grid gap-10 [@media(min-width:1180px)_and_(min-height:650px)]:grid-cols-[minmax(0,1.08fr)_minmax(32rem,0.92fr)] [@media(min-width:1180px)_and_(min-height:650px)]:gap-12"
           dir={textDirection}
         >
-          <div
-            className="min-w-0"
-            onMouseLeave={() => setActiveProjectId(null)}
-            onBlur={handleProjectListBlur}
-          >
+          <div className="min-w-0">
             <div className="grid gap-5">
-              {projects.map((project, index) => (
+              {visibleProjects.map((project, index) => (
                 <ProjectCard
                   key={project.id}
                   project={project}
                   index={index}
-                  isActive={activeProjectId === project.id}
+                  isActive={activeProject?.id === project.id}
                   onActivate={() => setActiveProjectId(project.id)}
                   onOpenDetails={() => setOpenProjectId(project.id)}
                   copy={copy}
@@ -1514,7 +1780,7 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
             className="relative hidden min-h-0 [@media(min-width:1180px)_and_(min-height:650px)]:block"
             dir={textDirection}
           >
-            <div className="sticky top-[5.75rem] h-[calc(100svh-14.5rem)] min-h-[26rem] max-h-[36rem] overflow-hidden">
+            <div className="sticky top-[5.75rem] h-[calc(100svh-10rem)] min-h-[28rem] max-h-[40rem] overflow-hidden">
               <AnimatePresence initial={false}>
                 {activeProject && isDesktopPreviewEnabled ? (
                   <ProjectPreview

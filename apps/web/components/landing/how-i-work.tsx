@@ -16,7 +16,9 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 
-import BookingModal, { type BookingModalCopy } from "@/components/booking-modal";
+import BookingModal, {
+  type BookingModalCopy,
+} from "@/components/booking-modal";
 import type { TextDirection } from "@/lib/lang/config";
 import { useHydratedReducedMotion } from "@/lib/use-hydrated-reduced-motion";
 
@@ -54,6 +56,11 @@ type ProcessNote = Readonly<{
   value: string;
 }>;
 
+type CommonQuestion = Readonly<{
+  question: string;
+  answer: string;
+}>;
+
 export type HowIWorkCopy = Readonly<{
   eyebrow: string;
   title: string;
@@ -65,6 +72,12 @@ export type HowIWorkCopy = Readonly<{
   avatarAlt: string;
   notes: ReadonlyArray<ProcessNote>;
   chatItems: ReadonlyArray<ChatItem>;
+  faq: Readonly<{
+    eyebrow: string;
+    title: string;
+    intro: string;
+    items: ReadonlyArray<CommonQuestion>;
+  }>;
 }>;
 
 type HowIWorkProps = Readonly<{
@@ -399,6 +412,53 @@ function ProcessNote({
   );
 }
 
+function CommonQuestions({
+  copy,
+  textDirection,
+}: {
+  copy: HowIWorkCopy["faq"];
+  textDirection: TextDirection;
+}) {
+  return (
+    <div className="mx-auto mt-[clamp(5rem,9vw,8rem)] w-full max-w-[1920px] px-5 sm:px-8 lg:px-10">
+      <div className="grid gap-10 border-t border-[#111318]/14 pt-10 lg:grid-cols-[minmax(18rem,0.56fr)_minmax(34rem,0.74fr)] lg:gap-16 lg:pt-14">
+        <div dir={textDirection}>
+          <p className="text-[0.7rem] uppercase tracking-[0.22em] text-[#B8792E]">
+            {copy.eyebrow}
+          </p>
+          <h2 className="mt-4 max-w-[34rem] text-[clamp(2.25rem,4.6vw,4.75rem)] font-normal leading-[0.95] tracking-[-0.07em] text-[#111318]">
+            {copy.title}
+          </h2>
+          <p className="mt-5 max-w-[31rem] text-[1rem] leading-[1.6] tracking-[-0.02em] text-[#111318]/62">
+            {copy.intro}
+          </p>
+        </div>
+
+        <dl className="border-t border-[#111318]/14" dir={textDirection}>
+          {copy.items.map((item, index) => (
+            <div
+              key={item.question}
+              className="grid gap-4 border-b border-[#111318]/14 py-6 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-5"
+            >
+              <span className="font-mono text-[0.68rem] tracking-[0.16em] text-[#B8792E]">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <dt className="text-[clamp(1.05rem,1.6vw,1.35rem)] font-medium leading-[1.3] tracking-[-0.035em] text-[#111318]">
+                  {item.question}
+                </dt>
+                <dd className="mt-3 max-w-[48rem] text-[0.95rem] leading-[1.65] tracking-[-0.02em] text-[#111318]/64">
+                  {item.answer}
+                </dd>
+              </div>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  );
+}
+
 export default function HowIWork({
   copy,
   bookingModalCopy,
@@ -483,6 +543,8 @@ export default function HowIWork({
             </div>
           </motion.div>
         </div>
+
+        <CommonQuestions copy={copy.faq} textDirection={textDirection} />
       </section>
 
       <BookingModal
