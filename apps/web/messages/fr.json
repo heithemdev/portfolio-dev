@@ -131,43 +131,8 @@
           }
         }
       },
-      "rimoochat": {
-        "number": "03",
-        "title": "Rimoochat",
-        "category": "E-commerce artisanal",
-        "status": "En ligne · Utilisé",
-        "summary": "J’ai construit Rimoochat pour vendre des robes et des textiles faits main en ligne. Les clients voient toute la gamme, ouvrent chaque produit et commandent sans chercher dans les anciens posts ou messages.",
-        "contribution": "J’ai défini la boutique, conçu les pages, construit le frontend et créé le parcours de commande mobile.",
-        "result": "La boutique a aidé à augmenter les ventes pendant les derniers mois. Elle donne aussi aux clients un seul endroit pour parcourir les produits et commander.",
-        "linkLabel": "Ouvrir la démo",
-        "year": "2025",
-        "images": {
-          "cardAlt": "Carte projet de la boutique e-commerce Rimoochat",
-          "mobileAlt": "Interface mobile de la boutique Rimoochat",
-          "desktopAlt": "Interface desktop de la boutique Rimoochat"
-        },
-        "caseStudy": {
-          "context": {
-            "eyebrow": "Le problème produit",
-            "title": "Vendre par messages rendait chaque commande plus difficile",
-            "body": "Les clients devaient demander les produits disponibles, attendre les photos et répéter les mêmes questions. Dans un fil chargé, les pièces faites main ressemblaient aussi à des produits ordinaires."
-          },
-          "build": {
-            "eyebrow": "Ce que j’ai construit",
-            "title": "J’ai donné une page à chaque produit",
-            "body": "J’ai construit une boutique simple avec des photos claires, les prix, les détails et un parcours de commande court. Nous avons gardé un design doux pour mettre le travail fait main au centre."
-          },
-          "outcome": {
-            "eyebrow": "Étape actuelle",
-            "title": "Plus de ventes pendant les derniers mois",
-            "body": "Rimoochat est maintenant utilisé. Il a aidé l’activité à vendre plus et donne aux clients un parcours plus simple pour voir les produits et commander.",
-            "highlight": "En ligne",
-            "highlightLabel": "les ventes ont augmenté"
-          }
-        }
-      },
       "unimarket": {
-        "number": "04",
+        "number": "03",
         "title": "Unimarket",
         "category": "Commerce social",
         "status": "En cours de lancement",
@@ -207,7 +172,7 @@
         }
       },
       "duks": {
-        "number": "05",
+        "number": "04",
         "title": "DUKS Perfume",
         "category": "Expérience de site pour parfum",
         "status": "Projet pour le plaisir",
@@ -242,7 +207,7 @@
         }
       },
       "reperto": {
-        "number": "06",
+        "number": "05",
         "title": "Reperto",
         "category": "Startup privée",
         "status": "Privé · Accord en attente",
@@ -283,7 +248,7 @@
         "summary": "J’ai construit Tahwisa pour une agence de voyages. L’équipe l’utilise chaque jour pour suivre les clients, réservations, paiements, dettes, dépenses et l’argent détenu par chaque employé.",
         "contribution": "J’ai défini le système, construit les parcours d’argent et de réservation, développé toute l’app et rendu son installation possible.",
         "result": "L’agence vérifie maintenant les impayés, les dates, les demandes clients, les coûts, le bénéfice et les transferts entre employés dans un seul endroit.",
-        "number": "07",
+        "number": "06",
         "year": "2026",
         "linkLabel": "",
         "images": {
@@ -318,7 +283,7 @@
         "summary": "Je construis Waity pour les cliniques. Les patients voient leur place sur le téléphone, attendent à proximité et reviennent quand leur tour approche.",
         "contribution": "J’ai défini le produit, conçu les écrans des patients et du personnel, puis construit la première app web.",
         "result": "Le but est de réduire le nombre de personnes dans la salle, les questions à l’accueil et le temps passé à gérer la file. Waity est encore en développement.",
-        "number": "08",
+        "number": "07",
         "year": "2026",
         "linkLabel": "",
         "images": {
@@ -353,7 +318,7 @@
         "summary": "Je construis Awid pour la livraison locale en Algérie. Un client publie une liste de courses, un retrait ou un colis. Un livreur proche propose ensuite un prix.",
         "contribution": "J’ai défini le produit, la recherche des livreurs proches, les étapes de livraison et la première app.",
         "result": "Le but est une livraison locale simple pour les clients et plus de travail payé pour les livreurs indépendants. Awid arrive bientôt.",
-        "number": "09",
+        "number": "08",
         "year": "2026",
         "linkLabel": "",
         "images": {

@@ -18,7 +18,6 @@ const routePaths = ["", "/about", "/how-i-work"];
 const projectOrder = [
   "supermarket-laibi-2",
   "said",
-  "rimoochat",
   "unimarket",
   "duks",
   "reperto",

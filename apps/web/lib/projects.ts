@@ -15,13 +15,6 @@ export const PROJECTS = [
     image: "/Projects/said/card.webp",
   },
   {
-    key: "rimoochat",
-    id: "rimoochat",
-    group: "ecommerce",
-    href: "https://rimoochat.com/",
-    image: "/Projects/rimoochat/card.webp",
-  },
-  {
     key: "unimarket",
     id: "unimarket",
     group: "platforms",

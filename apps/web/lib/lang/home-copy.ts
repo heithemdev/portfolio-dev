@@ -18,7 +18,6 @@ type ProjectConfig = Readonly<{
   key:
     | "laibi"
     | "said"
-    | "rimoochat"
     | "unimarket"
     | "duks"
     | "reperto"

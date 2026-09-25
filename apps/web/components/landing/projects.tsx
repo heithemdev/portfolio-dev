@@ -205,26 +205,6 @@ const projectImageMap: Record<
       },
     ],
   },
-  rimoochat: {
-    cardImage: {
-      src: "/Projects/rimoochat/card.webp",
-      position: "center",
-    },
-    mobileImages: [
-      {
-        src: "/Projects/rimoochat/mobile.webp",
-        fallbackSrc: "/Projects/rimoochat/card.webp",
-        position: "center",
-      },
-    ],
-    desktopImages: [
-      {
-        src: "/Projects/rimoochat/desktop.webp",
-        fallbackSrc: "/Projects/rimoochat/card.webp",
-        position: "center",
-      },
-    ],
-  },
   unimarket: {
     cardImage: {
       src: "/Projects/unimarket/card.webp",
@@ -1013,11 +993,9 @@ function ProjectCard({
 function PreviewFrame({
   children,
   className,
-  delay,
 }: {
   children: ReactNode;
   className: string;
-  delay: number;
 }) {
   const shouldReduceMotion = useHydratedReducedMotion();
 
@@ -1027,13 +1005,30 @@ function PreviewFrame({
         "absolute overflow-hidden border border-[#111318]/16 bg-[#F4EFE8] shadow-[0_24px_70px_rgba(17,19,24,0.13)]",
         className,
       )}
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 18, scale: 0.985 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={shouldReduceMotion ? undefined : { opacity: 0, y: 10, scale: 0.99 }}
-      transition={{
-        delay: shouldReduceMotion ? 0 : delay,
-        duration: shouldReduceMotion ? 0 : 0.34,
-        ease: [0.16, 1, 0.3, 1],
+      variants={{
+        hidden: shouldReduceMotion
+          ? { opacity: 1 }
+          : { opacity: 0, y: 22, scale: 0.94, rotate: -1.5 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotate: 0,
+          transition: {
+            duration: shouldReduceMotion ? 0 : 0.42,
+            ease: [0.16, 1, 0.3, 1],
+          },
+        },
+        exit: {
+          opacity: 0,
+          y: shouldReduceMotion ? 0 : -14,
+          scale: shouldReduceMotion ? 1 : 0.95,
+          rotate: shouldReduceMotion ? 0 : 1.5,
+          transition: {
+            duration: shouldReduceMotion ? 0 : 0.23,
+            ease: [0.4, 0, 1, 1],
+          },
+        },
       }}
     >
       {children}
@@ -1108,10 +1103,25 @@ function ProjectPreview({
       key={project.id}
       className="relative h-full min-h-0 w-full overflow-hidden"
       dir={textDirection}
-      initial={shouldReduceMotion ? false : { opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={shouldReduceMotion ? undefined : { opacity: 0 }}
-      transition={{ duration: shouldReduceMotion ? 0 : 0.18 }}
+      initial={shouldReduceMotion ? false : "hidden"}
+      animate="visible"
+      exit="exit"
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            delayChildren: shouldReduceMotion ? 0 : 0.02,
+            staggerChildren: shouldReduceMotion ? 0 : 0.09,
+          },
+        },
+        exit: {
+          transition: {
+            staggerChildren: shouldReduceMotion ? 0 : 0.07,
+            staggerDirection: -1,
+            when: "afterChildren",
+          },
+        },
+      }}
     >
       <div className="absolute inset-0 border border-[#111318]/8" />
       <div className="absolute left-0 top-0 h-14 w-14 border-l border-t border-[#B8792E]/48" />
@@ -1122,7 +1132,6 @@ function ProjectPreview({
           "top-[3%] z-20 w-[69%]",
           isArabic ? "right-[2%]" : "left-[2%]",
         )}
-        delay={0}
       >
         <PreviewHeader
           eyebrow={`${project.number} / ${project.category}`}
@@ -1186,7 +1195,6 @@ function ProjectPreview({
           "top-[8%] z-30 w-[28%] max-w-[16rem]",
           isArabic ? "left-[1%]" : "right-[1%]",
         )}
-        delay={0.06}
       >
         <PreviewHeader
           eyebrow={project.caseStudy.build.eyebrow}
@@ -1210,7 +1218,6 @@ function ProjectPreview({
           "project-preview-outcome top-[63%] z-40 w-[82%]",
           isArabic ? "right-[6%]" : "left-[6%]",
         )}
-        delay={0.12}
       >
         <PreviewHeader
           eyebrow={project.caseStudy.outcome.eyebrow}
@@ -1781,7 +1788,7 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
             dir={textDirection}
           >
             <div className="sticky top-[5.75rem] h-[calc(100svh-10rem)] min-h-[28rem] max-h-[40rem] overflow-hidden">
-              <AnimatePresence initial={false}>
+              <AnimatePresence initial={false} mode="wait">
                 {activeProject && isDesktopPreviewEnabled ? (
                   <ProjectPreview
                     key={activeProject.id}

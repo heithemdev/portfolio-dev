@@ -21,7 +21,6 @@ const ROUTE_IMAGES: Record<(typeof ROUTES)[number], ReadonlyArray<string>> = {
     "/assets/Heithem%20avatar%20BNW.png",
     "/Projects/superete%20laibi%202/card.webp",
     "/Projects/said/card.webp",
-    "/Projects/rimoochat/card.webp",
     "/Projects/unimarket/card.webp",
     "/Projects/duks/card.webp",
     "/Projects/reperto/cover.webp",

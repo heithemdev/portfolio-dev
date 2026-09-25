@@ -131,43 +131,8 @@
           }
         }
       },
-      "rimoochat": {
-        "number": "03",
-        "title": "Rimoochat",
-        "category": "Handmade e-commerce",
-        "status": "Live · In use",
-        "summary": "I built Rimoochat to sell handmade dresses and home textiles online. Customers see the full range, check each item, and order without digging through old posts or messages.",
-        "contribution": "I planned the store, designed the pages, built the frontend, and made the mobile order flow.",
-        "result": "The store has helped increase sales over the last few months. It also gives customers one clear place to browse and order.",
-        "linkLabel": "Open demo",
-        "year": "2025",
-        "images": {
-          "cardAlt": "Rimoochat e-commerce store project card",
-          "mobileAlt": "Rimoochat mobile store interface",
-          "desktopAlt": "Rimoochat desktop store interface"
-        },
-        "caseStudy": {
-          "context": {
-            "eyebrow": "The product problem",
-            "title": "Selling through messages made each order harder",
-            "body": "Customers had to ask what was available, wait for photos, and repeat the same questions. Busy social feeds also made handmade pieces look like common products."
-          },
-          "build": {
-            "eyebrow": "What I built",
-            "title": "I gave every product its own page",
-            "body": "I built a simple store with clear photos, prices, product details, and a short order flow. We kept the design soft so the handmade work stays in focus."
-          },
-          "outcome": {
-            "eyebrow": "Current stage",
-            "title": "More sales in recent months",
-            "body": "Rimoochat is now in use. It has helped the business sell more while giving customers a simpler way to browse and order.",
-            "highlight": "Live",
-            "highlightLabel": "sales have increased"
-          }
-        }
-      },
       "unimarket": {
-        "number": "04",
+        "number": "03",
         "title": "Unimarket",
         "category": "Social commerce platform",
         "status": "Launching",
@@ -207,7 +172,7 @@
         }
       },
       "duks": {
-        "number": "05",
+        "number": "04",
         "title": "DUKS Perfume",
         "category": "Perfume website experiment",
         "status": "Fun project",
@@ -242,7 +207,7 @@
         }
       },
       "reperto": {
-        "number": "06",
+        "number": "05",
         "title": "Reperto",
         "category": "Private startup",
         "status": "Private · Awaiting approval",
@@ -283,7 +248,7 @@
         "summary": "I built Tahwisa for a travel agency. The team uses it every day to track clients, bookings, payments, debts, expenses, and the money held by each worker.",
         "contribution": "I planned the system, built the money and booking flows, developed the full app, and made it installable.",
         "result": "The agency now checks unpaid balances, due dates, client requests, costs, profit, and staff cash transfers in one place.",
-        "number": "07",
+        "number": "06",
         "year": "2026",
         "linkLabel": "",
         "images": {
@@ -318,7 +283,7 @@
         "summary": "I am building Waity for clinics. Patients check their place in line on a phone, wait nearby, and return when their turn gets close.",
         "contribution": "I planned the product, designed the patient and staff screens, and built the first web app.",
         "result": "The goal is fewer people in the waiting room, fewer questions at reception, and less time spent managing the line. Waity is still in development.",
-        "number": "08",
+        "number": "07",
         "year": "2026",
         "linkLabel": "",
         "images": {
@@ -353,7 +318,7 @@
         "summary": "I am building Awid for local delivery in Algeria. A customer posts a shopping list, pickup, or package. A nearby driver then offers a price.",
         "contribution": "I planned the product, the nearby-driver search, the delivery steps, and the first app.",
         "result": "The goal is simple local delivery for customers and more paid work for independent drivers. Awid is coming soon.",
-        "number": "09",
+        "number": "08",
         "year": "2026",
         "linkLabel": "",
         "images": {
