@@ -127,6 +127,28 @@ export function getHowIWorkCopy(t: Translator): HowIWorkCopy {
         body: t("howIWork.chat.heithemClose"),
       },
     ],
+    terms: {
+      eyebrow: t("howIWork.terms.eyebrow"),
+      title: t("howIWork.terms.title"),
+      intro: t("howIWork.terms.intro"),
+      items: [
+        {
+          marker: "50/50",
+          title: t("howIWork.terms.items.payment.title"),
+          body: t("howIWork.terms.items.payment.body"),
+        },
+        {
+          marker: "03",
+          title: t("howIWork.terms.items.revisions.title"),
+          body: t("howIWork.terms.items.revisions.body"),
+        },
+        {
+          marker: "+",
+          title: t("howIWork.terms.items.scope.title"),
+          body: t("howIWork.terms.items.scope.body"),
+        },
+      ],
+    },
     faq: {
       eyebrow: t("howIWork.faq.eyebrow"),
       title: t("howIWork.faq.title"),

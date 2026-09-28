@@ -61,6 +61,12 @@ type CommonQuestion = Readonly<{
   answer: string;
 }>;
 
+type WorkingTerm = Readonly<{
+  marker: string;
+  title: string;
+  body: string;
+}>;
+
 export type HowIWorkCopy = Readonly<{
   eyebrow: string;
   title: string;
@@ -72,6 +78,12 @@ export type HowIWorkCopy = Readonly<{
   avatarAlt: string;
   notes: ReadonlyArray<ProcessNote>;
   chatItems: ReadonlyArray<ChatItem>;
+  terms: Readonly<{
+    eyebrow: string;
+    title: string;
+    intro: string;
+    items: ReadonlyArray<WorkingTerm>;
+  }>;
   faq: Readonly<{
     eyebrow: string;
     title: string;
@@ -459,6 +471,59 @@ function CommonQuestions({
   );
 }
 
+function WorkingTerms({
+  copy,
+  textDirection,
+}: {
+  copy: HowIWorkCopy["terms"];
+  textDirection: TextDirection;
+}) {
+  return (
+    <div className="mx-auto mt-[clamp(5rem,9vw,8rem)] w-full max-w-[1920px] px-5 sm:px-8 lg:px-10">
+      <div
+        className="grid gap-10 bg-[#111318] px-6 py-8 text-[#F4EFE8] sm:px-10 sm:py-12 lg:grid-cols-[minmax(18rem,0.56fr)_minmax(34rem,0.74fr)] lg:gap-16 lg:px-14 lg:py-16"
+        dir={textDirection}
+      >
+        <div>
+          <p className="text-[0.7rem] uppercase tracking-[0.22em] text-[#D3A063]">
+            {copy.eyebrow}
+          </p>
+          <h2 className="mt-4 max-w-[36rem] text-[clamp(2.25rem,4.6vw,4.75rem)] font-normal leading-[0.95] tracking-[-0.07em]">
+            {copy.title}
+          </h2>
+          <p className="mt-5 max-w-[31rem] text-[1rem] leading-[1.6] tracking-[-0.02em] text-[#F4EFE8]/62">
+            {copy.intro}
+          </p>
+        </div>
+
+        <ol className="border-t border-[#F4EFE8]/22">
+          {copy.items.map((item) => (
+            <li
+              key={item.title}
+              className="grid gap-4 border-b border-[#F4EFE8]/22 py-6 sm:grid-cols-[5.75rem_minmax(0,1fr)] sm:gap-6"
+            >
+              <span
+                aria-hidden="true"
+                className="font-mono text-[1.05rem] tracking-[-0.05em] text-[#D3A063]"
+              >
+                {item.marker}
+              </span>
+              <div>
+                <h3 className="text-[clamp(1.18rem,1.8vw,1.5rem)] font-medium leading-[1.25] tracking-[-0.035em]">
+                  {item.title}
+                </h3>
+                <p className="mt-3 max-w-[43rem] text-[0.95rem] leading-[1.65] tracking-[-0.02em] text-[#F4EFE8]/66">
+                  {item.body}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  );
+}
+
 export default function HowIWork({
   copy,
   bookingModalCopy,
@@ -544,6 +609,7 @@ export default function HowIWork({
           </motion.div>
         </div>
 
+        <WorkingTerms copy={copy.terms} textDirection={textDirection} />
         <CommonQuestions copy={copy.faq} textDirection={textDirection} />
       </section>
 

@@ -621,14 +621,25 @@ function ProjectImageCarousel({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <AnimatePresence initial={false} mode="wait">
+      <AnimatePresence initial={false} mode="sync">
         <motion.div
           key={currentImage.src}
           className="absolute inset-0"
-          initial={shouldReduceMotion ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={shouldReduceMotion ? undefined : { opacity: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.22 }}
+          initial={
+            shouldReduceMotion
+              ? false
+              : { opacity: 0, x: 7, clipPath: "inset(0 0 0 14%)" }
+          }
+          animate={{ opacity: 1, x: 0, clipPath: "inset(0 0 0 0)" }}
+          exit={
+            shouldReduceMotion
+              ? undefined
+              : { opacity: 0, x: -5, clipPath: "inset(0 12% 0 0)" }
+          }
+          transition={{
+            duration: shouldReduceMotion ? 0 : 0.26,
+            ease: [0.16, 1, 0.3, 1],
+          }}
         >
           <ProjectImage
             image={currentImage}
@@ -639,6 +650,14 @@ function ProjectImageCarousel({
           />
         </motion.div>
       </AnimatePresence>
+
+      {!shouldReduceMotion ? (
+        <span
+          key={`scan-${currentImage.src}`}
+          aria-hidden="true"
+          className="project-glitch-scan pointer-events-none absolute inset-0 z-10"
+        />
+      ) : null}
 
       {imageCount > 1 ? (
         <>
@@ -868,6 +887,7 @@ function ProjectCard({
   return (
     <article
       aria-labelledby={`${project.id}-card-title`}
+      data-cursor-project={project.number}
       dir={textDirection}
       onMouseEnter={onActivate}
       onFocusCapture={onActivate}
@@ -1709,7 +1729,9 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
   }, [openProjectId]);
 
   const activeProject =
-    visibleProjects.find((project) => project.id === activeProjectId) ?? null;
+    visibleProjects.find((project) => project.id === activeProjectId) ??
+    visibleProjects[0] ??
+    null;
   const openProject =
     projects.find((project) => project.id === openProjectId) ?? null;
   const isArabic = textDirection === "rtl";

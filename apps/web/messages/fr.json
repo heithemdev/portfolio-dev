@@ -24,7 +24,7 @@
     "sideLabel": "ingénieur logiciel",
     "year": "2026",
     "intro": "Bonjour. Moi c’est",
-    "description": "Apps web, e-commerce, plateformes et SaaS. Votre solution commence avec le bouton ci-dessous.",
+    "description": "Je crée des boutiques, des plateformes et des applications web autour d'un problème clair, puis je les mène jusqu'à leur mise en ligne.",
     "seeWork": "Voir les projets",
     "contact": "Me contacter",
     "avatarAlt": "Portrait noir et blanc de Heithem Chorfi",
@@ -41,7 +41,7 @@
   },
   "projects": {
     "title": "Projets sélectionnés",
-    "intro": "",
+    "intro": "Ouvrez un projet pour voir ce que j'ai construit, les choix faits et où il en est aujourd'hui.",
     "techUsed": "Stack utilisée",
     "contributionLabel": "Ma contribution",
     "resultLabel": "Résultat / objectif",
@@ -402,6 +402,25 @@
       "fileMeta": "Scope, investissement, planning",
       "clientOk": "C’est clair. On peut commencer.",
       "heithemClose": "Parfait. Dès que vous validez l’accord, le travail commence."
+    },
+    "terms": {
+      "eyebrow": "Conditions de travail",
+      "title": "Tout est clair dès le départ.",
+      "intro": "Ces points figurent dans l'accord de projet avant le début du travail.",
+      "items": {
+        "payment": {
+          "title": "Paiement",
+          "body": "50 % sont dus avant le début du développement. Les 50 % restants sont dus après la livraison du travail convenu."
+        },
+        "revisions": {
+          "title": "Petites retouches",
+          "body": "Trois petites retouches du travail convenu sont incluses. Les suivantes sont facturées séparément."
+        },
+        "scope": {
+          "title": "Changements de périmètre",
+          "body": "Les changements majeurs ou nouvelles fonctionnalités font l'objet d'un devis séparé avant leur réalisation."
+        }
+      }
     },
     "faq": {
       "eyebrow": "Questions courantes",

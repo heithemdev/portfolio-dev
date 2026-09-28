@@ -24,7 +24,7 @@
     "sideLabel": "software engineer",
     "year": "2026",
     "intro": "Hello. I'm",
-    "description": "Web apps, e-commerce, platforms, and SaaS. Your solution starts from the button below.",
+    "description": "I build stores, platforms, and web apps around a clear problem, then carry them through to launch.",
     "seeWork": "See work",
     "contact": "Contact me",
     "avatarAlt": "Black and white portrait of Heithem Chorfi",
@@ -41,7 +41,7 @@
   },
   "projects": {
     "title": "Selected Work",
-    "intro": "",
+    "intro": "Open a project to see what I built, the decisions behind it, and where it stands today.",
     "techUsed": "Tech used",
     "contributionLabel": "My contribution",
     "resultLabel": "Result / goal",
@@ -402,6 +402,25 @@
       "fileMeta": "Scope, investment, timeline",
       "clientOk": "Clear. We can start.",
       "heithemClose": "Perfect. Once you give the OK on the agreement, work starts."
+    },
+    "terms": {
+      "eyebrow": "Working terms",
+      "title": "Clear from the start.",
+      "intro": "These points go into the project agreement before work begins.",
+      "items": {
+        "payment": {
+          "title": "Payment",
+          "body": "50% is due before the build starts. The remaining 50% is due after the agreed work is delivered."
+        },
+        "revisions": {
+          "title": "Small revisions",
+          "body": "Three small revisions to the agreed work are included. Further revisions are billed separately."
+        },
+        "scope": {
+          "title": "Changes in scope",
+          "body": "Major changes or new features are quoted separately before that work begins."
+        }
+      }
     },
     "faq": {
       "eyebrow": "Common questions",
