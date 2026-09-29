@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import SectionReveal from "@/components/section-reveal";
 
 import type { Locale, TextDirection } from "@/lib/lang/config";
 
@@ -114,8 +115,9 @@ export default function PageTeasers({
     >
       <div className="mx-auto grid w-full max-w-[1920px] lg:grid-cols-2">
         {items.map((item, index) => (
-          <div
+          <SectionReveal
             key={item.href}
+            delay={index * 70}
             className={
               index === 0
                 ? "border-b border-[#111318]/10 lg:border-b-0 lg:border-r"
@@ -123,7 +125,7 @@ export default function PageTeasers({
             }
           >
             <TeaserLink item={item} textDirection={textDirection} />
-          </div>
+          </SectionReveal>
         ))}
       </div>
     </section>

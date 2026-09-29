@@ -5,8 +5,7 @@
 // Linked files: app/[locale]/page.tsx, components/navbar.tsx, components/smooth-section-link.tsx, lib/lang/config.ts, public/assets/heithem-portrait-shoulders-v2.webp.
 
 import Image from "next/image";
-import { motion } from "motion/react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import SmoothSectionLink from "@/components/smooth-section-link";
 import type { TextDirection } from "@/lib/lang/config";
@@ -262,44 +261,30 @@ function HeroSupportContent({
   textDirection: TextDirection;
 }) {
   const isArabic = textDirection === "rtl";
-  const reducedMotion = useHydratedReducedMotion();
 
   return (
     <>
-      <motion.p
+      <p
         dir={textDirection}
         className={[
           className ?? "",
+          "hero-editorial__description",
           isMobile
             ? "max-w-[22rem] text-[1rem]"
             : "max-w-[34rem] text-[clamp(1rem,1.12vw,1.16rem)]",
           "font-normal leading-[1.58] text-[#111318]/66",
           isArabic ? "tracking-normal" : "tracking-[-0.025em]",
         ].join(" ")}
-        initial={false}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: reducedMotion ? 0 : 0.08,
-          duration: reducedMotion ? 0 : 0.28,
-          ease: [0.16, 1, 0.3, 1],
-        }}
       >
         {copy.description}
-      </motion.p>
+      </p>
 
-      <motion.div
+      <div
         className={
           isMobile
-            ? "mt-8 flex flex-wrap items-center gap-3"
-            : "mt-7 flex flex-wrap items-center gap-3 lg:mt-9 lg:gap-4"
+            ? "hero-editorial__actions mt-8 flex flex-wrap items-center gap-3"
+            : "hero-editorial__actions mt-7 flex flex-wrap items-center gap-3 lg:mt-9 lg:gap-4"
         }
-        initial={false}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: reducedMotion ? 0 : 0.1,
-          duration: reducedMotion ? 0 : 0.28,
-          ease: [0.16, 1, 0.3, 1],
-        }}
       >
         <SmoothSectionLink
           href="#work"
@@ -320,13 +305,50 @@ function HeroSupportContent({
         >
           <span dir={textDirection}>{copy.contact}</span>
         </SmoothSectionLink>
-      </motion.div>
+      </div>
     </>
   );
 }
 
 export default function Hero({ copy, textDirection }: HeroProps) {
   const isArabic = textDirection === "rtl";
+  const portraitRef = useRef<HTMLImageElement>(null);
+  const [portraitLoaded, setPortraitLoaded] = useState(false);
+
+  useEffect(() => {
+    const image = portraitRef.current;
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (
+      !portraitLoaded ||
+      !image ||
+      preference.matches ||
+      !image.animate ||
+      image.getBoundingClientRect().bottom <= 0
+    )
+      return;
+
+    const compact = window.matchMedia("(max-width: 1023px)").matches;
+    // Separate translate from transform so the approved desktop scale stays intact.
+    // Trigger on image load: the entrance cannot finish while the image downloads.
+    const animation = image.animate(
+      [
+        { opacity: 0, translate: compact ? "0 24px" : "36px 24px" },
+        { opacity: 1, translate: "0 0" },
+      ],
+      {
+        duration: compact ? 650 : 900,
+        easing: "cubic-bezier(0.2, 0.65, 0.3, 1)",
+      },
+    );
+    const stopMotion = () => {
+      if (preference.matches) animation.cancel();
+    };
+    preference.addEventListener("change", stopMotion);
+    return () => {
+      preference.removeEventListener("change", stopMotion);
+      animation.cancel();
+    };
+  }, [portraitLoaded]);
 
   return (
     <section
@@ -355,6 +377,8 @@ export default function Hero({ copy, textDirection }: HeroProps) {
             placeholder="empty"
             loading="eager"
             fetchPriority="high"
+            ref={portraitRef}
+            onLoad={() => setPortraitLoaded(true)}
             sizes="(min-width: 1920px) 1088px, (min-width: 1280px) 57vw, (min-width: 1024px) 52vw, (min-width: 496px) 480px, calc(100vw - 16px)"
             className="hero-editorial__image select-none"
           />
@@ -374,6 +398,7 @@ export default function Hero({ copy, textDirection }: HeroProps) {
           ) : null}
           <p
             className={[
+              "hero-editorial__intro",
               "text-[clamp(1.2rem,2.1vw,2rem)] font-normal leading-none text-[#111318]/75",
               isArabic ? "tracking-normal" : "tracking-[-0.045em]",
             ].join(" ")}

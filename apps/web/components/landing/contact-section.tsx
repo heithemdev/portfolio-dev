@@ -5,7 +5,7 @@
 "use client";
 
 import Link from "next/link";
-import type { FormEvent, ReactNode } from "react";
+import type { FormEvent } from "react";
 import { useEffect, useState } from "react";
 import {
   ArrowUpRight,
@@ -15,11 +15,10 @@ import {
   PhoneCall,
   Send,
 } from "lucide-react";
-import { motion } from "motion/react";
 
 import BookingModal, { type BookingModalCopy } from "@/components/booking-modal";
 import type { Locale, TextDirection } from "@/lib/lang/config";
-import { useHydratedReducedMotion } from "@/lib/use-hydrated-reduced-motion";
+import SectionReveal from "@/components/section-reveal";
 
 const CONTACT_EMAIL = "heithem.dev@gmail.com";
 const CONTACT_PHONE_DISPLAY = "+213 794 20 66 55";
@@ -149,34 +148,6 @@ function formatAlgeriaTime(utcMs: number): AlgeriaTimeSnapshot {
       month: "short",
     }).format(date),
   };
-}
-
-function FadeIn({
-  children,
-  className,
-  delay = 0,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  const shouldReduceMotion = useHydratedReducedMotion();
-
-  return (
-    <motion.div
-      className={className}
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
-      whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.35 }}
-      transition={{
-        delay: shouldReduceMotion ? 0 : delay,
-        duration: 0.38,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-    >
-      {children}
-    </motion.div>
-  );
 }
 
 function IconMask({
@@ -691,7 +662,7 @@ export default function ContactSection({
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#111318]/10" />
 
       <div className="mx-auto grid w-full max-w-[1920px] gap-10 px-5 sm:px-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(28rem,0.58fr)] lg:items-center lg:gap-14 lg:px-10">
-        <FadeIn>
+        <SectionReveal>
           <div dir={textDirection}>
             <p className="text-[clamp(1.15rem,1.9vw,1.65rem)] uppercase tracking-[0.2em] text-[#B8792E]">
               {copy.eyebrow}
@@ -717,11 +688,11 @@ export default function ContactSection({
           />
 
           <ContactLinks copy={copy} textDirection={textDirection} />
-        </FadeIn>
+        </SectionReveal>
 
-        <FadeIn delay={0.1}>
+        <SectionReveal delay={70}>
           <ContactForm copy={copy} textDirection={textDirection} />
-        </FadeIn>
+        </SectionReveal>
       </div>
     </section>
   );

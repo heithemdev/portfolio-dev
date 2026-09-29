@@ -31,6 +31,7 @@ import {
 import type { TextDirection } from "@/lib/lang/config";
 import { getProjectPath } from "@/lib/projects";
 import { useHydratedReducedMotion } from "@/lib/use-hydrated-reduced-motion";
+import SectionReveal from "@/components/section-reveal";
 
 type TechId =
   | "next.js"
@@ -538,8 +539,8 @@ function ProjectImage({
           sizes={sizes}
           loading={loading}
           className={cn(
-            "transition-[opacity,transform] duration-400 ease-out motion-reduce:transition-none",
-            isLoaded ? "scale-100 opacity-100" : "scale-[1.01] opacity-0",
+            "transition-opacity duration-200 ease-out motion-reduce:transition-none",
+            isLoaded ? "opacity-100" : "opacity-0",
           )}
           style={{
             objectFit: fit,
@@ -621,23 +622,15 @@ function ProjectImageCarousel({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <AnimatePresence initial={false} mode="sync">
+      <AnimatePresence initial={false} mode="wait">
         <motion.div
           key={currentImage.src}
           className="absolute inset-0"
-          initial={
-            shouldReduceMotion
-              ? false
-              : { opacity: 0, x: 7, clipPath: "inset(0 0 0 14%)" }
-          }
-          animate={{ opacity: 1, x: 0, clipPath: "inset(0 0 0 0)" }}
-          exit={
-            shouldReduceMotion
-              ? undefined
-              : { opacity: 0, x: -5, clipPath: "inset(0 12% 0 0)" }
-          }
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={shouldReduceMotion ? undefined : { opacity: 0 }}
           transition={{
-            duration: shouldReduceMotion ? 0 : 0.26,
+            duration: shouldReduceMotion ? 0 : 0.18,
             ease: [0.16, 1, 0.3, 1],
           }}
         >
@@ -650,14 +643,6 @@ function ProjectImageCarousel({
           />
         </motion.div>
       </AnimatePresence>
-
-      {!shouldReduceMotion ? (
-        <span
-          key={`scan-${currentImage.src}`}
-          aria-hidden="true"
-          className="project-glitch-scan pointer-events-none absolute inset-0 z-10"
-        />
-      ) : null}
 
       {imageCount > 1 ? (
         <>
@@ -1026,27 +1011,21 @@ function PreviewFrame({
         className,
       )}
       variants={{
-        hidden: shouldReduceMotion
-          ? { opacity: 1 }
-          : { opacity: 0, y: 22, scale: 0.94, rotate: -1.5 },
+        hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 12 },
         visible: {
           opacity: 1,
           y: 0,
-          scale: 1,
-          rotate: 0,
           transition: {
-            duration: shouldReduceMotion ? 0 : 0.42,
-            ease: [0.16, 1, 0.3, 1],
+            duration: shouldReduceMotion ? 0 : 0.24,
+            ease: [0.2, 0.8, 0.2, 1],
           },
         },
         exit: {
           opacity: 0,
-          y: shouldReduceMotion ? 0 : -14,
-          scale: shouldReduceMotion ? 1 : 0.95,
-          rotate: shouldReduceMotion ? 0 : 1.5,
+          y: shouldReduceMotion ? 0 : -6,
           transition: {
-            duration: shouldReduceMotion ? 0 : 0.23,
-            ease: [0.4, 0, 1, 1],
+            duration: shouldReduceMotion ? 0 : 0.13,
+            ease: "easeIn",
           },
         },
       }}
@@ -1130,13 +1109,12 @@ function ProjectPreview({
         hidden: {},
         visible: {
           transition: {
-            delayChildren: shouldReduceMotion ? 0 : 0.02,
-            staggerChildren: shouldReduceMotion ? 0 : 0.09,
+            staggerChildren: shouldReduceMotion ? 0 : 0.075,
           },
         },
         exit: {
           transition: {
-            staggerChildren: shouldReduceMotion ? 0 : 0.07,
+            staggerChildren: shouldReduceMotion ? 0 : 0.045,
             staggerDirection: -1,
             when: "afterChildren",
           },
@@ -1470,7 +1448,7 @@ function ProjectShowcaseOverlay({
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] bg-[#111318]/48 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-[max(0.75rem,env(safe-area-inset-top))] backdrop-blur-[2px] sm:px-5"
+      className="fixed inset-0 z-[9999] bg-[#111318]/48 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-[max(0.75rem,env(safe-area-inset-top))] sm:px-5"
       role="dialog"
       aria-modal="true"
       aria-labelledby={`${project.id}-case-study-title`}
@@ -1485,13 +1463,9 @@ function ProjectShowcaseOverlay({
         tabIndex={-1}
         className="mx-auto flex max-h-[calc(100dvh-1.5rem)] w-full max-w-[1180px] flex-col overflow-hidden border border-[#111318]/18 bg-[#F4EFE8] shadow-[0_30px_90px_rgba(17,19,24,0.3)]"
         onClick={handlePanelClick}
-        initial={
-          shouldReduceMotion ? false : { y: 22, scale: 0.99, opacity: 0 }
-        }
-        animate={{ y: 0, scale: 1, opacity: 1 }}
-        exit={
-          shouldReduceMotion ? undefined : { y: 14, scale: 0.99, opacity: 0 }
-        }
+        initial={shouldReduceMotion ? false : { y: 10, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={shouldReduceMotion ? undefined : { y: 6, opacity: 0 }}
         transition={{
           duration: shouldReduceMotion ? 0 : 0.25,
           ease: [0.16, 1, 0.3, 1],
@@ -1747,7 +1721,7 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#111318]/10" />
 
       <div className="mx-auto w-full max-w-[1920px] px-5 sm:px-8 lg:px-10">
-        <div
+        <SectionReveal
           className={cn("max-w-[52rem]", isArabic && "ml-auto text-right")}
           dir={textDirection}
         >
@@ -1781,7 +1755,7 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
             copy={copy.filters}
             textDirection={textDirection}
           />
-        </div>
+        </SectionReveal>
 
         <div
           className="projects-layout mt-14 grid gap-10 [@media(min-width:1180px)_and_(min-height:650px)]:grid-cols-[minmax(0,1.08fr)_minmax(32rem,0.92fr)] [@media(min-width:1180px)_and_(min-height:650px)]:gap-12"
@@ -1790,16 +1764,17 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
           <div className="min-w-0">
             <div className="grid gap-5">
               {visibleProjects.map((project, index) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  index={index}
-                  isActive={activeProject?.id === project.id}
-                  onActivate={() => setActiveProjectId(project.id)}
-                  onOpenDetails={() => setOpenProjectId(project.id)}
-                  copy={copy}
-                  textDirection={textDirection}
-                />
+                <SectionReveal key={project.id}>
+                  <ProjectCard
+                    project={project}
+                    index={index}
+                    isActive={activeProject?.id === project.id}
+                    onActivate={() => setActiveProjectId(project.id)}
+                    onOpenDetails={() => setOpenProjectId(project.id)}
+                    copy={copy}
+                    textDirection={textDirection}
+                  />
+                </SectionReveal>
               ))}
             </div>
           </div>
