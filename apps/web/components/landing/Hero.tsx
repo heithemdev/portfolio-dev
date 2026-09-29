@@ -1,8 +1,8 @@
 "use client";
 
 // components/landing/Hero.tsx
-// Purpose: Localized portfolio hero with Arabic-safe mixed text rendering and unchanged layout direction.
-// Linked files: app/[locale]/page.tsx, components/navbar.tsx, components/smooth-section-link.tsx, lib/lang/config.ts, public/assets/Heithem avatar BNW.png.
+// Purpose: Responsive editorial portrait hero with one shared accessible content tree.
+// Linked files: app/[locale]/page.tsx, components/navbar.tsx, components/smooth-section-link.tsx, lib/lang/config.ts, public/assets/heithem-portrait-shoulders-v2.webp.
 
 import Image from "next/image";
 import { motion } from "motion/react";
@@ -12,7 +12,7 @@ import SmoothSectionLink from "@/components/smooth-section-link";
 import type { TextDirection } from "@/lib/lang/config";
 import { useHydratedReducedMotion } from "@/lib/use-hydrated-reduced-motion";
 
-import heithemAvatar from "../../public/assets/Heithem avatar BNW.png";
+import heithemAvatar from "../../public/assets/heithem-portrait-shoulders-v2.webp";
 
 type HeroMetric = Readonly<{
   value: string;
@@ -171,7 +171,9 @@ function TypedHeroTitle({
     !prefersReducedMotion && visibleCount < nameCharacters.length;
 
   const isTypingRole =
-    !prefersReducedMotion && visibleCount >= nameCharacters.length;
+    !prefersReducedMotion &&
+    visibleCount >= nameCharacters.length &&
+    visibleCount < totalCharacters;
 
   return (
     <>
@@ -179,10 +181,10 @@ function TypedHeroTitle({
         aria-hidden="true"
         dir={textDirection}
         className={[
-          "mt-4 overflow-visible pb-[0.04em] font-normal text-[#111318] max-lg:text-[clamp(4.25rem,24vw,8rem)]",
+          "mt-4 overflow-visible pb-[0.04em] font-normal text-[#111318] max-lg:text-[clamp(4.25rem,21vw,7.5rem)]",
           isArabic
-            ? "text-[clamp(5.1rem,11.4vw,12.6rem)] leading-[1.04] tracking-normal"
-            : "text-[clamp(5.4rem,12.2vw,13.7rem)] leading-[0.82] tracking-[-0.055em]",
+            ? "text-[clamp(5.1rem,10.6vw,11.5rem)] leading-[1.04] tracking-normal"
+            : "text-[clamp(5.4rem,11.3vw,12.5rem)] leading-[0.82] tracking-[-0.055em]",
         ].join(" ")}
       >
         <TypedLine
@@ -198,10 +200,10 @@ function TypedHeroTitle({
         aria-hidden="true"
         dir={textDirection}
         className={[
-          "mt-6 whitespace-nowrap font-normal text-[#111318] max-lg:mt-4 max-lg:text-[clamp(1.9rem,10vw,3.35rem)]",
+          "mt-6 whitespace-nowrap font-normal text-[#111318] max-lg:mt-4 max-lg:text-[clamp(1.35rem,6.6vw,2.75rem)]",
           isArabic
-            ? "text-[clamp(2rem,3.1vw,3.45rem)] leading-[1.16] tracking-normal"
-            : "text-[clamp(1.9rem,3vw,3.45rem)] leading-[0.98] tracking-[-0.07em]",
+            ? "text-[clamp(1.8rem,2.75vw,3.15rem)] leading-[1.16] tracking-normal"
+            : "text-[clamp(1.5rem,2.55vw,3.1rem)] leading-[0.98] tracking-[-0.07em]",
         ].join(" ")}
       >
         <TypedLine
@@ -260,6 +262,7 @@ function HeroSupportContent({
   textDirection: TextDirection;
 }) {
   const isArabic = textDirection === "rtl";
+  const reducedMotion = useHydratedReducedMotion();
 
   return (
     <>
@@ -273,11 +276,11 @@ function HeroSupportContent({
           "font-normal leading-[1.58] text-[#111318]/66",
           isArabic ? "tracking-normal" : "tracking-[-0.025em]",
         ].join(" ")}
-        initial={{ opacity: 0, y: 4 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{
-          delay: 0.08,
-          duration: 0.28,
+          delay: reducedMotion ? 0 : 0.08,
+          duration: reducedMotion ? 0 : 0.28,
           ease: [0.16, 1, 0.3, 1],
         }}
       >
@@ -288,13 +291,13 @@ function HeroSupportContent({
         className={
           isMobile
             ? "mt-8 flex flex-wrap items-center gap-3"
-            : "mt-10 flex flex-wrap items-center gap-4"
+            : "mt-7 flex flex-wrap items-center gap-3 lg:mt-9 lg:gap-4"
         }
-        initial={{ opacity: 0, y: 4 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{
-          delay: 0.1,
-          duration: 0.28,
+          delay: reducedMotion ? 0 : 0.1,
+          duration: reducedMotion ? 0 : 0.28,
           ease: [0.16, 1, 0.3, 1],
         }}
       >
@@ -328,255 +331,69 @@ export default function Hero({ copy, textDirection }: HeroProps) {
   return (
     <section
       id="hero"
+      data-scroll-section
       aria-labelledby="hero-title"
-      className="relative isolate min-h-[100svh] overflow-visible bg-[#F4EFE8] text-[#111318] lg:h-[100svh] lg:overflow-hidden"
+      className="hero-editorial relative isolate bg-[#F4EFE8] text-[#111318]"
       dir="ltr"
     >
-      <style>{`
-        @keyframes heroCaretBlink {
-          0%, 49% {
-            opacity: 1;
-          }
-
-          50%, 100% {
-            opacity: 0;
-          }
-        }
-
-        .unicode-bidi-isolate {
-          unicode-bidi: isolate;
-        }
-      `}</style>
-
       <h1 id="hero-title" className="sr-only" dir={textDirection}>
         {copy.name}, {copy.role}
       </h1>
 
-      <div className="hidden h-full lg:block">
-        <div className="relative z-20 mx-auto flex h-full w-full max-w-[1920px] flex-col px-5 pb-0 pt-[4.75rem] sm:px-8 lg:px-10">
-          <div className="relative grid min-h-0 flex-1 grid-cols-1 items-end gap-10 lg:grid-cols-[minmax(0,0.96fr)_minmax(420px,0.92fr)] lg:gap-0">
-            <motion.aside
-              aria-hidden="true"
-              className="absolute left-0 top-1/2 hidden h-[min(52svh,31rem)] w-16 -translate-y-1/2 lg:block"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                delay: 0.08,
-                duration: 0.32,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-            >
-              <p
-                dir={textDirection}
-                className={[
-                  "absolute left-1/2 top-0 -translate-x-1/2 -rotate-90 whitespace-nowrap text-[0.76rem] font-normal leading-none text-[#111318]/34",
-                  isArabic ? "tracking-normal" : "tracking-[-0.025em]",
-                ].join(" ")}
-              >
-                {copy.sideLabel}
-              </p>
+      <div className="hero-editorial__layout">
+        <aside className="hero-editorial__rail" aria-hidden="true">
+          <span dir={textDirection}>{copy.sideLabel}</span>
+          <span className="hero-editorial__rail-line" />
+          <span>{copy.year}</span>
+        </aside>
 
-              <motion.div
-                className="absolute left-1/2 top-[22%] h-[62%] w-px -translate-x-1/2 bg-[#111318]/12"
-                initial={{ scaleY: 0 }}
-                animate={{ scaleY: 1 }}
-                transition={{
-                  delay: 0.12,
-                  duration: 0.38,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                style={{ transformOrigin: "top" }}
-              />
-
-              <p className="absolute bottom-0 left-1/2 -translate-x-1/2 -rotate-90 whitespace-nowrap text-[0.76rem] font-normal leading-none tracking-[-0.025em] text-[#111318]/34">
-                {copy.year}
-              </p>
-            </motion.aside>
-
-            <div className="relative z-30 pb-[clamp(2.25rem,5.7svh,4.75rem)] lg:pl-[clamp(5.5rem,8vw,8.5rem)] xl:pl-[clamp(6.5rem,8.6vw,9.75rem)]">
-              <motion.div
-                className="mb-[clamp(2.65rem,5.9svh,5.1rem)] grid max-w-[34rem] translate-y-[clamp(1.1rem,2.2svh,2.2rem)] grid-cols-2 gap-[clamp(2.6rem,5vw,6.25rem)] sm:flex"
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: 0.06,
-                  duration: 0.28,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              >
-                {copy.metrics.map((metric) => (
-                  <HeroMetricBlock
-                    key={metric.label}
-                    metric={metric}
-                    textDirection={textDirection}
-                  />
-                ))}
-              </motion.div>
-
-              <div className="max-w-[min(54vw,53rem)]" dir={textDirection}>
-                <motion.p
-                  className={[
-                    "text-[clamp(1.35rem,2.1vw,2.15rem)] font-normal leading-none text-[#111318]/80",
-                    isArabic ? "tracking-normal" : "tracking-[-0.06em]",
-                  ].join(" ")}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{
-                    delay: 0.08,
-                    duration: 0.25,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                >
-                  {copy.intro}
-                </motion.p>
-
-                <TypedHeroTitle
-                  name={copy.name}
-                  role={copy.role}
-                  textDirection={textDirection}
-                  startDelayMs={160}
-                  nameSpeedMs={95}
-                  roleSpeedMs={34}
-                  pauseBetweenLinesMs={120}
-                  nameCursorClassName="ml-[0.035em] inline-block h-[0.72em] w-[0.035em] translate-y-[0.08em] animate-[heroCaretBlink_0.68s_step-end_infinite] bg-[#111318]"
-                  roleCursorClassName="ml-[0.08em] inline-block h-[0.86em] w-[0.035em] translate-y-[0.08em] animate-[heroCaretBlink_0.68s_step-end_infinite] bg-[#111318]"
-                />
-
-                <HeroSupportContent
-                  className="mt-7"
-                  copy={copy}
-                  textDirection={textDirection}
-                />
-              </div>
-            </div>
-
-            <div className="relative z-10 hidden h-full min-h-0 items-end justify-end lg:flex">
-              <motion.div
-                className="absolute bottom-0 left-1/2 h-[72%] w-[76%] -translate-x-1/2 border border-[#111318]/10 lg:left-auto lg:right-4 lg:h-[76%] lg:w-[72%] lg:translate-x-0"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{
-                  delay: 0.1,
-                  duration: 0.3,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              />
-
-              <motion.div
-                className="relative z-10"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{
-                  delay: 0.14,
-                  duration: 0.38,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              >
-                <Image
-                  src={heithemAvatar}
-                  alt=""
-                  placeholder="blur"
-                  loading="eager"
-                  sizes="52vw"
-                  className="h-[min(89svh,62rem)] w-auto max-w-none select-none object-contain"
-                />
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="relative z-20 flex min-h-[100svh] flex-col px-5 pb-14 pt-[5.5rem] lg:hidden">
-        <motion.div
-          className="grid grid-cols-2 gap-6"
-          initial={{ opacity: 0, y: 4 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.06,
-            duration: 0.28,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-        >
-          {copy.metrics.map((metric) => (
-            <HeroMetricBlock
-              key={metric.label}
-              metric={metric}
-              textDirection={textDirection}
-            />
-          ))}
-        </motion.div>
-
-        <div className="relative left-1/2 mt-5 w-screen -translate-x-1/2 overflow-visible">
-          <motion.div
-            className="pointer-events-none absolute bottom-[4.5rem] left-1/2 z-0 h-[72%] w-[72%] -translate-x-1/2 border border-[#111318]/10"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              delay: 0.1,
-              duration: 0.28,
-              ease: [0.16, 1, 0.3, 1],
-            }}
+        <div className="hero-editorial__portrait">
+          <div className="hero-editorial__frame" aria-hidden="true" />
+          <Image
+            src={heithemAvatar}
+            alt={copy.avatarAlt}
+            placeholder="empty"
+            loading="eager"
+            fetchPriority="high"
+            sizes="(min-width: 1920px) 1088px, (min-width: 1280px) 57vw, (min-width: 1024px) 52vw, (min-width: 496px) 480px, calc(100vw - 16px)"
+            className="hero-editorial__image select-none"
           />
-
-          <motion.div
-            className="relative z-10 flex w-screen justify-center overflow-visible"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              delay: 0.12,
-              duration: 0.32,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            style={{
-              WebkitMaskImage:
-                "linear-gradient(to bottom, black 0%, black 81%, rgba(0,0,0,0.72) 89%, transparent 100%)",
-              maskImage:
-                "linear-gradient(to bottom, black 0%, black 81%, rgba(0,0,0,0.72) 89%, transparent 100%)",
-            }}
-          >
-            <Image
-              src={heithemAvatar}
-              alt={copy.avatarAlt}
-              placeholder="blur"
-              loading="eager"
-              sizes="100vw"
-              className="block h-auto w-screen max-w-none select-none object-contain"
-            />
-          </motion.div>
         </div>
 
-        <div className="relative z-20 -mt-[30px]" dir={textDirection}>
-          <motion.p
+        <div className="hero-editorial__copy" dir={textDirection}>
+          {copy.metrics.length > 0 ? (
+            <div className="mb-9 flex gap-10">
+              {copy.metrics.map((metric) => (
+                <HeroMetricBlock
+                  key={metric.label}
+                  metric={metric}
+                  textDirection={textDirection}
+                />
+              ))}
+            </div>
+          ) : null}
+          <p
             className={[
-              "text-[clamp(1.25rem,7vw,1.85rem)] font-normal leading-none text-[#111318]/80",
-              isArabic ? "tracking-normal" : "tracking-[-0.06em]",
+              "text-[clamp(1.2rem,2.1vw,2rem)] font-normal leading-none text-[#111318]/75",
+              isArabic ? "tracking-normal" : "tracking-[-0.045em]",
             ].join(" ")}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              delay: 0.28,
-              duration: 0.25,
-              ease: [0.16, 1, 0.3, 1],
-            }}
           >
             {copy.intro}
-          </motion.p>
+          </p>
 
           <TypedHeroTitle
             name={copy.name}
             role={copy.role}
             textDirection={textDirection}
-            startDelayMs={260}
-            nameSpeedMs={90}
-            roleSpeedMs={30}
-            pauseBetweenLinesMs={120}
-            nameCursorClassName="ml-[0.035em] inline-block h-[0.72em] w-[0.035em] translate-y-[0.08em] animate-[heroCaretBlink_0.68s_step-end_infinite] bg-[#111318]"
-            roleCursorClassName="ml-[0.08em] inline-block h-[0.86em] w-[0.035em] translate-y-[0.08em] animate-[heroCaretBlink_0.68s_step-end_infinite] bg-[#111318]"
+            startDelayMs={160}
+            nameSpeedMs={75}
+            roleSpeedMs={25}
+            pauseBetweenLinesMs={100}
+            nameCursorClassName="hero-caret ml-[0.035em] inline-block h-[0.72em] w-[0.035em] translate-y-[0.08em] bg-[#111318]"
+            roleCursorClassName="hero-caret ml-[0.08em] inline-block h-[0.86em] w-[0.035em] translate-y-[0.08em] bg-[#111318]"
           />
-
           <HeroSupportContent
-            className="mt-6"
-            isMobile
+            className="mt-5 lg:mt-7"
             copy={copy}
             textDirection={textDirection}
           />

@@ -683,6 +683,7 @@ export default function ContactSection({
   return (
     <section
       id="contact"
+      data-scroll-section
       aria-labelledby="contact-title"
       className="relative isolate flex min-h-svh items-center overflow-hidden bg-[#F4EFE8] py-[clamp(3rem,5vw,5rem)] text-[#111318]"
       dir="ltr"

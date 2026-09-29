@@ -1739,8 +1739,9 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
   return (
     <section
       id="work"
+      data-scroll-section
       aria-labelledby="projects-title"
-      className="relative scroll-mt-[5.5rem] overflow-visible bg-[#F4EFE8] py-[clamp(4.5rem,8vw,7.25rem)] text-[#111318]"
+      className="relative overflow-visible bg-[#F4EFE8] py-[clamp(4.5rem,8vw,7.25rem)] text-[#111318]"
       dir="ltr"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#111318]/10" />

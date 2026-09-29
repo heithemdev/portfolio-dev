@@ -107,6 +107,7 @@ export default function PageTeasers({
 
   return (
     <section
+      data-scroll-section
       aria-label={copy.ariaLabel}
       className="border-y border-[#111318]/10 bg-[#F4EFE8]"
       dir="ltr"

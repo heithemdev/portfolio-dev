@@ -13,6 +13,7 @@ import { IBM_Plex_Sans, IBM_Plex_Sans_Arabic } from "next/font/google";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import PortfolioCursor from "@/components/portfolio-cursor";
+import PortfolioScroll from "@/components/portfolio-scroll";
 import {
   LOCALES,
   getDirection,
@@ -78,6 +79,7 @@ export default async function LocaleLayout({
         className={`${localizedFontClassName} min-h-screen bg-[#F4EFE8] text-[#111318]`}
       >
         <PortfolioCursor />
+        <PortfolioScroll />
         <Navbar
           copy={{
             logoAria: t("navbar.logoAria"),

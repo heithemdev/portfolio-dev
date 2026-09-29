@@ -5,6 +5,7 @@
 // Linked files: components/navbar.tsx, components/footer.tsx, components/landing/Hero.tsx, components/landing/about-section.tsx.
 
 import Link from "next/link";
+import { getSectionTop, scrollPortfolioTo } from "@/lib/portfolio-scroll";
 import type { AnchorHTMLAttributes, MouseEvent, ReactNode } from "react";
 
 type SmoothSectionLinkProps = Omit<
@@ -18,121 +19,26 @@ type SmoothSectionLinkProps = Omit<
     onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
   }>;
 
-type ScrollAnimationResult = "finished" | "cancelled";
-
-const DEFAULT_SCROLL_OFFSET = 84;
-const MIN_SCROLL_DURATION_MS = 420;
-const MAX_SCROLL_DURATION_MS = 950;
-const SCROLL_DURATION_PER_PIXEL = 0.45;
-
-let activeAnimationFrameId: number | null = null;
-let activeCancelHandler: (() => void) | null = null;
-
 function getSamePageTarget(href: string) {
   const targetUrl = new URL(href, window.location.href);
 
   if (
     targetUrl.origin !== window.location.origin ||
     targetUrl.pathname !== window.location.pathname ||
+    targetUrl.search !== window.location.search ||
     !targetUrl.hash
   ) {
     return null;
   }
 
-  return {
-    hash: targetUrl.hash,
-    targetId: decodeURIComponent(targetUrl.hash.slice(1)),
-  };
-}
-
-function getScrollTargetTop(target: HTMLElement, offset: number) {
-  const targetTop = target.getBoundingClientRect().top + window.scrollY;
-
-  return Math.max(0, targetTop - offset);
-}
-
-function easeOutCubic(progress: number) {
-  return 1 - Math.pow(1 - progress, 3);
-}
-
-function stopActiveScrollAnimation() {
-  if (activeAnimationFrameId !== null) {
-    window.cancelAnimationFrame(activeAnimationFrameId);
-    activeAnimationFrameId = null;
-  }
-
-  if (activeCancelHandler) {
-    activeCancelHandler();
-    activeCancelHandler = null;
-  }
-}
-
-function animateScrollTo(targetTop: number) {
-  stopActiveScrollAnimation();
-
-  const startTop = window.scrollY;
-  const distance = targetTop - startTop;
-  const absoluteDistance = Math.abs(distance);
-
-  if (absoluteDistance < 2) {
-    window.scrollTo(0, targetTop);
-    return Promise.resolve<ScrollAnimationResult>("finished");
-  }
-
-  const duration = Math.min(
-    MAX_SCROLL_DURATION_MS,
-    Math.max(
-      MIN_SCROLL_DURATION_MS,
-      absoluteDistance * SCROLL_DURATION_PER_PIXEL,
-    ),
-  );
-
-  const startedAt = performance.now();
-
-  return new Promise<ScrollAnimationResult>((resolve) => {
-    let isCancelled = false;
-
-    const cancelOnUserControl = () => {
-      isCancelled = true;
-      stopActiveScrollAnimation();
-      resolve("cancelled");
+  try {
+    return {
+      hash: targetUrl.hash,
+      targetId: decodeURIComponent(targetUrl.hash.slice(1)),
     };
-
-    const cancelOptions: AddEventListenerOptions = { passive: true, once: true };
-
-    window.addEventListener("wheel", cancelOnUserControl, cancelOptions);
-    window.addEventListener("touchstart", cancelOnUserControl, cancelOptions);
-    window.addEventListener("keydown", cancelOnUserControl, { once: true });
-
-    activeCancelHandler = () => {
-      window.removeEventListener("wheel", cancelOnUserControl);
-      window.removeEventListener("touchstart", cancelOnUserControl);
-      window.removeEventListener("keydown", cancelOnUserControl);
-    };
-
-    const step = (currentTime: number) => {
-      if (isCancelled) {
-        return;
-      }
-
-      const elapsed = currentTime - startedAt;
-      const progress = Math.min(1, elapsed / duration);
-      const easedProgress = easeOutCubic(progress);
-
-      window.scrollTo(0, startTop + distance * easedProgress);
-
-      if (progress < 1) {
-        activeAnimationFrameId = window.requestAnimationFrame(step);
-        return;
-      }
-
-      stopActiveScrollAnimation();
-      window.scrollTo(0, targetTop);
-      resolve("finished");
-    };
-
-    activeAnimationFrameId = window.requestAnimationFrame(step);
-  });
+  } catch {
+    return null;
+  }
 }
 
 function focusTargetAfterScroll(target: HTMLElement) {
@@ -157,7 +63,7 @@ function focusTargetAfterScroll(target: HTMLElement) {
 
 export default function SmoothSectionLink({
   href,
-  offset = DEFAULT_SCROLL_OFFSET,
+  offset,
   onClick,
   children,
   ...anchorProps
@@ -171,7 +77,9 @@ export default function SmoothSectionLink({
       event.metaKey ||
       event.altKey ||
       event.ctrlKey ||
-      event.shiftKey
+      event.shiftKey ||
+      anchorProps.download !== undefined ||
+      (anchorProps.target && anchorProps.target !== "_self")
     ) {
       return;
     }
@@ -190,22 +98,14 @@ export default function SmoothSectionLink({
 
     event.preventDefault();
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    const targetTop = getScrollTargetTop(target, offset);
-
-    window.history.pushState(null, "", samePageTarget.hash);
-
-    if (prefersReducedMotion) {
-      stopActiveScrollAnimation();
-      window.scrollTo(0, targetTop);
-      focusTargetAfterScroll(target);
-      return;
+    const targetTop = getSectionTop(target, offset);
+    if (window.location.hash !== samePageTarget.hash) {
+      // Preserve Next's router state for back/forward navigation.
+      window.history.pushState(window.history.state, "", samePageTarget.hash);
     }
 
-    void animateScrollTo(targetTop).then((result) => {
-      if (result === "finished") {
+    void scrollPortfolioTo(targetTop).then((result) => {
+      if (result === "finished" && target.isConnected) {
         focusTargetAfterScroll(target);
       }
     });
