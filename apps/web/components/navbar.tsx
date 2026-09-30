@@ -266,7 +266,6 @@ export default function Navbar({ copy, textDirection }: NavbarProps) {
               height={64}
               className="h-12 w-12 object-contain"
               loading="eager"
-              fetchPriority="high"
             />
           </SmoothSectionLink>
 

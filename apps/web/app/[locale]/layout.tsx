@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 import type { Viewport } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { IBM_Plex_Sans, IBM_Plex_Sans_Arabic } from "next/font/google";
+import localFont from "next/font/local";
 
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
@@ -23,16 +23,21 @@ import {
 import { getTranslator } from "@/lib/lang/dictionary";
 import { getBaseMetadata } from "@/lib/seo/site";
 
-const ibmPlexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const ibmPlexSans = localFont({
+  src: "../fonts/ibm-plex-sans-latin-variable.woff2",
+  weight: "400 700",
   display: "swap",
 });
 
-const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  weight: ["400", "500", "600", "700"],
+const ibmPlexSansArabic = localFont({
+  src: [
+    { path: "../fonts/ibm-plex-sans-arabic-400.woff2", weight: "400" },
+    { path: "../fonts/ibm-plex-sans-arabic-500.woff2", weight: "500" },
+    { path: "../fonts/ibm-plex-sans-arabic-600.woff2", weight: "600" },
+    { path: "../fonts/ibm-plex-sans-arabic-700.woff2", weight: "700" },
+  ],
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = getBaseMetadata();

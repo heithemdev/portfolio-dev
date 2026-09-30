@@ -38,6 +38,8 @@ type TechId =
   | "typescript"
   | "node.js"
   | "react"
+  | "flutter"
+  | "dart"
   | "tailwindcss"
   | "prisma"
   | "postgresql";
@@ -143,6 +145,8 @@ const techStack = [
   "typescript",
   "node.js",
   "react",
+  "flutter",
+  "dart",
   "tailwindcss",
   "prisma",
   "postgresql",
@@ -153,6 +157,8 @@ const techIconMap = {
   typescript: { label: "TypeScript", src: "/icons/typescript.svg" },
   "node.js": { label: "Node.js", src: "/icons/node-js.svg" },
   react: { label: "React", src: "/icons/react.svg" },
+  flutter: { label: "Flutter", src: "/icons/flutter.svg" },
+  dart: { label: "Dart", src: "/icons/dart.svg" },
   tailwindcss: { label: "TailwindCSS", src: "/icons/tailwindcss.svg" },
   prisma: { label: "Prisma", src: "/icons/prisma.svg" },
   postgresql: { label: "PostgreSQL", src: "/icons/postgresql.svg" },
@@ -844,7 +850,6 @@ function ProjectAccessLink({
 
 function ProjectCard({
   project,
-  index,
   isActive,
   onActivate,
   onOpenDetails,
@@ -852,7 +857,6 @@ function ProjectCard({
   textDirection,
 }: {
   project: Project;
-  index: number;
   isActive: boolean;
   onActivate: () => void;
   onOpenDetails: () => void;
@@ -891,7 +895,7 @@ function ProjectCard({
             sizes="(min-width: 1180px) 14rem, (min-width: 640px) 13.5rem, 100vw"
             unavailableLabel={copy.imageUnavailable}
             fit="cover"
-            loading={index < 2 ? "eager" : "lazy"}
+            loading="lazy"
           />
         </div>
 
@@ -1763,11 +1767,10 @@ export default function Projects({ copy, textDirection }: ProjectsProps) {
         >
           <div className="min-w-0">
             <div className="grid gap-5">
-              {visibleProjects.map((project, index) => (
+              {visibleProjects.map((project) => (
                 <SectionReveal key={project.id}>
                   <ProjectCard
                     project={project}
-                    index={index}
                     isActive={activeProject?.id === project.id}
                     onActivate={() => setActiveProjectId(project.id)}
                     onOpenDetails={() => setOpenProjectId(project.id)}

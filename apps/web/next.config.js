@@ -42,6 +42,15 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: "/assets/heithem-portrait-shoulders-v3.avif",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
         source: "/:path*",
         headers: [
           {

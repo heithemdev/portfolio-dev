@@ -329,11 +329,11 @@ export default function Hero({ copy, textDirection }: HeroProps) {
 
     const compact = window.matchMedia("(max-width: 1023px)").matches;
     // Separate translate from transform so the approved desktop scale stays intact.
-    // Trigger on image load: the entrance cannot finish while the image downloads.
+    // Keep the portrait painted while it enters, so its reveal does not delay LCP.
     const animation = image.animate(
       [
-        { opacity: 0, translate: compact ? "0 24px" : "36px 24px" },
-        { opacity: 1, translate: "0 0" },
+        { translate: compact ? "0 24px" : "36px 24px" },
+        { translate: "0 0" },
       ],
       {
         duration: compact ? 650 : 900,
@@ -358,6 +358,13 @@ export default function Hero({ copy, textDirection }: HeroProps) {
       className="hero-editorial relative isolate bg-[#F4EFE8] text-[#111318]"
       dir="ltr"
     >
+      <link
+        rel="preload"
+        as="image"
+        href="/assets/heithem-portrait-shoulders-v3.avif"
+        type="image/avif"
+        fetchPriority="high"
+      />
       <h1 id="hero-title" className="sr-only" dir={textDirection}>
         {copy.name}, {copy.role}
       </h1>
@@ -371,17 +378,22 @@ export default function Hero({ copy, textDirection }: HeroProps) {
 
         <div className="hero-editorial__portrait">
           <div className="hero-editorial__frame" aria-hidden="true" />
-          <Image
-            src={heithemAvatar}
-            alt={copy.avatarAlt}
-            placeholder="empty"
-            loading="eager"
-            fetchPriority="high"
-            ref={portraitRef}
-            onLoad={() => setPortraitLoaded(true)}
-            sizes="(min-width: 1920px) 1088px, (min-width: 1280px) 57vw, (min-width: 1024px) 52vw, (min-width: 496px) 480px, calc(100vw - 16px)"
-            className="hero-editorial__image select-none"
-          />
+          <picture className="block h-full w-full">
+            <source
+              srcSet="/assets/heithem-portrait-shoulders-v3.avif"
+              type="image/avif"
+            />
+            <Image
+              src={heithemAvatar}
+              alt={copy.avatarAlt}
+              unoptimized
+              loading="eager"
+              fetchPriority="high"
+              ref={portraitRef}
+              onLoad={() => setPortraitLoaded(true)}
+              className="hero-editorial__image select-none"
+            />
+          </picture>
         </div>
 
         <div className="hero-editorial__copy" dir={textDirection}>
